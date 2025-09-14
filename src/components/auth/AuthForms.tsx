@@ -1,13 +1,75 @@
+'use client'
+
 import { authFieldRegistry, authFormConfig } from '@/configs/auth.config'
 import { AuthFormsProps } from '@/types/auth/auth.type'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useEffect, useRef, useState } from 'react'
 import Button from '../ui/Button'
 import FormField from '../ui/FormField'
 
 export default function AuthForms({ variant }: AuthFormsProps) {
 	const config = authFormConfig[variant]
 	const fields = config.fieldIds.map(fieldId => authFieldRegistry[fieldId])
+	const telegramContainerRef = useRef<HTMLDivElement>(null)
+	const [showTelegramWidget, setShowTelegramWidget] = useState(false)
+
+	// Функция для обработки авторизации через Telegram
+	const onTelegramAuth = (user: {
+		id: number
+		first_name: string
+		last_name?: string
+		username?: string
+	}) => {
+		alert(
+			'Вход через Telegram: ' +
+				user.first_name +
+				' ' +
+				user.last_name +
+				' (' +
+				user.id +
+				(user.username ? ', @' + user.username : '') +
+				')'
+		)
+	}
+
+	// Загружаем скрипт Telegram виджета
+	useEffect(() => {
+		;(
+			window as Window & { onTelegramAuth?: typeof onTelegramAuth }
+		).onTelegramAuth = onTelegramAuth
+
+		// Загружаем скрипт Telegram виджета
+		const script = document.createElement('script')
+		script.src = 'https://telegram.org/js/telegram-widget.js?22'
+		script.async = true
+		script.setAttribute('data-telegram-login', 'Da1lyRoutine_bot')
+		script.setAttribute('data-size', 'large')
+		script.setAttribute('data-onauth', 'onTelegramAuth(user)')
+		script.setAttribute('data-request-access', 'write')
+
+		// Сохраняем ссылку на контейнер
+		const container = telegramContainerRef.current
+
+		// Добавляем скрипт в контейнер через ref
+		if (container) {
+			container.appendChild(script)
+		}
+
+		// Очистка при размонтировании
+		return () => {
+			if (container && container.contains(script)) {
+				container.removeChild(script)
+			}
+			delete (window as Window & { onTelegramAuth?: typeof onTelegramAuth })
+				.onTelegramAuth
+		}
+	}, [showTelegramWidget])
+
+	// Обработчик клика по кнопке Telegram
+	const handleTelegramClick = () => {
+		setShowTelegramWidget(true)
+	}
 
 	return (
 		<section>
@@ -43,8 +105,9 @@ export default function AuthForms({ variant }: AuthFormsProps) {
 					</Button>
 
 					<Button
-						type='submit'
+						type='button'
 						variant='primary'
+						onClick={handleTelegramClick}
 						className='pl-[60px] pr-[30px] min-w-0 w-fit relative'
 					>
 						<Image
@@ -57,6 +120,10 @@ export default function AuthForms({ variant }: AuthFormsProps) {
 						Вход
 					</Button>
 				</div>
+
+				{showTelegramWidget && (
+					<div ref={telegramContainerRef} className='min-h-[40px] mt-4' />
+				)}
 			</form>
 		</section>
 	)
