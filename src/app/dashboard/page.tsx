@@ -12,8 +12,7 @@ type DbUser = {
 }
 
 async function getUsers(): Promise<DbUser[]> {
-	const API_BASE_URL = 'http://localhost:4000'
-	const res = await fetch(`${API_BASE_URL}/users`, {
+	const res = await fetch(`http://localhost:4000/users`, {
 		method: 'GET',
 		cache: 'no-store',
 	})
