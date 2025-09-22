@@ -1,11 +1,9 @@
 'use server'
 
-import { cookies } from 'next/headers'
 import Image from 'next/image'
-import { redirect } from 'next/navigation'
 
 type DbUser = {
-	id: number
+	id: string
 	firstName?: string
 	lastName?: string
 	username?: string
@@ -13,35 +11,22 @@ type DbUser = {
 	createdAt: string
 }
 
-async function getUsers(
-	cookieHeader: string
-): Promise<{ users: DbUser[]; status: number }> {
+async function getUsers(): Promise<DbUser[]> {
 	const API_BASE_URL = 'http://localhost:4000'
+	const res = await fetch(`${API_BASE_URL}/users`, {
+		method: 'GET',
+		cache: 'no-store',
+	})
+	if (!res.ok) return []
 	try {
-		const res = await fetch(`${API_BASE_URL}/users`, {
-			method: 'GET',
-			cache: 'no-store',
-			headers: {
-				Cookie: cookieHeader,
-			},
-		})
-		if (!res.ok) {
-			return { users: [], status: res.status }
-		}
-		const data = (await res.json()) as DbUser[]
-		return { users: data, status: res.status }
+		return (await res.json()) as DbUser[]
 	} catch {
-		return { users: [], status: 500 }
+		return []
 	}
 }
 
 export default async function DashboardPage() {
-	const cookieHeader = cookies().toString()
-	const { users, status } = await getUsers(cookieHeader)
-
-	if (status === 401) {
-		redirect('/log-in')
-	}
+	const users = await getUsers()
 
 	return (
 		<section className='max-w-3xl mx-auto py-8 px-4'>
