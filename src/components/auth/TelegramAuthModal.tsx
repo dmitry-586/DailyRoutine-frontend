@@ -1,8 +1,10 @@
 'use client'
 
+import { postTelegramAuth } from '@/services/auth.service'
 import { TelegramUser } from '@/types/auth/auth.type'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Button from '../ui/Button'
 import Modal from '../ui/Modal'
@@ -10,44 +12,29 @@ import Modal from '../ui/Modal'
 interface TelegramAuthModalProps {
 	isOpen: boolean
 	onClose: () => void
-	onAuthSuccess?: (user: TelegramUser) => void
 }
 
 export default function TelegramAuthModal({
 	isOpen,
 	onClose,
-	onAuthSuccess,
 }: TelegramAuthModalProps) {
 	const telegramContainerRef = useRef<HTMLDivElement>(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const router = useRouter()
 
 	// Функция для обработки авторизации через Telegram
 	const onTelegramAuth = useCallback(
-		(user: TelegramUser) => {
-			console.log('🚀 Telegram авторизация успешна!')
-			console.log('👤 Данные пользователя:', user)
-			console.log('📝 Детальная информация:')
-			console.log(`   ID: ${user.id}`)
-			console.log(`   Имя: ${user.first_name}`)
-			console.log(`   Фамилия: ${user.last_name || 'не указана'}`)
-			console.log(
-				`   Username: ${user.username ? '@' + user.username : 'не указан'}`
-			)
-			console.log(`   Фото: ${user.photo_url || 'не указано'}`)
-			console.log(
-				`   Дата авторизации: ${new Date(
-					user.auth_date * 1000
-				).toLocaleString()}`
-			)
-			console.log(`   Hash: ${user.hash}`)
-
-			// Вызываем callback
-			onAuthSuccess?.(user)
-
-			// Закрываем модальное окно
-			onClose()
+		async (user: TelegramUser) => {
+			setIsLoading(true)
+			try {
+				await postTelegramAuth(user)
+				onClose()
+				router.push('/dashboard')
+			} finally {
+				setIsLoading(false)
+			}
 		},
-		[onAuthSuccess, onClose]
+		[onClose, router]
 	)
 
 	// Загружаем скрипт Telegram виджета
@@ -55,7 +42,6 @@ export default function TelegramAuthModal({
 		if (!isOpen) return
 
 		setIsLoading(true)
-		console.log('📡 Загружается Telegram виджет...')
 		;(
 			window as Window & { onTelegramAuth?: typeof onTelegramAuth }
 		).onTelegramAuth = onTelegramAuth
@@ -71,11 +57,9 @@ export default function TelegramAuthModal({
 
 		// Обработчики событий скрипта
 		script.onload = () => {
-			console.log('✅ Telegram виджет загружен успешно')
 			setIsLoading(false)
 		}
 		script.onerror = () => {
-			console.error('❌ Ошибка загрузки Telegram виджета')
 			setIsLoading(false)
 		}
 
@@ -85,7 +69,6 @@ export default function TelegramAuthModal({
 		// Добавляем скрипт в контейнер через ref
 		if (container) {
 			container.appendChild(script)
-			console.log('🔗 Telegram виджет добавлен в DOM')
 		}
 
 		// Очистка при размонтировании
@@ -97,7 +80,7 @@ export default function TelegramAuthModal({
 				.onTelegramAuth
 			setIsLoading(false)
 		}
-	}, [isOpen, onClose, onAuthSuccess, onTelegramAuth])
+	}, [isOpen, onClose, onTelegramAuth])
 
 	return (
 		<Modal

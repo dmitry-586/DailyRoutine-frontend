@@ -1,7 +1,7 @@
 'use client'
 
 import { authFieldRegistry, authFormConfig } from '@/configs/auth.config'
-import { AuthFormsProps, TelegramUser } from '@/types/auth/auth.type'
+import { AuthFormsProps } from '@/types/auth/auth.type'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -14,15 +14,8 @@ export default function AuthForms({ variant }: AuthFormsProps) {
 	const fields = config.fieldIds.map(fieldId => authFieldRegistry[fieldId])
 	const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
 
-	// Обработчики для модального окна
 	const handleTelegramClick = () => {
-		console.log('🔵 Нажата кнопка Telegram авторизации')
 		setIsTelegramModalOpen(true)
-	}
-
-	const handleTelegramSuccess = (user: TelegramUser) => {
-		console.log('✅ Telegram авторизация завершена:', user)
-		// Здесь можно добавить дополнительную логику
 	}
 
 	return (
@@ -82,7 +75,6 @@ export default function AuthForms({ variant }: AuthFormsProps) {
 			<TelegramAuthModal
 				isOpen={isTelegramModalOpen}
 				onClose={() => setIsTelegramModalOpen(false)}
-				onAuthSuccess={handleTelegramSuccess}
 			/>
 		</>
 	)
