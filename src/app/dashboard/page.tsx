@@ -17,10 +17,15 @@ async function getUsers(): Promise<DbUser[]> {
 		method: 'GET',
 		cache: 'no-store',
 	})
-	if (!res.ok) return []
+	if (!res.ok) {
+		console.log('error', await res.json())
+		return []
+	}
 	try {
+		console.log('success', await res.json())
 		return (await res.json()) as DbUser[]
 	} catch {
+		console.log('error', await res.json())
 		return []
 	}
 }
