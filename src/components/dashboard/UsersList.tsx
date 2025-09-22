@@ -15,12 +15,14 @@ type DbUser = {
 export default function UsersList() {
 	const [users, setUsers] = useState<DbUser[] | null>(null)
 	const [error, setError] = useState<string | null>(null)
+	const API_BASE_URL =
+		process.env.NEXT_PUBLIC_API_URL ?? 'http://localhost:4000'
 
 	useEffect(() => {
 		let isMounted = true
 		;(async () => {
 			try {
-				const res = await fetch('http://localhost:4000/users', {
+				const res = await fetch(`${API_BASE_URL}/users`, {
 					method: 'GET',
 					credentials: 'omit',
 					headers: {
@@ -39,7 +41,7 @@ export default function UsersList() {
 		return () => {
 			isMounted = false
 		}
-	}, [])
+	}, [API_BASE_URL])
 
 	if (error) {
 		return <div className='text-red-500 text-sm'>{error}</div>
