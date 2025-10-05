@@ -22,3 +22,8 @@ export interface TelegramUser {
 	auth_date: number
 	hash: string
 }
+
+export interface TelegramAuthProps {
+	setIsTelegramModalOpen: (isOpen: boolean) => void
+	className?: string
+}

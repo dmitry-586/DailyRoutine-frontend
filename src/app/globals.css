@@ -4,12 +4,16 @@
 	--background: #32373a;
 	--foreground: #ffffff;
 	--primary: #1cbecb;
+	--color-light-gray: #b3b3b3;
+	--color-gray: #3d4348;
 }
 
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-primary: var(--primary);
+	--color-light-gray: var(--color-light-gray);
+	--color-gray: var(--color-gray);
 	--font-sans: var(--font-reggae-one);
 	--font-mono: var(--font-inter);
 	--shadow-blue: 3px 5px 10px rgba(28, 190, 203, 0.25);
