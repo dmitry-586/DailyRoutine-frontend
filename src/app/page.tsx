@@ -6,6 +6,7 @@ import CTA from '@/components/lending/cta.lending'
 import Footer from '@/components/lending/footer.lending'
 import Header from '@/components/lending/Header.lending'
 import Steps from '@/components/lending/steps'
+import PWAInstallButton from '@/components/ui/PWAInstallButton'
 import LendingLayout from '@/layouts/Lending.layout'
 import { useState } from 'react'
 
@@ -27,6 +28,7 @@ export default function Home() {
 			<LendingLayout>
 				<Footer />
 			</LendingLayout>
+			<PWAInstallButton />
 		</>
 	)
 }

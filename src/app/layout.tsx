@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
 import './globals.css'
-import ServiceWorkerRegister from './sw-register'
 
 const reggaeOne = Reggae_One({
 	variable: '--font-reggae-one',
@@ -17,15 +16,35 @@ const inter = Inter({
 
 export const metadata: Metadata = {
 	title: 'Daily Routine',
-	description: 'Daily Routine',
-	manifest: '/manifest.webmanifest',
+	description: 'Daily Routine - управляйте своими ежедневными задачами',
+	manifest: '/pwa/manifest.json',
 	applicationName: 'Daily Routine',
+	appleWebApp: {
+		title: 'Daily Routine',
+		statusBarStyle: 'black-translucent',
+		capable: true,
+	},
 	icons: {
-		icon: [{ url: '/logo.svg', type: 'image/svg+xml' }],
+		icon: [
+			{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+			{ url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
+		],
+		apple: [
+			{ url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
+		],
+	},
+	other: {
+		'mobile-web-app-capable': 'yes',
+		'apple-mobile-web-app-capable': 'yes',
 	},
 }
 
 export const viewport: Viewport = {
+	width: 'device-width',
+	initialScale: 1,
+	maximumScale: 1,
+	userScalable: false,
+	viewportFit: 'cover',
 	themeColor: '#0ea5e9',
 }
 
@@ -37,7 +56,6 @@ export default function RootLayout({
 	return (
 		<html lang='ru'>
 			<body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
-				<ServiceWorkerRegister />
 				{children}
 			</body>
 		</html>
