@@ -5,7 +5,7 @@ import Logo from '../ui/Logo'
 export default function Header({ setIsTelegramModalOpen }: TelegramAuthProps) {
 	return (
 		<>
-			<header>
+			<header className='flex flex-col'>
 				<Logo title='Daily Routine' />
 				<section className='w-fit mt-5'>
 					<h2 className='text-xl'>Привычки, которые работают!</h2>
@@ -16,7 +16,7 @@ export default function Header({ setIsTelegramModalOpen }: TelegramAuthProps) {
 				</section>
 				<TelegramAuthButton
 					setIsTelegramModalOpen={setIsTelegramModalOpen}
-					className='mt-2'
+					className='mt-3 mx-auto'
 				/>
 			</header>
 		</>

@@ -1,4 +1,5 @@
 import { LogoProps } from '@/types/header/logo.interface'
+import { cn } from '@/utils/cn'
 import Image from 'next/image'
 
 export default function Logo({
@@ -8,7 +9,7 @@ export default function Logo({
 	titleClassName,
 }: LogoProps) {
 	return (
-		<div className={`flex items-center gap-2 ${className}`}>
+		<div className={cn('flex items-center gap-2', className)}>
 			<Image
 				src='/logo.svg'
 				alt='Daily Routine'
@@ -16,7 +17,7 @@ export default function Logo({
 				height={50}
 				className={imageClassName}
 			/>
-			<h1 className={`text-[22px] ${titleClassName}`}>{title}</h1>
+			<h1 className={cn('text-[22px]', titleClassName)}>{title}</h1>
 		</div>
 	)
 }
