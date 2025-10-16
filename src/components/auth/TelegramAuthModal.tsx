@@ -14,22 +14,46 @@ interface TelegramAuthModalProps {
 	onClose: () => void
 }
 
+// Глобальная функция для Telegram callback
+declare global {
+	interface Window {
+		onTelegramAuth?: (user: TelegramUser) => void
+	}
+}
+
 export default function TelegramAuthModal({
 	isOpen,
 	onClose,
 }: TelegramAuthModalProps) {
 	const telegramContainerRef = useRef<HTMLDivElement>(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const [error, setError] = useState<string | null>(null)
 	const router = useRouter()
+	const scriptLoadedRef = useRef(false)
 
 	// Функция для обработки авторизации через Telegram
 	const onTelegramAuth = useCallback(
 		async (user: TelegramUser) => {
+			console.log('Telegram auth callback received:', user)
 			setIsLoading(true)
+			setError(null)
 			try {
-				await postTelegramAuth(user)
+				const response = await postTelegramAuth(user)
+
+				if (!response.ok) {
+					throw new Error('Ошибка авторизации на сервере')
+				}
+
+				console.log('Auth successful, redirecting to dashboard')
 				onClose()
 				router.push('/dashboard')
+			} catch (err) {
+				console.error('Telegram auth error:', err)
+				setError(
+					err instanceof Error
+						? err.message
+						: 'Произошла ошибка при авторизации'
+				)
 			} finally {
 				setIsLoading(false)
 			}
@@ -41,12 +65,20 @@ export default function TelegramAuthModal({
 	useEffect(() => {
 		if (!isOpen) return
 
+		console.log('TelegramAuthModal opened, initializing widget...')
 		setIsLoading(true)
-		;(
-			window as Window & { onTelegramAuth?: typeof onTelegramAuth }
-		).onTelegramAuth = onTelegramAuth
+		setError(null)
 
-		// Загружаем скрипт Telegram виджета
+		// Регистрируем глобальную функцию callback
+		window.onTelegramAuth = onTelegramAuth
+
+		// Очищаем контейнер перед добавлением нового скрипта
+		const container = telegramContainerRef.current
+		if (container) {
+			container.innerHTML = ''
+		}
+
+		// Создаём скрипт Telegram виджета
 		const script = document.createElement('script')
 		script.src = 'https://telegram.org/js/telegram-widget.js?22'
 		script.async = true
@@ -57,30 +89,36 @@ export default function TelegramAuthModal({
 
 		// Обработчики событий скрипта
 		script.onload = () => {
-			setIsLoading(false)
-		}
-		script.onerror = () => {
+			console.log('Telegram widget script loaded successfully')
+			scriptLoadedRef.current = true
 			setIsLoading(false)
 		}
 
-		// Сохраняем ссылку на контейнер
-		const container = telegramContainerRef.current
+		script.onerror = e => {
+			console.error('Failed to load Telegram widget script:', e)
+			setError(
+				'Не удалось загрузить виджет Telegram. Проверьте интернет-соединение.'
+			)
+			setIsLoading(false)
+		}
 
-		// Добавляем скрипт в контейнер через ref
+		// Добавляем скрипт в контейнер
 		if (container) {
 			container.appendChild(script)
 		}
 
 		// Очистка при размонтировании
 		return () => {
-			if (container && container.contains(script)) {
-				container.removeChild(script)
+			console.log('Cleaning up Telegram widget...')
+			if (container) {
+				container.innerHTML = ''
 			}
-			delete (window as Window & { onTelegramAuth?: typeof onTelegramAuth })
-				.onTelegramAuth
+			delete window.onTelegramAuth
+			scriptLoadedRef.current = false
 			setIsLoading(false)
+			setError(null)
 		}
-	}, [isOpen, onClose, onTelegramAuth])
+	}, [isOpen, onTelegramAuth])
 
 	return (
 		<Modal
@@ -104,11 +142,19 @@ export default function TelegramAuthModal({
 				и&nbsp;безопасный способ авторизации.
 			</p>
 
+			{error && (
+				<div className='mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg'>
+					<p className='text-red-600 dark:text-red-400 text-sm text-center'>
+						{error}
+					</p>
+				</div>
+			)}
+
 			<div className='mb-6'>
 				{isLoading ? (
 					<div className='flex items-center justify-center py-8'>
 						<Loader2 className='animate-spin h-8 w-8 text-primary' />
-						<span className='ml-3 text-foreground/60'>Загрузка...</span>
+						<span className='ml-3 text-foreground/60'>Загрузка виджета...</span>
 					</div>
 				) : (
 					<div

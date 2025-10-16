@@ -1,6 +1,7 @@
 'use client'
 
 import TelegramAuthModal from '@/components/auth/TelegramAuthModal'
+import TelegramDebugInfo from '@/components/auth/TelegramDebugInfo'
 import Benefits from '@/components/lending/benefits'
 import CTA from '@/components/lending/cta.lending'
 import Header from '@/components/lending/Header.lending'
@@ -11,6 +12,7 @@ import { useState } from 'react'
 
 export default function Home() {
 	const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
+	const isDevelopment = process.env.NODE_ENV === 'development'
 
 	return (
 		<>
@@ -25,6 +27,7 @@ export default function Home() {
 				onClose={() => setIsTelegramModalOpen(false)}
 			/>
 			<PWAInstallButton />
+			{isDevelopment && <TelegramDebugInfo />}
 		</>
 	)
 }
