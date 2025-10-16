@@ -66,6 +66,12 @@ export default function TelegramAuthModal({
 		if (!isOpen) return
 
 		console.log('TelegramAuthModal opened, initializing widget...')
+		console.log('Current domain:', window.location.hostname)
+		console.log('Current URL:', window.location.href)
+		console.log(
+			'⚠️ ВАЖНО: Домен в BotFather должен быть:',
+			window.location.hostname
+		)
 		setIsLoading(true)
 		setError(null)
 
@@ -137,10 +143,21 @@ export default function TelegramAuthModal({
 				/>
 			</div>
 
-			<p className='text-foreground/80 mt-3 mb-6 text-center'>
+			<p className='text-foreground/80 mt-3 mb-4 text-center'>
 				Нажмите кнопку ниже, чтобы войти через Telegram. Это быстрый
 				и&nbsp;безопасный способ авторизации.
 			</p>
+
+			<div className='mb-4 p-3 bg-amber-500/10 border border-amber-500/30 rounded-lg'>
+				<p className='text-xs text-amber-800 dark:text-amber-300 font-medium mb-1'>
+					⚠️ Важно!
+				</p>
+				<p className='text-xs text-amber-700 dark:text-amber-400'>
+					После ввода номера телефона подтверждение придёт{' '}
+					<strong>в приложении Telegram</strong> (не SMS!). Откройте Telegram на
+					телефоне и подтвердите доступ.
+				</p>
+			</div>
 
 			{error && (
 				<div className='mb-4 p-4 bg-red-500/10 border border-red-500/20 rounded-lg'>
