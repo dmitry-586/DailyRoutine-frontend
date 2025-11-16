@@ -4,19 +4,20 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbopack",
+		"dev:tunnel": "next dev --turbopack -p 3000",
 		"build": "next build --turbopack",
 		"start": "next start",
-		"lint": "eslint"
+		"lint": "eslint",
+		"ngrok": "ngrok http 3000"
 	},
 	"dependencies": {
-		"@types/crypto-js": "^4.2.2",
+		"@tanstack/react-query": "^5.90.5",
+		"axios": "^1.13.2",
 		"clsx": "^2.1.1",
-		"crypto-js": "^4.2.0",
 		"lucide-react": "^0.544.0",
 		"next": "15.5.2",
 		"react": "19.1.0",
 		"react-dom": "19.1.0",
-		"react-hook-form": "^7.62.0",
 		"tailwind-merge": "^3.3.1"
 	},
 	"devDependencies": {

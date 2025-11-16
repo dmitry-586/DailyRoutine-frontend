@@ -1,3 +1,4 @@
+import TanstackClientProvider from '@/providers/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
 import './globals.css'
@@ -56,7 +57,7 @@ export default function RootLayout({
 	return (
 		<html lang='ru'>
 			<body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
-				{children}
+				<TanstackClientProvider>{children}</TanstackClientProvider>
 			</body>
 		</html>
 	)

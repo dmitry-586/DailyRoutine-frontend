@@ -1,8 +1,8 @@
 'use client'
 
+import Button from '@/components/ui/Button'
 import { Download } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import Button from './Button'
 
 interface BeforeInstallPromptEvent extends Event {
 	readonly platforms: string[]
@@ -19,7 +19,6 @@ export default function PWAInstallButton() {
 	const [showInstallButton, setShowInstallButton] = useState(false)
 
 	useEffect(() => {
-		// Регистрируем Service Worker
 		if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
 			navigator.serviceWorker.register('/pwa/sw.js').catch(error => {
 				console.warn('Service Worker не удалось зарегистрировать:', error)
@@ -40,7 +39,6 @@ export default function PWAInstallButton() {
 		window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
 		window.addEventListener('appinstalled', handleAppInstalled)
 
-		// Проверяем, не установлено ли уже приложение
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			setShowInstallButton(false)
 		}

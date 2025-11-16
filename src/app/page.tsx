@@ -1,12 +1,12 @@
 'use client'
 
-import TelegramAuthModal from '@/components/auth/TelegramAuthModal'
-import Benefits from '@/components/lending/benefits'
-import CTA from '@/components/lending/cta.lending'
-import Header from '@/components/lending/Header.lending'
-import Steps from '@/components/lending/steps'
+import TelegramAuthModal from '@/components/features/auth/TelegramAuthModal'
+import Benefits from '@/components/features/landing/Benefits'
+import CTA from '@/components/features/landing/CTA'
+import Header from '@/components/features/landing/Header'
+import LandingLayout from '@/components/features/landing/LandingLayout'
+import Steps from '@/components/features/landing/Steps'
 import PWAInstallButton from '@/components/ui/PWAInstallButton'
-import LendingLayout from '@/layouts/Lending.layout'
 import { useState } from 'react'
 
 export default function Home() {
@@ -14,11 +14,11 @@ export default function Home() {
 
 	return (
 		<>
-			<LendingLayout>
+			<LandingLayout>
 				<Header setIsTelegramModalOpen={setIsTelegramModalOpen} />
 				<Steps />
 				<Benefits />
-			</LendingLayout>
+			</LandingLayout>
 			<CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
 			<TelegramAuthModal
 				isOpen={isTelegramModalOpen}

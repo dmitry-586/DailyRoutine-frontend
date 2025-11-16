@@ -1,5 +1,5 @@
-import { ModalProps } from '@/types/ui/modal.interface'
-import { cn } from '@/utils/cn'
+import { cn } from '@/lib/utils/cn'
+import { IModalProps } from '@/types/ui.types'
 import { X } from 'lucide-react'
 
 export default function Modal({
@@ -8,7 +8,7 @@ export default function Modal({
 	title,
 	children,
 	className,
-}: ModalProps) {
+}: IModalProps) {
 	if (!isOpen) return null
 
 	return (
@@ -17,7 +17,6 @@ export default function Modal({
 				className='absolute inset-0 bg-black/50 backdrop-blur-sm'
 				onClick={onClose}
 			/>
-
 			<div
 				className={cn(
 					'relative bg-background border-2 border-primary rounded-[20px]',
@@ -31,12 +30,10 @@ export default function Modal({
 					<button
 						onClick={onClose}
 						className='text-foreground/60 hover:text-foreground transition-colors duration-200 cursor-pointer'
-						aria-label='Закрыть'
 					>
 						<X size={24} />
 					</button>
 				</div>
-
 				<div className='p-6'>{children}</div>
 			</div>
 		</div>
