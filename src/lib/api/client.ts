@@ -4,15 +4,19 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios'
+import { ApiError, handleApiError } from './errors'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
+const ensureApiBaseUrl = (): string => {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL?.trim()
 
-if (!API_BASE_URL) {
-  throw new Error('API URL не задан (NEXT_PUBLIC_API_URL)')
+  if (!baseUrl) {
+    throw new ApiError('API URL не задан (NEXT_PUBLIC_API_URL)', 500)
+  }
+
+  return baseUrl
 }
 
 export const apiClient: AxiosInstance = axios.create({
-  baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -22,6 +26,8 @@ export const apiClient: AxiosInstance = axios.create({
 
 apiClient.interceptors.request.use(
   (config: InternalAxiosRequestConfig) => {
+    config.baseURL = config.baseURL ?? ensureApiBaseUrl()
+
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('access_token')
       if (token && config.headers) {
@@ -48,7 +54,8 @@ apiClient.interceptors.response.use(
       try {
         const refreshToken = localStorage.getItem('refresh_token')
         if (refreshToken && typeof window !== 'undefined') {
-          const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
+          const baseUrl = ensureApiBaseUrl()
+          const response = await axios.post(`${baseUrl}/auth/refresh`, {
             refresh_token: refreshToken,
           })
 
@@ -78,35 +85,6 @@ apiClient.interceptors.response.use(
     return Promise.reject(error)
   },
 )
-
-export class ApiError extends Error {
-  status: number
-  payload?: unknown
-
-  constructor(message: string, status: number, payload?: unknown) {
-    super(message)
-    this.name = 'ApiError'
-    this.status = status
-    this.payload = payload
-  }
-}
-
-function handleApiError(error: unknown): ApiError {
-  if (axios.isAxiosError(error)) {
-    const status = error.response?.status ?? 500
-    const message =
-      error.response?.data?.message || error.message || `HTTP ${status}`
-    const payload = error.response?.data
-
-    return new ApiError(message, status, payload)
-  }
-
-  if (error instanceof Error) {
-    return new ApiError(error.message, 500)
-  }
-
-  return new ApiError('Неизвестная ошибка', 500)
-}
 
 export async function apiFetch<TResponse = unknown>(
   path: string,

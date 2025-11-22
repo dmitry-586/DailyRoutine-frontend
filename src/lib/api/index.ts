@@ -1,3 +1,4 @@
 export { postTelegramAuth } from './auth'
-export { apiClient, ApiError, apiFetch } from './client'
+export { apiClient, apiFetch } from './client'
+export { ApiError } from './errors'
 export { authKeys, routineKeys } from './keys'
