@@ -1,5 +1,9 @@
 import type { AxiosRequestConfig } from 'axios'
-import axios, { AxiosError, AxiosInstance, InternalAxiosRequestConfig } from 'axios'
+import axios, {
+	AxiosError,
+	AxiosInstance,
+	InternalAxiosRequestConfig,
+} from 'axios'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
@@ -44,10 +48,9 @@ apiClient.interceptors.response.use(
 			try {
 				const refreshToken = localStorage.getItem('refresh_token')
 				if (refreshToken && typeof window !== 'undefined') {
-					const response = await axios.post(
-						`${API_BASE_URL}/auth/refresh`,
-						{ refresh_token: refreshToken }
-					)
+					const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
+						refresh_token: refreshToken,
+					})
 
 					const { access_token, refresh_token } = response.data
 
@@ -92,9 +95,7 @@ function handleApiError(error: unknown): ApiError {
 	if (axios.isAxiosError(error)) {
 		const status = error.response?.status ?? 500
 		const message =
-			error.response?.data?.message ||
-			error.message ||
-			`HTTP ${status}`
+			error.response?.data?.message || error.message || `HTTP ${status}`
 		const payload = error.response?.data
 
 		return new ApiError(message, status, payload)
