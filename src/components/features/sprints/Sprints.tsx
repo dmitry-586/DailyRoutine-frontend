@@ -118,108 +118,106 @@ export function Sprints() {
     ) / currentTasks.length
 
   return (
-    <div className="min-h-screen bg-[#2D3134] p-4 sm:p-6">
-      <div className="mx-auto max-w-7xl">
+    <div className='bg-background min-h-screen p-4 sm:p-6'>
+      <div className='mx-auto max-w-7xl'>
         {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <h1 className="mb-2 text-white">Спринты</h1>
-          <p className="text-[#B3B3B3]">
+        <div className='mb-6 sm:mb-8'>
+          <h1 className='mb-2 text-white'>Спринты</h1>
+          <p className='text-light-gray'>
             Выполняйте задания и получайте награды
           </p>
         </div>
 
         {/* Sprint Progress */}
-        <div className="mb-8 grid grid-cols-1 gap-4 md:grid-cols-3">
-          <Card className="border border-[#1CBECB]/20 bg-gradient-to-br from-[#3D4348] to-[#32373A] p-6 transition-all duration-200 hover:border-[#1CBECB]/40 hover:shadow-lg hover:shadow-[#1CBECB]/10">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="rounded-xl bg-[#1CBECB]/20 p-3 shadow-lg shadow-[#1CBECB]/10">
-                <Target className="h-6 w-6 text-[#1CBECB]" />
+        <div className='mb-8 grid grid-cols-1 gap-4 md:grid-cols-3'>
+          <Card className='border-primary/20 hover:border-primary/40 hover:shadow-primary/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+            <div className='mb-3 flex items-center gap-3'>
+              <div className='bg-primary/20 shadow-primary/10 rounded-xl p-3 shadow-lg'>
+                <Target className='text-primary h-6 w-6' />
               </div>
-              <span className="text-sm font-medium text-[#B3B3B3]">
+              <span className='text-light-gray text-sm font-medium'>
                 Активные задания
               </span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <p className="text-4xl font-bold text-white">
+            <div className='flex items-baseline gap-2'>
+              <p className='text-4xl font-bold text-white'>
                 {selectedTasks.length}
               </p>
-              <span className="text-lg text-[#B3B3B3]">/ 5</span>
+              <span className='text-light-gray text-lg'>/ 5</span>
             </div>
             {selectedTasks.length >= 5 && (
-              <p className="mt-2 text-xs text-[#4CAF50]">
-                ✓ Максимум достигнут
-              </p>
+              <p className='text-green mt-2 text-xs'>✓ Максимум достигнут</p>
             )}
           </Card>
 
-          <Card className="border border-[#4CAF50]/20 bg-gradient-to-br from-[#3D4348] to-[#32373A] p-6 transition-all duration-200 hover:border-[#4CAF50]/40 hover:shadow-lg hover:shadow-[#4CAF50]/10">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="rounded-xl bg-[#4CAF50]/20 p-3 shadow-lg shadow-[#4CAF50]/10">
-                <Trophy className="h-6 w-6 text-[#4CAF50]" />
+          <Card className='border-green/20 hover:border-green/40 hover:shadow-green/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+            <div className='mb-3 flex items-center gap-3'>
+              <div className='bg-green/20 shadow-green/10 rounded-xl p-3 shadow-lg'>
+                <Trophy className='text-green h-6 w-6' />
               </div>
-              <span className="text-sm font-medium text-[#B3B3B3]">
+              <span className='text-light-gray text-sm font-medium'>
                 Выполнено
               </span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <p className="text-4xl font-bold text-white">{completedTasks}</p>
-              <span className="text-lg text-[#B3B3B3]">
+            <div className='flex items-baseline gap-2'>
+              <p className='text-4xl font-bold text-white'>{completedTasks}</p>
+              <span className='text-light-gray text-lg'>
                 / {selectedTasks.length}
               </span>
             </div>
             {completedTasks > 0 && (
-              <p className="mt-2 text-xs text-[#4CAF50]">
+              <p className='text-green mt-2 text-xs'>
                 {Math.round((completedTasks / selectedTasks.length) * 100)}%
                 выполнено
               </p>
             )}
           </Card>
 
-          <Card className="border border-[#FF9800]/20 bg-gradient-to-br from-[#3D4348] to-[#32373A] p-6 transition-all duration-200 hover:border-[#FF9800]/40 hover:shadow-lg hover:shadow-[#FF9800]/10">
-            <div className="mb-3 flex items-center gap-3">
-              <div className="rounded-xl bg-[#FF9800]/20 p-3 shadow-lg shadow-[#FF9800]/10">
-                <Award className="h-6 w-6 text-[#FF9800]" />
+          <Card className='border-orange/20 hover:border-orange/40 hover:shadow-orange/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+            <div className='mb-3 flex items-center gap-3'>
+              <div className='bg-orange/20 shadow-orange/10 rounded-xl p-3 shadow-lg'>
+                <Award className='text-orange h-6 w-6' />
               </div>
-              <span className="text-sm font-medium text-[#B3B3B3]">
+              <span className='text-light-gray text-sm font-medium'>
                 Общий прогресс
               </span>
             </div>
-            <div className="flex items-baseline gap-2">
-              <p className="text-4xl font-bold text-white">
+            <div className='flex items-baseline gap-2'>
+              <p className='text-4xl font-bold text-white'>
                 {Math.round(totalProgress)}
               </p>
-              <span className="text-lg text-[#B3B3B3]">%</span>
+              <span className='text-light-gray text-lg'>%</span>
             </div>
-            <div className="mt-3">
-              <Progress value={totalProgress} className="h-2" />
+            <div className='mt-3'>
+              <Progress value={totalProgress} className='h-2' />
             </div>
           </Card>
         </div>
 
-        <Tabs defaultValue="active" className="mb-8">
-          <TabsList className="mb-6 bg-[#3D4348]">
+        <Tabs defaultValue='active' className='mb-8'>
+          <TabsList className='bg-gray mb-6'>
             <TabsTrigger
-              value="active"
-              className="transition-all duration-200 hover:bg-[#1CBECB]/20 data-[state=active]:bg-[#1CBECB] data-[state=active]:hover:bg-[#1CBECB]"
+              value='active'
+              className='hover:bg-primary/20 data-[state=active]:bg-primary data-[state=active]:hover:bg-primary transition-all duration-200'
             >
               Текущие ({selectedTasks.length})
             </TabsTrigger>
             <TabsTrigger
-              value="available"
-              className="transition-all duration-200 hover:bg-[#1CBECB]/20 data-[state=active]:bg-[#1CBECB] data-[state=active]:hover:bg-[#1CBECB]"
+              value='available'
+              className='hover:bg-primary/20 data-[state=active]:bg-primary data-[state=active]:hover:bg-primary transition-all duration-200'
             >
               Доступные ({availableTasks.length - selectedTasks.length})
             </TabsTrigger>
             <TabsTrigger
-              value="leaderboard"
-              className="transition-all duration-200 hover:bg-[#1CBECB]/20 data-[state=active]:bg-[#1CBECB] data-[state=active]:hover:bg-[#1CBECB]"
+              value='leaderboard'
+              className='hover:bg-primary/20 data-[state=active]:bg-primary data-[state=active]:hover:bg-primary transition-all duration-200'
             >
               Таблица лидеров
             </TabsTrigger>
           </TabsList>
 
-          <TabsContent value="active">
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          <TabsContent value='active'>
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
               {currentTasks.map((task) => {
                 const progress = (task.progress / task.total) * 100
                 const isCompleted = task.progress >= task.total
@@ -227,53 +225,53 @@ export function Sprints() {
                 return (
                   <Card
                     key={task.id}
-                    className={`border bg-gradient-to-br from-[#3D4348] to-[#32373A] p-6 transition-all duration-200 hover:scale-[1.02] ${
+                    className={`from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:scale-[1.02] ${
                       isCompleted
-                        ? 'border-[#4CAF50]/40 shadow-lg shadow-[#4CAF50]/10 hover:shadow-xl hover:shadow-[#4CAF50]/20'
-                        : 'border-[#B3B3B3]/10 hover:border-[#1CBECB]/30 hover:shadow-lg hover:shadow-[#1CBECB]/10'
+                        ? 'border-green/40 shadow-green/10 hover:shadow-green/20 shadow-lg hover:shadow-xl'
+                        : 'border-light-gray/10 hover:border-primary/30 hover:shadow-primary/10 hover:shadow-lg'
                     }`}
                   >
-                    <div className="mb-4 flex items-start justify-between">
-                      <div className="flex-1">
-                        <h3 className="mb-2 font-semibold text-white">
+                    <div className='mb-4 flex items-start justify-between'>
+                      <div className='flex-1'>
+                        <h3 className='mb-2 font-semibold text-white'>
                           {task.title}
                         </h3>
-                        <div className="flex items-center gap-2 text-sm text-[#B3B3B3]">
-                          <Clock className="h-4 w-4" />
+                        <div className='text-light-gray flex items-center gap-2 text-sm'>
+                          <Clock className='h-4 w-4' />
                           <span>
                             {task.progress} / {task.total}
                           </span>
                         </div>
                       </div>
-                      <div className="flex items-center gap-1 rounded-full border border-[#1CBECB]/30 bg-[#1CBECB]/20 px-3 py-1.5">
-                        <Award className="h-4 w-4 text-[#1CBECB]" />
-                        <span className="font-semibold text-[#1CBECB]">
+                      <div className='border-primary/30 bg-primary/20 flex items-center gap-1 rounded-full border px-3 py-1.5'>
+                        <Award className='text-primary h-4 w-4' />
+                        <span className='text-primary font-semibold'>
                           {task.reward}
                         </span>
                       </div>
                     </div>
 
-                    <div className="mb-4">
-                      <div className="mb-1 flex items-center justify-between text-xs text-[#B3B3B3]">
+                    <div className='mb-4'>
+                      <div className='text-light-gray mb-1 flex items-center justify-between text-xs'>
                         <span>Прогресс</span>
                         <span>{Math.round(progress)}%</span>
                       </div>
                       <Progress
                         value={progress}
-                        className="h-2.5"
+                        className='h-2.5'
                         indicatorClassName={
-                          isCompleted ? 'bg-[#4CAF50]' : 'bg-[#1CBECB]'
+                          isCompleted ? 'bg-green' : 'bg-primary'
                         }
                       />
                     </div>
 
                     {isCompleted ? (
-                      <Button className="w-full bg-gradient-to-r from-[#4CAF50] to-[#45a049] shadow-lg transition-all duration-200 hover:scale-105 hover:from-[#45a049] hover:to-[#4CAF50] hover:shadow-xl hover:shadow-[#4CAF50]/30">
-                        <Trophy className="mr-2 h-4 w-4" />
+                      <Button className='hover:shadow-green/30 from-green to-green-dark w-full bg-gradient-to-r shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl'>
+                        <Trophy className='mr-2 h-4 w-4' />
                         Получить награду
                       </Button>
                     ) : (
-                      <div className="py-2 text-center text-sm text-[#B3B3B3]">
+                      <div className='text-light-gray py-2 text-center text-sm'>
                         Осталось: {task.total - task.progress}
                       </div>
                     )}
@@ -283,34 +281,36 @@ export function Sprints() {
             </div>
           </TabsContent>
 
-          <TabsContent value="available">
+          <TabsContent value='available'>
             {availableTasks.filter((task) => !selectedTasks.includes(task.id))
               .length === 0 ? (
-              <div className="py-12 text-center">
-                <p className="text-[#B3B3B3]">Все задания добавлены в спринт</p>
+              <div className='py-12 text-center'>
+                <p className='text-light-gray'>
+                  Все задания добавлены в спринт
+                </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
                 {availableTasks
                   .filter((task) => !selectedTasks.includes(task.id))
                   .map((task) => (
                     <Card
                       key={task.id}
-                      className="border border-[#B3B3B3]/10 bg-gradient-to-br from-[#3D4348] to-[#32373A] p-6 transition-all duration-200 hover:scale-[1.02] hover:border-[#1CBECB]/30 hover:shadow-lg hover:shadow-[#1CBECB]/10"
+                      className='border-light-gray/10 hover:border-primary/30 hover:shadow-primary/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:scale-[1.02] hover:shadow-lg'
                     >
-                      <div className="mb-4 flex items-start justify-between">
-                        <div className="flex-1">
-                          <h3 className="mb-2 font-semibold text-white">
+                      <div className='mb-4 flex items-start justify-between'>
+                        <div className='flex-1'>
+                          <h3 className='mb-2 font-semibold text-white'>
                             {task.title}
                           </h3>
-                          <div className="flex items-center gap-2 text-sm text-[#B3B3B3]">
-                            <Target className="h-4 w-4" />
+                          <div className='text-light-gray flex items-center gap-2 text-sm'>
+                            <Target className='h-4 w-4' />
                             <span>Цель: {task.total}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-1 rounded-full border border-[#1CBECB]/30 bg-[#1CBECB]/20 px-3 py-1.5">
-                          <Award className="h-4 w-4 text-[#1CBECB]" />
-                          <span className="font-semibold text-[#1CBECB]">
+                        <div className='border-primary/30 bg-primary/20 flex items-center gap-1 rounded-full border px-3 py-1.5'>
+                          <Award className='text-primary h-4 w-4' />
+                          <span className='text-primary font-semibold'>
                             {task.reward}
                           </span>
                         </div>
@@ -319,7 +319,7 @@ export function Sprints() {
                       <Button
                         onClick={() => toggleTask(task.id)}
                         disabled={selectedTasks.length >= 5}
-                        className="w-full bg-[#1CBECB] transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20 disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+                        className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 w-full transition-all duration-200 hover:scale-105 hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100'
                       >
                         {selectedTasks.length >= 5
                           ? 'Достигнут лимит (5/5)'
@@ -331,51 +331,51 @@ export function Sprints() {
             )}
           </TabsContent>
 
-          <TabsContent value="leaderboard">
-            <Card className="border-none bg-[#3D4348]">
-              <div className="divide-y divide-[#B3B3B3]/10">
+          <TabsContent value='leaderboard'>
+            <Card className='bg-gray border-none'>
+              <div className='divide-light-gray/10 divide-y'>
                 {leaderboard.map((entry) => (
                   <div
                     key={entry.rank}
                     className={`flex items-center justify-between p-4 ${
-                      entry.isUser ? 'bg-[#1CBECB]/10' : ''
+                      entry.isUser ? 'bg-primary/10' : ''
                     }`}
                   >
-                    <div className="flex items-center gap-4">
+                    <div className='flex items-center gap-4'>
                       <div
                         className={`flex h-10 w-10 items-center justify-center rounded-full ${
                           entry.rank === 1
-                            ? 'bg-[#FFD700]/20 text-[#FFD700]'
+                            ? 'bg-gold/20 text-gold'
                             : entry.rank === 2
-                              ? 'bg-[#C0C0C0]/20 text-[#C0C0C0]'
+                              ? 'bg-silver/20 text-silver'
                               : entry.rank === 3
-                                ? 'bg-[#CD7F32]/20 text-[#CD7F32]'
-                                : 'bg-[#3D4348] text-[#B3B3B3]'
+                                ? 'bg-bronze/20 text-bronze'
+                                : 'bg-gray text-light-gray'
                         }`}
                       >
                         {entry.rank <= 3 ? (
-                          <Trophy className="h-5 w-5" />
+                          <Trophy className='h-5 w-5' />
                         ) : (
                           entry.rank
                         )}
                       </div>
-                      <div className="text-2xl">{entry.avatar}</div>
+                      <div className='text-2xl'>{entry.avatar}</div>
                       <div>
                         <p
                           className={`${
-                            entry.isUser ? 'text-[#1CBECB]' : 'text-white'
+                            entry.isUser ? 'text-primary' : 'text-white'
                           }`}
                         >
                           {entry.name}
                         </p>
-                        <p className="text-sm text-[#B3B3B3]">
+                        <p className='text-light-gray text-sm'>
                           Ранг #{entry.rank}
                         </p>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <p className="text-white">{entry.points}</p>
-                      <p className="text-sm text-[#B3B3B3]">очков</p>
+                    <div className='text-right'>
+                      <p className='text-white'>{entry.points}</p>
+                      <p className='text-light-gray text-sm'>очков</p>
                     </div>
                   </div>
                 ))}

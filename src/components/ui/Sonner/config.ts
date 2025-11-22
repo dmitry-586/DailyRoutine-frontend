@@ -3,8 +3,8 @@ export const sonnerConfig = {
   className: 'toaster group',
   toastOptions: {
     style: {
-      background: '#3D4348',
-      color: '#FFFFFF',
+      background: 'var(--gray)',
+      color: 'var(--foreground)',
       border: '1px solid rgba(179, 179, 179, 0.1)',
     },
   },

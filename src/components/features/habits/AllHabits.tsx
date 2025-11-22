@@ -62,20 +62,20 @@ export function AllHabits({
   })
 
   return (
-    <div className='min-h-screen bg-[#2D3134] p-4 sm:p-6'>
+    <div className='bg-background min-h-screen p-4 sm:p-6'>
       <div className='mx-auto max-w-7xl'>
         {/* Header */}
         <div className='mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center'>
           <div>
             <h1 className='mb-2 text-white'>Все привычки</h1>
-            <p className='text-[#B3B3B3]'>Управляйте своими привычками</p>
+            <p className='text-light-gray'>Управляйте своими привычками</p>
           </div>
           <Button
             onClick={() => {
               setEditingHabit(null)
               setIsModalOpen(true)
             }}
-            className='bg-[#1CBECB] transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20'
+            className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
           >
             <Plus className='mr-2 h-4 w-4' />
             Новая привычка
@@ -85,16 +85,16 @@ export function AllHabits({
         {/* Filters */}
         <div className='mb-6'>
           <Tabs value={filter} onValueChange={(value: any) => setFilter(value)}>
-            <TabsList className='bg-[#3D4348]'>
+            <TabsList className='bg-gray'>
               <TabsTrigger
                 value='all'
-                className='transition-all duration-200 hover:bg-[#1CBECB]/20 data-[state=active]:bg-[#1CBECB] data-[state=active]:hover:bg-[#1CBECB]'
+                className='hover:bg-primary/20 data-[state=active]:bg-primary data-[state=active]:hover:bg-primary transition-all duration-200'
               >
                 Все ({habits.filter((h) => h.isActive !== false).length})
               </TabsTrigger>
               <TabsTrigger
                 value='good'
-                className='transition-all duration-200 hover:bg-[#4CAF50]/20 data-[state=active]:bg-[#4CAF50] data-[state=active]:hover:bg-[#4CAF50]'
+                className='hover:bg-green/20 data-[state=active]:bg-green data-[state=active]:hover:bg-green transition-all duration-200'
               >
                 Полезные (
                 {
@@ -106,7 +106,7 @@ export function AllHabits({
               </TabsTrigger>
               <TabsTrigger
                 value='bad'
-                className='transition-all duration-200 hover:bg-[#F44336]/20 data-[state=active]:bg-[#F44336] data-[state=active]:hover:bg-[#F44336]'
+                className='hover:bg-red/20 data-[state=active]:bg-red data-[state=active]:hover:bg-red transition-all duration-200'
               >
                 Вредные (
                 {
@@ -117,7 +117,7 @@ export function AllHabits({
               </TabsTrigger>
               <TabsTrigger
                 value='inactive'
-                className='transition-all duration-200 hover:bg-[#B3B3B3]/20 data-[state=active]:bg-[#B3B3B3] data-[state=active]:hover:bg-[#B3B3B3]'
+                className='hover:bg-light-gray/20 data-[state=active]:bg-light-gray data-[state=active]:hover:bg-light-gray transition-all duration-200'
               >
                 Неактивные ({habits.filter((h) => h.isActive === false).length})
               </TabsTrigger>
@@ -141,8 +141,8 @@ export function AllHabits({
             ))}
           </div>
         ) : (
-          <div className='rounded-xl border border-[#B3B3B3]/10 bg-[#3D4348] p-12 text-center'>
-            <p className='mb-4 text-[#B3B3B3]'>
+          <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
+            <p className='text-light-gray mb-4'>
               {filter === 'all'
                 ? 'У вас пока нет привычек'
                 : filter === 'inactive'
@@ -154,7 +154,7 @@ export function AllHabits({
                 setEditingHabit(null)
                 setIsModalOpen(true)
               }}
-              className='bg-[#1CBECB] transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20'
+              className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
             >
               <Plus className='mr-2 h-4 w-4' />
               Создать привычку

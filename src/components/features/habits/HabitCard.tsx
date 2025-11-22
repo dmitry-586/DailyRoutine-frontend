@@ -132,35 +132,35 @@ export function HabitCard({
   }
 
   const getIcon = () => {
-    if (format === 'time') return <Clock className="h-4 w-4" />
-    if (format === 'count') return <Target className="h-4 w-4" />
+    if (format === 'time') return <Clock className='h-4 w-4' />
+    if (format === 'count') return <Target className='h-4 w-4' />
     return null
   }
 
   return (
     <>
       <div
-        className={`relative cursor-pointer rounded-lg border bg-[#3D4348] p-4 transition-all duration-200 ${
+        className={`bg-gray relative cursor-pointer rounded-lg border p-4 transition-all duration-200 ${
           !isActive
-            ? 'border-[#B3B3B3]/20 opacity-50 hover:border-[#B3B3B3]/30'
+            ? 'border-light-gray/20 hover:border-light-gray/30 opacity-50'
             : isCompleted && type === 'good'
-              ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50 hover:shadow-lg hover:shadow-[#4CAF50]/10'
+              ? 'border-green/30 hover:border-green/50 hover:shadow-green/10 hover:shadow-lg'
               : isCompleted && type === 'bad'
-                ? 'border-[#4CAF50]/30 hover:border-[#4CAF50]/50 hover:shadow-lg hover:shadow-[#4CAF50]/10'
-                : 'border-[#B3B3B3]/10 hover:border-[#1CBECB]/30 hover:bg-[#3D4348]/95 hover:shadow-lg hover:shadow-[#1CBECB]/10'
+                ? 'border-green/30 hover:border-green/50 hover:shadow-green/10 hover:shadow-lg'
+                : 'border-light-gray/10 hover:border-primary/30 hover:bg-gray/95 hover:shadow-primary/10 hover:shadow-lg'
         }`}
         onClick={onClick}
       >
         {/* Header */}
-        <div className="mb-3 flex items-start justify-between">
-          <div className="min-w-0 flex-1">
-            <div className="mb-1 flex items-center gap-2">
-              <h3 className="truncate text-base font-medium text-white">
+        <div className='mb-3 flex items-start justify-between'>
+          <div className='min-w-0 flex-1'>
+            <div className='mb-1 flex items-center gap-2'>
+              <h3 className='truncate text-base font-medium text-white'>
                 {title}
               </h3>
             </div>
             {format !== 'binary' && (
-              <div className="flex items-center gap-2 text-xs text-[#B3B3B3]">
+              <div className='text-light-gray flex items-center gap-2 text-xs'>
                 {getIcon()}
                 <span>
                   {current} / {target} {unit}
@@ -168,15 +168,15 @@ export function HabitCard({
               </div>
             )}
           </div>
-          <div className="ml-2 flex flex-shrink-0 items-center gap-1 rounded border border-[#FF9800]/20 bg-[#FF9800]/10 px-2 py-1">
+          <div className='border-orange/20 bg-orange/10 ml-2 flex flex-shrink-0 items-center gap-1 rounded border px-2 py-1'>
             <Flame
               className={`h-3.5 w-3.5 ${
-                streak > 0 ? 'text-[#FF9800]' : 'text-[#B3B3B3]'
+                streak > 0 ? 'text-orange' : 'text-light-gray'
               }`}
             />
             <span
               className={`text-xs font-medium ${
-                streak > 0 ? 'text-[#FF9800]' : 'text-[#B3B3B3]'
+                streak > 0 ? 'text-orange' : 'text-light-gray'
               }`}
             >
               {streak}
@@ -186,27 +186,27 @@ export function HabitCard({
 
         {/* Progress Bar - только для полезных привычек с count/time */}
         {type === 'good' && format !== 'binary' && (
-          <div className="mb-3">
+          <div className='mb-3'>
             <Progress
               value={progress}
-              className="h-2"
-              indicatorClassName="bg-[#4CAF50]"
+              className='h-2'
+              indicatorClassName='bg-green'
             />
           </div>
         )}
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-2">
+        <div className='flex items-center gap-2'>
           {type === 'good' ? (
             <Button
               onClick={handleComplete}
               className={`h-9 flex-1 text-sm transition-all duration-200 ${
                 isCompleted
-                  ? 'bg-[#4CAF50] hover:bg-[#4CAF50]/90 hover:shadow-md hover:shadow-[#4CAF50]/20'
-                  : 'bg-[#1CBECB] hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20'
+                  ? 'bg-green hover:bg-green/90 hover:shadow-green/20 hover:shadow-md'
+                  : 'bg-primary hover:bg-primary/90 hover:shadow-primary/20 hover:shadow-md'
               }`}
             >
-              <Check className="mr-1.5 h-4 w-4" />
+              <Check className='mr-1.5 h-4 w-4' />
               {isCompleted ? 'Выполнено' : 'Отметить'}
             </Button>
           ) : (
@@ -214,22 +214,22 @@ export function HabitCard({
               onClick={handleRelapse}
               className={`h-9 flex-1 text-sm transition-all duration-200 ${
                 !isCompleted
-                  ? 'bg-[#F44336] hover:bg-[#F44336]/90 hover:shadow-md hover:shadow-[#F44336]/20'
-                  : 'border border-[#B3B3B3]/20 bg-[#2D3134] hover:border-[#B3B3B3]/30 hover:bg-[#3D4348]'
+                  ? 'bg-red hover:bg-red/90 hover:shadow-red/20 hover:shadow-md'
+                  : 'border-light-gray/20 bg-background hover:border-light-gray/30 hover:bg-gray border'
               }`}
             >
-              <X className="mr-1.5 h-4 w-4" />
+              <X className='mr-1.5 h-4 w-4' />
               Сорвался
             </Button>
           )}
           {/* Action buttons - всегда видимы */}
           {(onEdit || onDelete || onToggleActive) && (
-            <div className="flex flex-shrink-0 gap-1">
+            <div className='flex flex-shrink-0 gap-1'>
               {onToggleActive && (
                 <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-9 w-9 bg-[#B3B3B3]/20 transition-all duration-200 hover:scale-105 hover:bg-[#B3B3B3]/40"
+                  size='icon'
+                  variant='ghost'
+                  className='bg-light-gray/20 hover:bg-light-gray/40 h-9 w-9 transition-all duration-200 hover:scale-105'
                   onClick={(e) => {
                     e.stopPropagation()
                     onToggleActive({
@@ -247,30 +247,30 @@ export function HabitCard({
                   }}
                 >
                   {isActive ? (
-                    <Archive className="h-4 w-4 text-[#B3B3B3]" />
+                    <Archive className='text-light-gray h-4 w-4' />
                   ) : (
-                    <ArchiveRestore className="h-4 w-4 text-[#1CBECB]" />
+                    <ArchiveRestore className='text-primary h-4 w-4' />
                   )}
                 </Button>
               )}
               {onEdit && (
                 <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-9 w-9 bg-[#1CBECB]/20 transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/40"
+                  size='icon'
+                  variant='ghost'
+                  className='bg-primary/20 hover:bg-primary/40 h-9 w-9 transition-all duration-200 hover:scale-105'
                   onClick={handleEdit}
                 >
-                  <Pencil className="h-4 w-4 text-[#1CBECB]" />
+                  <Pencil className='text-primary h-4 w-4' />
                 </Button>
               )}
               {onDelete && (
                 <Button
-                  size="icon"
-                  variant="ghost"
-                  className="h-9 w-9 bg-[#F44336]/20 transition-all duration-200 hover:scale-105 hover:bg-[#F44336]/40"
+                  size='icon'
+                  variant='ghost'
+                  className='bg-red/20 hover:bg-red/40 h-9 w-9 transition-all duration-200 hover:scale-105'
                   onClick={handleDeleteClick}
                 >
-                  <Trash2 className="h-4 w-4 text-[#F44336]" />
+                  <Trash2 className='text-red h-4 w-4' />
                 </Button>
               )}
             </div>
@@ -280,21 +280,21 @@ export function HabitCard({
 
       {/* Delete Confirmation Dialog */}
       <AlertDialog open={showDeleteDialog} onOpenChange={setShowDeleteDialog}>
-        <AlertDialogContent className="border-[#B3B3B3]/20 bg-[#3D4348] text-white">
+        <AlertDialogContent className='border-light-gray/20 bg-gray text-white'>
           <AlertDialogHeader>
             <AlertDialogTitle>Удалить привычку?</AlertDialogTitle>
-            <AlertDialogDescription className="text-[#B3B3B3]">
+            <AlertDialogDescription className='text-light-gray'>
               Вы уверены, что хотите удалить привычку "{title}"? Это действие
               нельзя отменить.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-[#B3B3B3]/20">
+            <AlertDialogCancel className='border-light-gray/20'>
               Отмена
             </AlertDialogCancel>
             <AlertDialogAction
               onClick={handleDeleteConfirm}
-              className="bg-[#F44336] hover:bg-[#F44336]/90"
+              className='bg-red hover:bg-red/90'
             >
               Удалить
             </AlertDialogAction>

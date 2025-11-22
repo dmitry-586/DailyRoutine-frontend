@@ -61,17 +61,17 @@ const getIntensityColor = (
 ): string => {
   if (!completed) {
     // Для незавершенных дней - темно-серый цвет с видимой границей
-    return 'bg-[#21262d] border border-[#30363d]'
+    return 'bg-muted border border-muted/50'
   }
 
   // Для binary привычек только два состояния - выполнено или нет
   // Используем яркие контрастные цвета, которые хорошо видны на темном фоне
   if (habitType === 'good') {
     // Яркий зеленый для выполненных полезных привычек (более яркий чем GitHub)
-    return 'bg-[#3fb950] border border-[#3fb950]'
+    return 'bg-green border border-green'
   } else {
     // Яркий оранжево-красный для дней без срыва (вредные привычки)
-    return 'bg-[#ff6b6b] border border-[#ff6b6b]'
+    return 'bg-red border border-red'
   }
 }
 
@@ -173,27 +173,27 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
     totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0
 
   return (
-    <div className="space-y-4">
+    <div className='space-y-4'>
       {/* Period Selector */}
-      <div className="flex flex-wrap items-center justify-between gap-4">
-        <h3 className="text-lg font-semibold text-white">Активность</h3>
+      <div className='flex flex-wrap items-center justify-between gap-4'>
+        <h3 className='text-lg font-semibold text-white'>Активность</h3>
         <Tabs value={period} onValueChange={(value: any) => setPeriod(value)}>
-          <TabsList className="border border-[#30363d] bg-[#161b22]">
+          <TabsList className='border-muted/50 bg-background border'>
             <TabsTrigger
-              value="week"
-              className="px-3 py-1.5 text-xs text-[#8b949e] data-[state=active]:bg-[#1CBECB] data-[state=active]:text-white"
+              value='week'
+              className='text-light-gray data-[state=active]:bg-primary px-3 py-1.5 text-xs data-[state=active]:text-white'
             >
               Неделя
             </TabsTrigger>
             <TabsTrigger
-              value="month"
-              className="px-3 py-1.5 text-xs text-[#8b949e] data-[state=active]:bg-[#1CBECB] data-[state=active]:text-white"
+              value='month'
+              className='text-light-gray data-[state=active]:bg-primary px-3 py-1.5 text-xs data-[state=active]:text-white'
             >
               Месяц
             </TabsTrigger>
             <TabsTrigger
-              value="year"
-              className="px-3 py-1.5 text-xs text-[#8b949e] data-[state=active]:bg-[#1CBECB] data-[state=active]:text-white"
+              value='year'
+              className='text-light-gray data-[state=active]:bg-primary px-3 py-1.5 text-xs data-[state=active]:text-white'
             >
               Год
             </TabsTrigger>
@@ -202,31 +202,29 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
       </div>
 
       {/* Stats Summary */}
-      <div className="mb-4 flex flex-wrap items-center gap-6 text-sm">
-        <div className="flex items-center gap-2">
-          <span className="text-[#8b949e]">
+      <div className='mb-4 flex flex-wrap items-center gap-6 text-sm'>
+        <div className='flex items-center gap-2'>
+          <span className='text-light-gray'>
             Выполнено:{' '}
-            <span className="font-semibold text-white">{completedDays}</span> из{' '}
-            <span className="font-semibold text-white">{totalDays}</span> дней
+            <span className='font-semibold text-white'>{completedDays}</span> из{' '}
+            <span className='font-semibold text-white'>{totalDays}</span> дней
           </span>
         </div>
-        <div className="flex items-center gap-2">
-          <span className="text-[#8b949e]">Успешность:</span>
-          <span className="font-semibold text-[#1CBECB]">
-            {completionRate}%
-          </span>
+        <div className='flex items-center gap-2'>
+          <span className='text-light-gray'>Успешность:</span>
+          <span className='text-primary font-semibold'>{completionRate}%</span>
         </div>
       </div>
 
       {/* Activity Grid */}
-      <div className="overflow-x-auto pb-4">
-        <div className="relative flex items-start gap-1">
+      <div className='overflow-x-auto pb-4'>
+        <div className='relative flex items-start gap-1'>
           {/* Day labels */}
-          <div className="mr-2 flex flex-col gap-1 pt-6">
+          <div className='mr-2 flex flex-col gap-1 pt-6'>
             {['Пн', '', 'Ср', '', 'Пт', '', ''].map((day, index) => (
               <div
                 key={index}
-                className="text-xs font-medium text-[#8b949e]"
+                className='text-light-gray text-xs font-medium'
                 style={{ height: `${cellSize + cellGap}px` }}
               >
                 {day}
@@ -235,9 +233,9 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
           </div>
 
           {/* Weeks */}
-          <div className="relative flex gap-1">
+          <div className='relative flex gap-1'>
             {weeks.map((week, weekIndex) => (
-              <div key={weekIndex} className="flex flex-col gap-1">
+              <div key={weekIndex} className='flex flex-col gap-1'>
                 {week.map((day, dayIndex) => {
                   const isFuture = day.date > new Date()
                   const isHovered =
@@ -256,9 +254,9 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
                             )}`
                       } ${
                         isHovered && !isFuture
-                          ? 'z-10 scale-110 ring-2 ring-[#58a6ff]'
+                          ? 'ring-primary z-10 scale-110 ring-2'
                           : !isFuture
-                            ? 'hover:ring-1 hover:ring-[#58a6ff]/50'
+                            ? 'hover:ring-primary/50 hover:ring-1'
                             : ''
                       }`}
                       style={{
@@ -291,26 +289,26 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
       </div>
 
       {/* Legend and Tooltip */}
-      <div className="flex items-center justify-between pt-2 text-sm text-[#8b949e]">
-        <div className="flex items-center gap-4">
-          <span className="text-xs">Меньше</span>
-          <div className="flex items-center gap-2">
+      <div className='text-light-gray flex items-center justify-between pt-2 text-sm'>
+        <div className='flex items-center gap-4'>
+          <span className='text-xs'>Меньше</span>
+          <div className='flex items-center gap-2'>
             <div
               className={`rounded-sm ${getIntensityColor(false, habitType)}`}
               style={{ width: '12px', height: '12px' }}
             />
-            <span className="text-xs">Не выполнено</span>
+            <span className='text-xs'>Не выполнено</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className='flex items-center gap-2'>
             <div
               className={`rounded-sm ${getIntensityColor(true, habitType)}`}
               style={{ width: '12px', height: '12px' }}
             />
-            <span className="text-xs">
+            <span className='text-xs'>
               {habitType === 'good' ? 'Выполнено' : 'День без срыва'}
             </span>
           </div>
-          <span className="text-xs">Больше</span>
+          <span className='text-xs'>Больше</span>
         </div>
 
         {hoveredDate &&
@@ -320,7 +318,7 @@ export function ActivityGrid({ habitType, onDateClick }: ActivityGridProps) {
             )
             const isCompleted = hoveredDay?.completed || false
             return (
-              <div className="rounded border border-[#30363d] bg-[#161b22] px-3 py-1.5 text-xs text-white">
+              <div className='border-muted/50 bg-background rounded border px-3 py-1.5 text-xs text-white'>
                 <strong>{formatDate(hoveredDate)}</strong>
                 {': '}
                 {habitType === 'good'

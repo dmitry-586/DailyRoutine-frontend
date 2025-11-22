@@ -59,86 +59,86 @@ export function Settings() {
   }
 
   return (
-    <div className="min-h-screen bg-[#2D3134] p-4 sm:p-6">
-      <div className="mx-auto max-w-4xl">
+    <div className='bg-background min-h-screen p-4 sm:p-6'>
+      <div className='mx-auto max-w-4xl'>
         {/* Header */}
-        <div className="mb-6 sm:mb-8">
-          <div className="mb-2 flex items-center gap-3">
-            <SettingsIcon className="h-8 w-8 text-[#1CBECB]" />
-            <h1 className="text-white">Настройки</h1>
+        <div className='mb-6 sm:mb-8'>
+          <div className='mb-2 flex items-center gap-3'>
+            <SettingsIcon className='text-primary h-8 w-8' />
+            <h1 className='text-white'>Настройки</h1>
           </div>
-          <p className="text-[#B3B3B3]">
+          <p className='text-light-gray'>
             Управляйте своим профилем и уведомлениями
           </p>
         </div>
 
         {/* Profile Settings */}
-        <Card className="mb-6 border-none bg-[#3D4348] p-6">
-          <div className="mb-6 flex items-center gap-3">
-            <div className="rounded-lg bg-[#1CBECB]/10 p-2">
-              <User className="h-5 w-5 text-[#1CBECB]" />
+        <Card className='bg-gray mb-6 border-none p-6'>
+          <div className='mb-6 flex items-center gap-3'>
+            <div className='bg-primary/10 rounded-lg p-2'>
+              <User className='text-primary h-5 w-5' />
             </div>
-            <h3 className="text-white">Профиль</h3>
+            <h3 className='text-white'>Профиль</h3>
           </div>
 
-          <div className="space-y-6">
+          <div className='space-y-6'>
             {/* Avatar */}
-            <div className="flex items-center gap-4">
-              <div className="group relative cursor-pointer">
-                <div className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 border-[#B3B3B3]/20 bg-[#2D3134] transition-all duration-200 group-hover:border-[#1CBECB]/30">
+            <div className='flex items-center gap-4'>
+              <div className='group relative cursor-pointer'>
+                <div className='border-light-gray/20 bg-background group-hover:border-primary/30 flex h-20 w-20 items-center justify-center overflow-hidden rounded-full border-2 transition-all duration-200'>
                   {avatar ? (
                     <img
                       src={avatar}
-                      alt="Avatar"
-                      className="h-full w-full object-cover"
+                      alt='Avatar'
+                      className='h-full w-full object-cover'
                     />
                   ) : (
-                    <User className="h-10 w-10 text-[#B3B3B3] transition-colors duration-200 group-hover:text-[#1CBECB]" />
+                    <User className='text-light-gray group-hover:text-primary h-10 w-10 transition-colors duration-200' />
                   )}
                 </div>
                 <Button
-                  size="icon"
-                  variant="ghost"
+                  size='icon'
+                  variant='ghost'
                   onClick={handleAvatarClick}
-                  className="absolute right-0 bottom-0 h-7 w-7 rounded-full border-2 border-[#3D4348] bg-[#1CBECB] transition-all duration-200 hover:scale-110 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/30"
+                  className='border-gray bg-primary hover:bg-primary/90 hover:shadow-primary/30 absolute right-0 bottom-0 h-7 w-7 rounded-full border-2 transition-all duration-200 hover:scale-110 hover:shadow-md'
                 >
-                  <Camera className="h-4 w-4 text-white" />
+                  <Camera className='h-4 w-4 text-white' />
                 </Button>
                 <input
                   ref={fileInputRef}
-                  type="file"
-                  accept="image/*"
+                  type='file'
+                  accept='image/*'
                   onChange={handleAvatarChange}
-                  className="hidden"
+                  className='hidden'
                 />
               </div>
               <div>
-                <p className="mb-1 text-sm font-medium text-white">
+                <p className='mb-1 text-sm font-medium text-white'>
                   Фото профиля
                 </p>
-                <p className="text-xs text-[#B3B3B3]">
+                <p className='text-light-gray text-xs'>
                   JPG, PNG или GIF. Максимум 5 МБ
                 </p>
               </div>
             </div>
 
-            <div className="space-y-4">
-              <div className="space-y-2">
-                <Label className="text-[#B3B3B3]">Имя пользователя</Label>
+            <div className='space-y-4'>
+              <div className='space-y-2'>
+                <Label className='text-light-gray'>Имя пользователя</Label>
                 <Input
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="border-[#B3B3B3]/20 bg-[#2D3134] text-white"
+                  className='border-light-gray/20 bg-background text-white'
                 />
               </div>
 
-              <div className="space-y-2">
-                <Label className="text-[#B3B3B3]">Email</Label>
+              <div className='space-y-2'>
+                <Label className='text-light-gray'>Email</Label>
                 <Input
-                  type="email"
+                  type='email'
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="border-[#B3B3B3]/20 bg-[#2D3134] text-white"
+                  className='border-light-gray/20 bg-background text-white'
                 />
               </div>
             </div>
@@ -146,21 +146,21 @@ export function Settings() {
         </Card>
 
         {/* Notification Settings */}
-        <Card className="mb-6 border-none bg-[#3D4348] p-6">
-          <div className="mb-6 flex items-center gap-3">
-            <div className="rounded-lg bg-[#1CBECB]/10 p-2">
-              <Bell className="h-5 w-5 text-[#1CBECB]" />
+        <Card className='bg-gray mb-6 border-none p-6'>
+          <div className='mb-6 flex items-center gap-3'>
+            <div className='bg-primary/10 rounded-lg p-2'>
+              <Bell className='text-primary h-5 w-5' />
             </div>
-            <h3 className="text-white">Уведомления</h3>
+            <h3 className='text-white'>Уведомления</h3>
           </div>
 
-          <div className="space-y-4">
-            <div className="group flex items-center justify-between border-b border-[#B3B3B3]/10 py-3 transition-colors duration-200 hover:border-[#B3B3B3]/20">
-              <div className="flex-1">
-                <p className="text-white transition-colors duration-200 group-hover:text-white">
+          <div className='space-y-4'>
+            <div className='group border-light-gray/10 hover:border-light-gray/20 flex items-center justify-between border-b py-3 transition-colors duration-200'>
+              <div className='flex-1'>
+                <p className='text-white transition-colors duration-200 group-hover:text-white'>
                   Напоминания о привычках
                 </p>
-                <p className="text-sm text-[#B3B3B3] transition-colors duration-200 group-hover:text-[#B3B3B3]/80">
+                <p className='text-light-gray group-hover:text-light-gray/80 text-sm transition-colors duration-200'>
                   Ежедневные напоминания выполнить привычки
                 </p>
               </div>
@@ -171,23 +171,23 @@ export function Settings() {
             </div>
 
             {notifyHabits && (
-              <div className="space-y-2 pl-4">
-                <Label className="text-[#B3B3B3]">Время напоминания</Label>
+              <div className='space-y-2 pl-4'>
+                <Label className='text-light-gray'>Время напоминания</Label>
                 <Input
-                  type="time"
+                  type='time'
                   value={notifyTime}
                   onChange={(e) => setNotifyTime(e.target.value)}
-                  className="w-40 border-[#B3B3B3]/20 bg-[#2D3134] text-white"
+                  className='border-light-gray/20 bg-background w-40 text-white'
                 />
               </div>
             )}
 
-            <div className="group flex items-center justify-between border-b border-[#B3B3B3]/10 py-3 transition-colors duration-200 hover:border-[#B3B3B3]/20">
-              <div className="flex-1">
-                <p className="text-white transition-colors duration-200 group-hover:text-white">
+            <div className='group border-light-gray/10 hover:border-light-gray/20 flex items-center justify-between border-b py-3 transition-colors duration-200'>
+              <div className='flex-1'>
+                <p className='text-white transition-colors duration-200 group-hover:text-white'>
                   Уведомления о сериях
                 </p>
-                <p className="text-sm text-[#B3B3B3] transition-colors duration-200 group-hover:text-[#B3B3B3]/80">
+                <p className='text-light-gray group-hover:text-light-gray/80 text-sm transition-colors duration-200'>
                   Получать уведомления о достижениях серий
                 </p>
               </div>
@@ -197,12 +197,12 @@ export function Settings() {
               />
             </div>
 
-            <div className="group flex items-center justify-between border-b border-[#B3B3B3]/10 py-3 transition-colors duration-200 hover:border-[#B3B3B3]/20">
-              <div className="flex-1">
-                <p className="text-white transition-colors duration-200 group-hover:text-white">
+            <div className='group border-light-gray/10 hover:border-light-gray/20 flex items-center justify-between border-b py-3 transition-colors duration-200'>
+              <div className='flex-1'>
+                <p className='text-white transition-colors duration-200 group-hover:text-white'>
                   Уведомления о наградах
                 </p>
-                <p className="text-sm text-[#B3B3B3] transition-colors duration-200 group-hover:text-[#B3B3B3]/80">
+                <p className='text-light-gray group-hover:text-light-gray/80 text-sm transition-colors duration-200'>
                   Получать уведомления о заработанных дейликах
                 </p>
               </div>
@@ -212,12 +212,12 @@ export function Settings() {
               />
             </div>
 
-            <div className="group flex items-center justify-between py-3">
-              <div className="flex-1">
-                <p className="text-white transition-colors duration-200 group-hover:text-white">
+            <div className='group flex items-center justify-between py-3'>
+              <div className='flex-1'>
+                <p className='text-white transition-colors duration-200 group-hover:text-white'>
                   Ежедневная сводка
                 </p>
-                <p className="text-sm text-[#B3B3B3] transition-colors duration-200 group-hover:text-[#B3B3B3]/80">
+                <p className='text-light-gray group-hover:text-light-gray/80 text-sm transition-colors duration-200'>
                   Сводка за день вечером
                 </p>
               </div>
@@ -227,12 +227,12 @@ export function Settings() {
         </Card>
 
         {/* Save Button */}
-        <div className="flex justify-end">
+        <div className='flex justify-end'>
           <Button
             onClick={handleSave}
-            className="bg-[#1CBECB] px-8 transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20"
+            className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 px-8 transition-all duration-200 hover:scale-105 hover:shadow-md'
           >
-            <Save className="mr-2 h-4 w-4" />
+            <Save className='mr-2 h-4 w-4' />
             Сохранить изменения
           </Button>
         </div>

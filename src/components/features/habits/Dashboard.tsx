@@ -49,19 +49,19 @@ export function Dashboard({
   }
 
   return (
-    <div className="min-h-screen bg-[#2D3134] p-6">
-      <div className="mx-auto max-w-7xl">
+    <div className='bg-background min-h-screen p-6'>
+      <div className='mx-auto max-w-7xl'>
         {/* Week Calendar */}
-        <div className="mb-6 overflow-x-auto">
+        <div className='mb-6 overflow-x-auto'>
           <WeekCalendar currentDay={3} />
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
+        <div className='grid grid-cols-1 gap-6 lg:grid-cols-3'>
           {/* Habits Section */}
-          <div className="space-y-4 lg:col-span-2">
-            <div className="mb-4 flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-white">
+          <div className='space-y-4 lg:col-span-2'>
+            <div className='mb-4 flex items-center justify-between'>
+              <h2 className='text-xl font-semibold text-white'>
                 Привычки на сегодня
               </h2>
               <Button
@@ -69,14 +69,14 @@ export function Dashboard({
                   setEditingHabit(null)
                   setIsModalOpen(true)
                 }}
-                className="h-9 bg-[#1CBECB] px-4 transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20"
+                className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 h-9 px-4 transition-all duration-200 hover:scale-105 hover:shadow-md'
               >
-                <Plus className="mr-2 h-4 w-4" />
+                <Plus className='mr-2 h-4 w-4' />
                 Добавить
               </Button>
             </div>
 
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+            <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
               {habits
                 .filter((h) => h.isActive !== false)
                 .map((habit) => (
@@ -92,16 +92,16 @@ export function Dashboard({
             </div>
 
             {habits.filter((h) => h.isActive !== false).length === 0 && (
-              <div className="rounded-xl border border-[#B3B3B3]/10 bg-[#3D4348] p-12 text-center">
-                <p className="mb-4 text-[#B3B3B3]">У вас пока нет привычек</p>
+              <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
+                <p className='text-light-gray mb-4'>У вас пока нет привычек</p>
                 <Button
                   onClick={() => {
                     setEditingHabit(null)
                     setIsModalOpen(true)
                   }}
-                  className="bg-[#1CBECB] transition-all duration-200 hover:scale-105 hover:bg-[#1CBECB]/90 hover:shadow-md hover:shadow-[#1CBECB]/20"
+                  className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
                 >
-                  <Plus className="mr-2 h-4 w-4" />
+                  <Plus className='mr-2 h-4 w-4' />
                   Создать первую привычку
                 </Button>
               </div>
@@ -109,8 +109,8 @@ export function Dashboard({
           </div>
 
           {/* Stats Panel */}
-          <div className="lg:col-span-1">
-            <h3 className="mb-4 text-lg font-semibold text-white">
+          <div className='lg:col-span-1'>
+            <h3 className='mb-4 text-lg font-semibold text-white'>
               Статистика
             </h3>
             <StatsPanel
@@ -120,12 +120,12 @@ export function Dashboard({
               dailyCoins={340}
             />
 
-            <div className="mt-6 rounded-xl border border-[#B3B3B3]/10 bg-[#3D4348] p-6 text-center">
-              <p className="mb-4 text-sm text-[#B3B3B3]">
+            <div className='border-light-gray/10 bg-gray mt-6 rounded-xl border p-6 text-center'>
+              <p className='text-light-gray mb-4 text-sm'>
                 Продолжайте в том же духе!
               </p>
-              <div className="mb-2 text-4xl">🎯</div>
-              <p className="font-semibold text-white">
+              <div className='mb-2 text-4xl'>🎯</div>
+              <p className='font-semibold text-white'>
                 {completedToday} из{' '}
                 {habits.filter((h) => h.isActive !== false).length} привычек
                 выполнено

@@ -139,28 +139,28 @@ export function HabitDetails({ habit, onBack }: HabitDetailsProps) {
   const stats = useMemo(() => calculateStats(habit), [habit])
 
   return (
-    <div className="min-h-screen bg-[#2D3134] p-4 sm:p-6">
-      <div className="mx-auto max-w-4xl">
+    <div className='bg-background min-h-screen p-4 sm:p-6'>
+      <div className='mx-auto max-w-4xl'>
         {/* Header */}
         <Button
-          variant="ghost"
+          variant='ghost'
           onClick={onBack}
-          className="mb-6 text-[#B3B3B3] transition-all duration-200 hover:bg-[#3D4348] hover:text-white"
+          className='text-light-gray hover:bg-gray mb-6 transition-all duration-200 hover:text-white'
         >
-          <ArrowLeft className="mr-2 h-4 w-4" />
+          <ArrowLeft className='mr-2 h-4 w-4' />
           Назад
         </Button>
 
-        <div className="mb-6 rounded-xl bg-[#3D4348] p-6">
-          <div className="mb-4 flex items-start justify-between">
+        <div className='bg-gray mb-6 rounded-xl p-6'>
+          <div className='mb-4 flex items-start justify-between'>
             <div>
-              <h1 className="mb-2 text-white">{habit.title}</h1>
-              <div className="flex items-center gap-4 text-sm text-[#B3B3B3]">
+              <h1 className='mb-2 text-white'>{habit.title}</h1>
+              <div className='text-light-gray flex items-center gap-4 text-sm'>
                 <span
                   className={`rounded-full px-3 py-1 ${
                     habit.type === 'good'
-                      ? 'bg-[#4CAF50]/20 text-[#4CAF50]'
-                      : 'bg-[#F44336]/20 text-[#F44336]'
+                      ? 'bg-green/20 text-green'
+                      : 'bg-red/20 text-red'
                   }`}
                 >
                   {habit.type === 'good' ? 'Полезная' : 'Вредная'}
@@ -177,43 +177,43 @@ export function HabitDetails({ habit, onBack }: HabitDetailsProps) {
           </div>
 
           {/* Stats Cards */}
-          <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-            <Card className="border-none bg-[#2D3134] p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <Flame className="h-4 w-4 text-[#FF9800]" />
-                <span className="text-sm text-[#B3B3B3]">Серия</span>
+          <div className='grid grid-cols-2 gap-4 md:grid-cols-4'>
+            <Card className='bg-background border-none p-4'>
+              <div className='mb-2 flex items-center gap-2'>
+                <Flame className='text-orange h-4 w-4' />
+                <span className='text-light-gray text-sm'>Серия</span>
               </div>
-              <p className="text-2xl text-white">{habit.streak}</p>
+              <p className='text-2xl text-white'>{habit.streak}</p>
             </Card>
 
-            <Card className="border-none bg-[#2D3134] p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <TrendingUp className="h-4 w-4 text-[#4CAF50]" />
-                <span className="text-sm text-[#B3B3B3]">Прогресс</span>
+            <Card className='bg-background border-none p-4'>
+              <div className='mb-2 flex items-center gap-2'>
+                <TrendingUp className='text-green h-4 w-4' />
+                <span className='text-light-gray text-sm'>Прогресс</span>
               </div>
-              <p className="text-2xl text-white">{stats.progress}%</p>
+              <p className='text-2xl text-white'>{stats.progress}%</p>
             </Card>
 
-            <Card className="border-none bg-[#2D3134] p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <Calendar className="h-4 w-4 text-[#1CBECB]" />
-                <span className="text-sm text-[#B3B3B3]">Всего дней</span>
+            <Card className='bg-background border-none p-4'>
+              <div className='mb-2 flex items-center gap-2'>
+                <Calendar className='text-primary h-4 w-4' />
+                <span className='text-light-gray text-sm'>Всего дней</span>
               </div>
-              <p className="text-2xl text-white">{stats.totalDays}</p>
+              <p className='text-2xl text-white'>{stats.totalDays}</p>
             </Card>
 
-            <Card className="border-none bg-[#2D3134] p-4">
-              <div className="mb-2 flex items-center gap-2">
-                <Target className="h-4 w-4 text-[#1CBECB]" />
-                <span className="text-sm text-[#B3B3B3]">Выполнено</span>
+            <Card className='bg-background border-none p-4'>
+              <div className='mb-2 flex items-center gap-2'>
+                <Target className='text-primary h-4 w-4' />
+                <span className='text-light-gray text-sm'>Выполнено</span>
               </div>
-              <p className="text-2xl text-white">{stats.completedDays}</p>
+              <p className='text-2xl text-white'>{stats.completedDays}</p>
             </Card>
           </div>
         </div>
 
         {/* Chart or Activity Grid */}
-        <div className="mb-6 rounded-xl bg-[#3D4348] p-6">
+        <div className='bg-gray mb-6 rounded-xl p-6'>
           {habit.format === 'binary' ? (
             <ActivityGrid
               habitType={habit.type}
@@ -224,33 +224,36 @@ export function HabitDetails({ habit, onBack }: HabitDetailsProps) {
             />
           ) : (
             <>
-              <h3 className="mb-4 text-white">График прогресса</h3>
+              <h3 className='mb-4 text-white'>График прогресса</h3>
               {chartData.length > 0 ? (
-                <ResponsiveContainer width="100%" height={250}>
+                <ResponsiveContainer width='100%' height={250}>
                   <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" stroke="#32373A" />
-                    <XAxis dataKey="day" stroke="#B3B3B3" />
-                    <YAxis stroke="#B3B3B3" domain={[0, 100]} />
+                    <CartesianGrid
+                      strokeDasharray='3 3'
+                      stroke='var(--muted)'
+                    />
+                    <XAxis dataKey='day' stroke='var(--light-gray)' />
+                    <YAxis stroke='var(--light-gray)' domain={[0, 100]} />
                     <Tooltip
                       contentStyle={{
-                        backgroundColor: '#3D4348',
+                        backgroundColor: 'var(--gray)',
                         border: 'none',
                         borderRadius: '8px',
-                        color: '#FFFFFF',
+                        color: 'var(--foreground)',
                       }}
                       formatter={(value: number) => [`${value}%`, 'Прогресс']}
                     />
                     <Line
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#1CBECB"
+                      type='monotone'
+                      dataKey='value'
+                      stroke='var(--primary)'
                       strokeWidth={2}
-                      dot={{ fill: '#1CBECB', r: 4 }}
+                      dot={{ fill: 'var(--primary)', r: 4 }}
                     />
                   </LineChart>
                 </ResponsiveContainer>
               ) : (
-                <div className="flex h-[250px] items-center justify-center text-[#B3B3B3]">
+                <div className='text-light-gray flex h-[250px] items-center justify-center'>
                   <p>
                     Нет данных для отображения. Начните отслеживать привычку!
                   </p>
@@ -262,30 +265,26 @@ export function HabitDetails({ habit, onBack }: HabitDetailsProps) {
 
         {/* History - только для не-binary привычек */}
         {habit.format !== 'binary' && (
-          <div className="rounded-xl bg-[#3D4348] p-6">
-            <h3 className="mb-4 text-white">История выполнений</h3>
+          <div className='bg-gray rounded-xl p-6'>
+            <h3 className='mb-4 text-white'>История выполнений</h3>
             {history.length > 0 ? (
-              <div className="space-y-3">
+              <div className='space-y-3'>
                 {history.map((entry, index) => (
                   <div
                     key={index}
-                    className="flex items-center justify-between rounded-lg bg-[#2D3134] p-3"
+                    className='bg-background flex items-center justify-between rounded-lg p-3'
                   >
-                    <div className="flex items-center gap-3">
+                    <div className='flex items-center gap-3'>
                       <div
                         className={`h-3 w-3 rounded-full ${
-                          entry.status === 'completed'
-                            ? 'bg-[#4CAF50]'
-                            : 'bg-[#F44336]'
+                          entry.status === 'completed' ? 'bg-green' : 'bg-red'
                         }`}
                       />
-                      <span className="text-white">{entry.date}</span>
+                      <span className='text-white'>{entry.date}</span>
                     </div>
                     <span
                       className={
-                        entry.status === 'completed'
-                          ? 'text-[#4CAF50]'
-                          : 'text-[#F44336]'
+                        entry.status === 'completed' ? 'text-green' : 'text-red'
                       }
                     >
                       {entry.value}
@@ -294,7 +293,7 @@ export function HabitDetails({ habit, onBack }: HabitDetailsProps) {
                 ))}
               </div>
             ) : (
-              <div className="py-8 text-center text-[#B3B3B3]">
+              <div className='text-light-gray py-8 text-center'>
                 <p>История выполнений пока пуста</p>
               </div>
             )}
