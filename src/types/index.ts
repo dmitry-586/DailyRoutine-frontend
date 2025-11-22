@@ -1,7 +1,6 @@
 // Landing types
 export interface StepProps {
-	image: string
-	title: string
-	description: string
+  image: string
+  title: string
+  description: string
 }
-

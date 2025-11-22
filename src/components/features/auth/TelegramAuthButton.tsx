@@ -4,28 +4,28 @@ import { TelegramAuthProps } from '@/types/auth.types'
 import Image from 'next/image'
 
 export default function TelegramAuthButton({
-	setIsTelegramModalOpen,
-	className,
+  setIsTelegramModalOpen,
+  className,
 }: TelegramAuthProps) {
-	const handleTelegramClick = () => {
-		setIsTelegramModalOpen(true)
-	}
+  const handleTelegramClick = () => {
+    setIsTelegramModalOpen(true)
+  }
 
-	return (
-		<Button
-			type='button'
-			variant='primary'
-			onClick={handleTelegramClick}
-			className={cn('pl-[60px] pr-[30px] min-w-0 w-fit relative', className)}
-		>
-			<Image
-				src='/telegram.svg'
-				alt='telegram'
-				width={40}
-				height={40}
-				className='absolute left-[-1px] top-[-1px]'
-			/>
-			Начать в Telegram
-		</Button>
-	)
+  return (
+    <Button
+      type='button'
+      variant='primary'
+      onClick={handleTelegramClick}
+      className={cn('relative min-w-0 pr-[30px] pl-[60px]', className)}
+    >
+      <Image
+        src='/telegram.svg'
+        alt='telegram'
+        width={40}
+        height={40}
+        className='absolute top-[-1px] left-[-1px]'
+      />
+      Начать в Telegrams
+    </Button>
+  )
 }

@@ -9,106 +9,106 @@ import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
 
 interface TelegramAuthModalProps {
-	isOpen: boolean
-	onClose: () => void
+  isOpen: boolean
+  onClose: () => void
 }
 
 declare global {
-	interface Window {
-		onTelegramAuth?: (user: TelegramUser) => void
-	}
+  interface Window {
+    onTelegramAuth?: (user: TelegramUser) => void
+  }
 }
 
 export default function TelegramAuthModal({
-	isOpen,
-	onClose,
+  isOpen,
+  onClose,
 }: TelegramAuthModalProps) {
-	const telegramContainerRef = useRef<HTMLDivElement>(null)
-	const [isLoading, setIsLoading] = useState(false)
+  const telegramContainerRef = useRef<HTMLDivElement>(null)
+  const [isLoading, setIsLoading] = useState(false)
 
-	useEffect(() => {
-		if (!isOpen) return
+  useEffect(() => {
+    if (!isOpen) return
 
-		window.onTelegramAuth = async (user: TelegramUser) => {
-			await postTelegramAuth(user)
-			onClose()
-		}
+    window.onTelegramAuth = async (user: TelegramUser) => {
+      await postTelegramAuth(user)
+      onClose()
+    }
 
-		return () => {
-			delete window.onTelegramAuth
-		}
-	}, [isOpen, onClose])
+    return () => {
+      delete window.onTelegramAuth
+    }
+  }, [isOpen, onClose])
 
-	useEffect(() => {
-		if (!isOpen) return
+  useEffect(() => {
+    if (!isOpen) return
 
-		setIsLoading(true)
+    setIsLoading(true)
 
-		const script = document.createElement('script')
-		script.src = 'https://telegram.org/js/telegram-widget.js?22'
-		script.async = true
-		script.setAttribute('data-telegram-login', 'Da1lyRoutine_bot')
-		script.setAttribute('data-size', 'large')
-		script.setAttribute('data-onauth', 'onTelegramAuth(user)')
-		script.setAttribute('data-request-access', 'write')
+    const script = document.createElement('script')
+    script.src = 'https://telegram.org/js/telegram-widget.js?22'
+    script.async = true
+    script.setAttribute('data-telegram-login', 'Da1lyRoutine_bot')
+    script.setAttribute('data-size', 'large')
+    script.setAttribute('data-onauth', 'onTelegramAuth(user)')
+    script.setAttribute('data-request-access', 'write')
 
-		const handleScriptLoad = () => setIsLoading(false)
-		script.onload = handleScriptLoad
-		script.onerror = handleScriptLoad
+    const handleScriptLoad = () => setIsLoading(false)
+    script.onload = handleScriptLoad
+    script.onerror = handleScriptLoad
 
-		const container = telegramContainerRef.current
+    const container = telegramContainerRef.current
 
-		if (container) {
-			container.appendChild(script)
-		}
+    if (container) {
+      container.appendChild(script)
+    }
 
-		return () => {
-			if (container && container.contains(script)) {
-				container.removeChild(script)
-			}
-			setIsLoading(false)
-		}
-	}, [isOpen])
+    return () => {
+      if (container && container.contains(script)) {
+        container.removeChild(script)
+      }
+      setIsLoading(false)
+    }
+  }, [isOpen])
 
-	return (
-		<Modal
-			isOpen={isOpen}
-			onClose={onClose}
-			title='Вход через Telegram'
-			className='max-w-lg'
-		>
-			<div className='w-16 h-16 bg-primary/20 rounded-full flex items-center justify-center mx-auto'>
-				<Image
-					src='/telegram.svg'
-					alt='Telegram'
-					width={40}
-					height={40}
-					className='text-primary'
-				/>
-			</div>
+  return (
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      title="Вход через Telegram"
+      className="max-w-lg"
+    >
+      <div className="bg-primary/20 mx-auto flex h-16 w-16 items-center justify-center rounded-full">
+        <Image
+          src="/telegram.svg"
+          alt="Telegram"
+          width={40}
+          height={40}
+          className="text-primary"
+        />
+      </div>
 
-			<p className='text-foreground/80 mt-3 mb-6 text-center'>
-				Нажмите кнопку ниже, чтобы войти через Telegram. Это быстрый
-				и&nbsp;безопасный способ авторизации.
-			</p>
+      <p className="text-foreground/80 mt-3 mb-6 text-center">
+        Нажмите кнопку ниже, чтобы войти через Telegram. Это быстрый
+        и&nbsp;безопасный способ авторизации.
+      </p>
 
-			<div className='mb-6'>
-				{isLoading ? (
-					<div className='flex items-center justify-center py-8'>
-						<Loader2 className='animate-spin h-8 w-8 text-primary' />
-						<span className='ml-3 text-foreground/60'>Загрузка...</span>
-					</div>
-				) : (
-					<div
-						ref={telegramContainerRef}
-						className='min-h-[40px] bg-transparent flex items-center justify-center'
-					/>
-				)}
-			</div>
+      <div className="mb-6">
+        {isLoading ? (
+          <div className="flex items-center justify-center py-8">
+            <Loader2 className="text-primary h-8 w-8 animate-spin" />
+            <span className="text-foreground/60 ml-3">Загрузка...</span>
+          </div>
+        ) : (
+          <div
+            ref={telegramContainerRef}
+            className="flex min-h-[40px] items-center justify-center bg-transparent"
+          />
+        )}
+      </div>
 
-			<Button variant='primary' onClick={onClose} className='w-full'>
-				Отмена
-			</Button>
-		</Modal>
-	)
+      <Button variant="primary" onClick={onClose} className="w-full">
+        Отмена
+      </Button>
+    </Modal>
+  )
 }

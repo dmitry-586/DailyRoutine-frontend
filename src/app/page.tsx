@@ -10,21 +10,21 @@ import PWAInstallButton from '@/components/ui/PWAInstallButton'
 import { useState } from 'react'
 
 export default function Home() {
-	const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
+  const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
 
-	return (
-		<>
-			<LandingLayout>
-				<Header setIsTelegramModalOpen={setIsTelegramModalOpen} />
-				<Steps />
-				<Benefits />
-			</LandingLayout>
-			<CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
-			<TelegramAuthModal
-				isOpen={isTelegramModalOpen}
-				onClose={() => setIsTelegramModalOpen(false)}
-			/>
-			<PWAInstallButton />
-		</>
-	)
+  return (
+    <>
+      <LandingLayout>
+        <Header setIsTelegramModalOpen={setIsTelegramModalOpen} />
+        <Steps />
+        <Benefits />
+      </LandingLayout>
+      <CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
+      <TelegramAuthModal
+        isOpen={isTelegramModalOpen}
+        onClose={() => setIsTelegramModalOpen(false)}
+      />
+      <PWAInstallButton />
+    </>
+  )
 }

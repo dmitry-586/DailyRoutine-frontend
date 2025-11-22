@@ -1,8 +1,7 @@
 export default function LandingLayout({
-	children,
+  children,
 }: {
-	children: React.ReactNode
+  children: React.ReactNode
 }) {
-	return <main className='p-5 max-w-6xl mx-auto'>{children}</main>
+  return <main className="mx-auto max-w-6xl p-5">{children}</main>
 }
-
