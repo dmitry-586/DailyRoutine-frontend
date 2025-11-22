@@ -1,12 +1,12 @@
 'use client'
 
+import { Button } from '@/components/ui/Button'
+import Modal from '@/components/ui/Modal'
 import { postTelegramAuth } from '@/lib/api/auth'
 import type { TelegramUser } from '@/types/auth.types'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
-import Button from '@/components/ui/Button'
-import Modal from '@/components/ui/Modal'
 
 interface TelegramAuthModalProps {
 	isOpen: boolean
@@ -112,4 +112,3 @@ export default function TelegramAuthModal({
 		</Modal>
 	)
 }
-

@@ -1,6 +1,6 @@
 'use client'
 
-import { Dashboard } from '@/components/features/habits/Dashboard'
+import { AllHabits } from '@/components/features/habits/AllHabits'
 import type { Habit } from '@/components/features/habits/HabitModal'
 import {
 	addHistoryEntry,
@@ -83,7 +83,7 @@ const initialHabits: Habit[] = [
 	history: generateHistoryForHabit(habit),
 }))
 
-export default function DashboardPage() {
+export default function HabitsPage() {
 	const router = useRouter()
 	const [habits, setHabits] = useState<Habit[]>(() => {
 		// Загружаем из localStorage или используем начальные данные
@@ -138,7 +138,7 @@ export default function DashboardPage() {
 	}
 
 	return (
-		<Dashboard
+		<AllHabits
 			habits={habits}
 			onAddHabit={handleAddHabit}
 			onUpdateHabit={handleUpdateHabit}

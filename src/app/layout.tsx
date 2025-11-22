@@ -1,3 +1,4 @@
+import { Toaster } from '@/components/ui/Sonner'
 import TanstackClientProvider from '@/providers/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
@@ -58,6 +59,7 @@ export default function RootLayout({
 		<html lang='ru'>
 			<body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
 				<TanstackClientProvider>{children}</TanstackClientProvider>
+				<Toaster />
 			</body>
 		</html>
 	)

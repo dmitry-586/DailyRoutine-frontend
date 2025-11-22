@@ -1,7 +1,7 @@
+import { Button } from '@/components/ui/Button'
 import { cn } from '@/lib/utils/cn'
-import Image from 'next/image'
-import Button from '@/components/ui/Button'
 import { TelegramAuthProps } from '@/types/auth.types'
+import Image from 'next/image'
 
 export default function TelegramAuthButton({
 	setIsTelegramModalOpen,
@@ -29,4 +29,3 @@ export default function TelegramAuthButton({
 		</Button>
 	)
 }
-
