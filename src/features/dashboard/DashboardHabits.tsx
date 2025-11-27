@@ -37,7 +37,7 @@ export function DashboardHabits({
     onDeleteHabit(id)
   }
   return (
-    <section className='w-full space-y-4 lg:col-span-2'>
+    <section className='w-full space-y-4'>
       <div className='mb-4 flex items-center justify-between'>
         <h2 className='text-xl font-semibold max-sm:text-lg'>
           Привычки на сегодня
@@ -54,7 +54,7 @@ export function DashboardHabits({
         </Button>
       </div>
 
-      <div className='grid grid-cols-1 gap-4 md:grid-cols-2'>
+      <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
         {habits
           .filter((h) => h.isActive !== false)
           .map((habit) => (

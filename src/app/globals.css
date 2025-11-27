@@ -45,3 +45,32 @@ body {
 h1 {
   font-family: var(--font-reggae-one);
 }
+
+/* Кастомный скроллбар */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray) transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--gray);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:active {
+  background: var(--light-gray);
+}

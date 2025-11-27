@@ -138,7 +138,7 @@ export default function DashboardPage() {
   return (
     <>
       <WeekCalendar />
-      <div className='mt-6 flex w-full gap-4'>
+      <div className='mt-6 flex w-full gap-4 max-md:flex-col'>
         <DashboardHabits
           habits={habits}
           onAddHabit={handleAddHabit}
