@@ -1,12 +1,12 @@
 'use client'
 
-import TelegramAuthModal from '@/components/features/auth/TelegramAuthModal'
-import Benefits from '@/components/features/landing/Benefits'
-import CTA from '@/components/features/landing/CTA'
-import Header from '@/components/features/landing/Header'
-import LandingLayout from '@/components/features/landing/LandingLayout'
-import Steps from '@/components/features/landing/Steps'
-import PWAInstallButton from '@/components/ui/PWAInstallButton'
+import PWAInstallButton from '@/shared/ui/PWAInstallButton'
+import TelegramAuthModal from '@/features/auth/TelegramAuthModal'
+import Benefits from '@/features/landing/Benefits'
+import CTA from '@/features/landing/CTA'
+import Header from '@/features/landing/Header'
+import LandingLayout from '@/features/landing/LandingLayout'
+import Steps from '@/features/landing/Steps'
 import { useState } from 'react'
 
 export default function Home() {

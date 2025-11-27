@@ -1,7 +1,7 @@
-import { Toaster } from '@/components/ui/Sonner'
-import TanstackClientProvider from '@/providers/TanstackClientProvider'
+import TanstackClientProvider from '@/shared/model/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
+import { Toaster } from 'sonner'
 import './globals.css'
 
 const reggaeOne = Reggae_One({
@@ -56,7 +56,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="ru">
+    <html lang='ru'>
       <body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
         <TanstackClientProvider>{children}</TanstackClientProvider>
         <Toaster />

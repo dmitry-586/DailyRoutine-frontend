@@ -1,8 +1,8 @@
 'use client'
 
-import { HabitDetails } from '@/components/features/habits/HabitDetails'
-import type { Habit } from '@/components/features/habits/HabitModal'
-import { generateHistoryForHabit } from '@/lib/utils/habitHistory'
+import { HabitDetails } from '@/features/habits/HabitDetails'
+import { generateHistoryForHabit } from '@/shared/lib/utils/habitHistory'
+import { Habit } from '@/shared/types/habit.types'
 import { useParams, useRouter } from 'next/navigation'
 import { useMemo } from 'react'
 

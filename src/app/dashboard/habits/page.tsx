@@ -1,11 +1,11 @@
 'use client'
 
-import { AllHabits } from '@/components/features/habits/AllHabits'
-import type { Habit } from '@/components/features/habits/HabitModal'
+import { AllHabits } from '@/features/habits/AllHabits'
+import { Habit } from '@/shared/types/habit.types'
 import {
   addHistoryEntry,
   generateHistoryForHabit,
-} from '@/lib/utils/habitHistory'
+} from '@/shared/lib/utils/habitHistory'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 

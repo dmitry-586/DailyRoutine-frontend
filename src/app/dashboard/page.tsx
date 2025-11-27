@@ -1,15 +1,16 @@
 'use client'
 
-import { Dashboard } from '@/components/features/habits/Dashboard'
-import type { Habit } from '@/components/features/habits/HabitModal'
+import { DashboardHabits } from '@/features/dashboard/DashboardHabits'
+import { Stats } from '@/features/dashboard/Stats'
+import { WeekCalendar } from '@/features/dashboard/WeekCalendar'
 import {
   addHistoryEntry,
   generateHistoryForHabit,
-} from '@/lib/utils/habitHistory'
+} from '@/shared/lib/utils/habitHistory'
+import { Habit } from '@/shared/types/habit.types'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-// Инициализируем привычки с историей
 const initialHabits: Habit[] = [
   {
     id: '1',
@@ -86,7 +87,6 @@ const initialHabits: Habit[] = [
 export default function DashboardPage() {
   const router = useRouter()
   const [habits, setHabits] = useState<Habit[]>(() => {
-    // Загружаем из localStorage или используем начальные данные
     if (typeof window !== 'undefined') {
       const stored = localStorage.getItem('habits')
       if (stored) {
@@ -100,7 +100,6 @@ export default function DashboardPage() {
     return initialHabits
   })
 
-  // Синхронизируем с localStorage при изменении
   useEffect(() => {
     if (typeof window !== 'undefined') {
       localStorage.setItem('habits', JSON.stringify(habits))
@@ -124,7 +123,6 @@ export default function DashboardPage() {
   }
 
   const handleCompleteHabit = (habit: Habit) => {
-    // Добавляем запись в историю при завершении
     const updatedHabit = addHistoryEntry(
       habit,
       habit.current,
@@ -138,13 +136,19 @@ export default function DashboardPage() {
   }
 
   return (
-    <Dashboard
-      habits={habits}
-      onAddHabit={handleAddHabit}
-      onUpdateHabit={handleUpdateHabit}
-      onDeleteHabit={handleDeleteHabit}
-      onCompleteHabit={handleCompleteHabit}
-      onHabitClick={handleViewHabitDetails}
-    />
+    <>
+      <WeekCalendar />
+      <div className='mt-6 flex w-full gap-4'>
+        <DashboardHabits
+          habits={habits}
+          onAddHabit={handleAddHabit}
+          onUpdateHabit={handleUpdateHabit}
+          onDeleteHabit={handleDeleteHabit}
+          onCompleteHabit={handleCompleteHabit}
+          onHabitClick={handleViewHabitDetails}
+        />
+        <Stats habits={habits} />
+      </div>
+    </>
   )
 }
