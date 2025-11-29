@@ -164,8 +164,10 @@ export function Shop() {
 
             <Select
               value={typeFilter}
-              onValueChange={(value) =>
-                setTypeFilter(value as 'all' | 'frame' | 'status' | 'theme')
+              onChange={(e) =>
+                setTypeFilter(
+                  e.target.value as 'all' | 'frame' | 'status' | 'theme',
+                )
               }
               className='border-light-gray/20 bg-gray w-[140px] text-white'
               options={[
@@ -178,8 +180,10 @@ export function Shop() {
 
             <Select
               value={priceFilter}
-              onValueChange={(value) =>
-                setPriceFilter(value as 'all' | 'affordable' | 'expensive')
+              onChange={(e) =>
+                setPriceFilter(
+                  e.target.value as 'all' | 'affordable' | 'expensive',
+                )
               }
               className='border-light-gray/20 bg-gray w-[160px] text-white'
               options={[
@@ -191,8 +195,10 @@ export function Shop() {
 
             <Select
               value={availabilityFilter}
-              onValueChange={(value) =>
-                setAvailabilityFilter(value as 'all' | 'owned' | 'available')
+              onChange={(e) =>
+                setAvailabilityFilter(
+                  e.target.value as 'all' | 'owned' | 'available',
+                )
               }
               className='border-light-gray/20 bg-gray w-[160px] text-white'
               options={[

@@ -16,7 +16,10 @@ export default function TelegramAuthButton({
       type='button'
       variant='primary'
       onClick={handleTelegramClick}
-      className={cn('relative min-w-0 pr-[30px] pl-[60px]', className)}
+      className={cn(
+        'relative h-10 min-w-0 rounded-full pr-[30px] pl-[60px]',
+        className,
+      )}
     >
       <Image
         src='/telegram.svg'

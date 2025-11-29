@@ -50,6 +50,7 @@ h1 {
 .custom-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--gray) transparent;
+  margin-right: 4px;
 }
 
 .custom-scrollbar::-webkit-scrollbar {

@@ -1,5 +1,6 @@
 'use client'
 
+import { useScrollLock } from '@/shared/lib/hooks/useScrollLock'
 import { cn } from '@/shared/lib/utils/cn'
 import { X } from 'lucide-react'
 
@@ -18,6 +19,7 @@ export default function Modal({
   children,
   className,
 }: ModalProps) {
+  useScrollLock(isOpen)
   return (
     <section
       className={cn(
@@ -36,13 +38,15 @@ export default function Modal({
       />
       <div
         className={cn(
-          'bg-background border-primary shadow-blue relative mx-4 w-full max-w-md rounded-[20px] border-2 transition-all duration-150',
+          'bg-background relative flex h-full max-h-[90vh] w-full max-w-[90vw] flex-col rounded-[12px] transition-all duration-150',
           className,
-          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0',
+          isOpen ? 'scale-100 opacity-100' : 'scale-75 opacity-0',
         )}
       >
-        <div className='border-primary/60 flex items-center justify-between border-b-2 p-6'>
-          <h2 className='font-reggae-one text-foreground text-2xl'>{title}</h2>
+        <div className='border-light-gray/20 flex items-center justify-between border-b-2 px-5 py-4 max-sm:px-3'>
+          <h2 className='font-reggae-one text-foreground text-2xl max-sm:text-xl'>
+            {title}
+          </h2>
           <button
             onClick={onClose}
             className='text-foreground/60 hover:text-foreground cursor-pointer transition-colors duration-200'
@@ -50,7 +54,9 @@ export default function Modal({
             <X size={24} />
           </button>
         </div>
-        <div className='p-6'>{children}</div>
+        <div className='custom-scrollbar h-full overflow-y-auto p-5 max-sm:px-3'>
+          {children}
+        </div>
       </div>
     </section>
   )
