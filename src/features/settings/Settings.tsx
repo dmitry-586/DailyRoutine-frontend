@@ -57,15 +57,15 @@ export function Settings() {
   }
 
   return (
-    <div className='bg-background min-h-screen p-4 sm:p-6'>
+    <div>
       <div className='mx-auto max-w-4xl'>
         {/* Header */}
         <div className='mb-6 sm:mb-8'>
           <div className='mb-2 flex items-center gap-3'>
             <SettingsIcon className='text-primary h-8 w-8' />
-            <h1 className='text-white'>Настройки</h1>
+            <h2 className='text-2xl leading-none text-white'>Настройки</h2>
           </div>
-          <p className='text-light-gray'>
+          <p className='text-light-gray max-sm:text-sm'>
             Управляйте своим профилем и уведомлениями
           </p>
         </div>

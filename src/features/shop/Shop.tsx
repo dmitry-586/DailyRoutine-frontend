@@ -124,18 +124,18 @@ export function Shop() {
   }
 
   return (
-    <div className='bg-background min-h-screen p-4 sm:p-6'>
+    <div>
       <div className='mx-auto max-w-7xl'>
         {/* Header */}
         <div className='mb-6 sm:mb-8'>
-          <h1 className='mb-2 text-white'>Магазин</h1>
-          <p className='text-light-gray'>
+          <h2 className='mb-2 text-2xl leading-none text-white'>Магазин</h2>
+          <p className='text-light-gray max-sm:text-sm'>
             Потратьте заработанные дейлики на награды
           </p>
         </div>
 
         {/* Balance Card */}
-        <div className='from-primary to-green mb-8 border-none bg-gradient-to-r p-6'>
+        <div className='from-primary to-green mb-8 rounded-lg border-none bg-gradient-to-r p-6'>
           <div className='flex items-center justify-between'>
             <div>
               <p className='mb-1 text-white/80'>Ваш баланс</p>
@@ -244,7 +244,7 @@ export function Shop() {
             {filteredItems.map((item) => (
               <div
                 key={item.id}
-                className='bg-gray hover:border-primary/30 hover:shadow-primary/10 flex flex-col border-none p-6 transition-all duration-200 hover:scale-[1.02] hover:border hover:shadow-lg'
+                className='bg-gray hover:border-primary/30 hover:shadow-primary/10 flex cursor-pointer flex-col rounded-lg p-6 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99]'
               >
                 <div className='mb-4 text-center'>
                   <div className='mb-3 text-6xl'>{item.preview}</div>

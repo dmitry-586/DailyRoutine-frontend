@@ -120,19 +120,19 @@ export function Sprints() {
     ) / currentTasks.length
 
   return (
-    <div className='bg-background min-h-screen p-4 sm:p-6'>
+    <div>
       <div className='mx-auto max-w-7xl'>
         {/* Header */}
         <div className='mb-6 sm:mb-8'>
-          <h1 className='mb-2 text-white'>Спринты</h1>
-          <p className='text-light-gray'>
+          <h2 className='mb-2 text-2xl leading-none text-white'>Спринты</h2>
+          <p className='text-light-gray max-sm:text-sm'>
             Выполняйте задания и получайте награды
           </p>
         </div>
 
         {/* Sprint Progress */}
         <div className='mb-8 grid grid-cols-1 gap-4 md:grid-cols-3'>
-          <div className='border-primary/20 hover:border-primary/40 hover:shadow-primary/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+          <div className='border-primary/20 hover:border-primary/40 hover:shadow-primary/10 from-gray to-muted rounded-lg border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
             <div className='mb-3 flex items-center gap-3'>
               <div className='bg-primary/20 shadow-primary/10 rounded-xl p-3 shadow-lg'>
                 <Target className='text-primary h-6 w-6' />
@@ -152,7 +152,7 @@ export function Sprints() {
             )}
           </div>
 
-          <div className='border-green/20 hover:border-green/40 hover:shadow-green/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+          <div className='border-green/20 hover:border-green/40 hover:shadow-green/10 from-gray to-muted rounded-lg border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
             <div className='mb-3 flex items-center gap-3'>
               <div className='bg-green/20 shadow-green/10 rounded-xl p-3 shadow-lg'>
                 <Trophy className='text-green h-6 w-6' />
@@ -175,7 +175,7 @@ export function Sprints() {
             )}
           </div>
 
-          <div className='border-orange/20 hover:border-orange/40 hover:shadow-orange/10 from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
+          <div className='border-orange/20 hover:border-orange/40 hover:shadow-orange/10 from-gray to-muted rounded-lg border bg-gradient-to-br p-6 transition-all duration-200 hover:shadow-lg'>
             <div className='mb-3 flex items-center gap-3'>
               <div className='bg-orange/20 shadow-orange/10 rounded-xl p-3 shadow-lg'>
                 <Award className='text-orange h-6 w-6' />
@@ -197,7 +197,7 @@ export function Sprints() {
         </div>
 
         <div className='mb-8'>
-          <TabsList className='bg-gray mb-6'>
+          <TabsList className='bg-gray mb-6 gap-2'>
             <TabsTrigger
               active={activeTab === 'active'}
               onClick={() => setActiveTab('active')}
@@ -230,7 +230,7 @@ export function Sprints() {
                 return (
                   <div
                     key={task.id}
-                    className={`from-gray to-muted border bg-gradient-to-br p-6 transition-all duration-200 hover:scale-[1.02] ${
+                    className={`from-gray to-muted rounded-lg border bg-gradient-to-br p-6 transition-all duration-200 hover:scale-[1.01] active:scale-[0.99] ${
                       isCompleted
                         ? 'border-green/40 shadow-green/10 hover:shadow-green/20 shadow-lg hover:shadow-xl'
                         : 'border-light-gray/10 hover:border-primary/30 hover:shadow-primary/10 hover:shadow-lg'

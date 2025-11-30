@@ -8,7 +8,7 @@ export const COUNT_UNITS = [
   { value: 'шт', label: 'штук' },
   { value: 'стр', label: 'страниц' },
   { value: 'км', label: 'километров' },
-  { value: 'стаканов', label: 'стаканов' },
+  { value: 'л', label: 'литров' },
 ] as const
 
 export const habitTypeOptions = [

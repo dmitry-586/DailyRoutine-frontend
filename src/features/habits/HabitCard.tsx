@@ -3,7 +3,6 @@
 import { Habit } from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
 import Modal from '@/shared/ui/Modal'
-import { Progress } from '@/shared/ui/Progress'
 import {
   Archive,
   ArchiveRestore,
@@ -49,16 +48,6 @@ export function HabitCard({
   useEffect(() => {
     setIsCompleted(completed)
   }, [completed])
-
-  // Для вредных привычек логика инвертирована:
-  // - completed = true означает "день прошел без срыва" (хорошо)
-  // - completed = false означает "был срыв" (плохо)
-  const progress =
-    format === 'binary'
-      ? isCompleted
-        ? 100
-        : 0
-      : Math.min((current / target) * 100, 100)
 
   const handleComplete = (e: React.MouseEvent) => {
     e.stopPropagation()
@@ -131,7 +120,7 @@ export function HabitCard({
   return (
     <>
       <div
-        className={`bg-gray relative cursor-pointer rounded-lg border p-4 transition-all duration-200 ${
+        className={`bg-gray relative cursor-pointer rounded-lg border p-4 transition-all duration-200 flex flex-col ${
           !isActive
             ? 'border-light-gray/20 hover:border-light-gray/30 opacity-50'
             : isCompleted && type === 'good'
@@ -154,7 +143,7 @@ export function HabitCard({
               <div className='text-light-gray flex items-center gap-2 text-xs'>
                 {getIcon()}
                 <span>
-                  {current} / {target} {unit}
+                  {target} {unit}
                 </span>
               </div>
             )}
@@ -175,19 +164,8 @@ export function HabitCard({
           </div>
         </div>
 
-        {/* Progress Bar - только для полезных привычек с count/time */}
-        {type === 'good' && format !== 'binary' && (
-          <div className='mb-3'>
-            <Progress
-              value={progress}
-              className='h-2'
-              indicatorClassName='bg-green'
-            />
-          </div>
-        )}
-
         {/* Action Buttons */}
-        <div className='flex items-center gap-2'>
+        <div className='mt-auto flex items-center gap-2'>
           {type === 'good' ? (
             <Button
               onClick={handleComplete}

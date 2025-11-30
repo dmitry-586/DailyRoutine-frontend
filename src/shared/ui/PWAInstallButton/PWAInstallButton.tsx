@@ -1,8 +1,9 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { Button } from '@/shared/ui/Button'
 import { Download } from 'lucide-react'
-import { useEffect, useState } from 'react'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]
@@ -13,7 +14,7 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>
 }
 
-export default function PWAInstallButton() {
+export const PWAInstallButton = () => {
   const [deferredPrompt, setDeferredPrompt] =
     useState<BeforeInstallPromptEvent | null>(null)
   const [showInstallButton, setShowInstallButton] = useState(false)
@@ -69,11 +70,13 @@ export default function PWAInstallButton() {
   return (
     <Button
       onClick={handleInstallClick}
-      variant="primary"
-      className="fixed right-4 bottom-4 z-50 flex min-w-[180px] items-center gap-2 bg-black/30 px-4 py-2 text-sm"
+      variant='primary'
+      className='fixed right-4 bottom-4 z-50 flex min-w-[180px] items-center gap-2 bg-black/30 px-4 py-2 text-sm'
     >
       <Download size={16} />
       Установить приложение
     </Button>
   )
 }
+
+export default PWAInstallButton

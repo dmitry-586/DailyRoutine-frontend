@@ -7,7 +7,7 @@ export function Stats() {
   const activeHabits = habits.filter((h) => h.isActive !== false)
 
   return (
-    <div className='w-max shrink-0 max-md:mb-10 max-md:w-full'>
+    <div className='w-max shrink-0 max-md:w-full'>
       <h3 className='mb-4 flex h-9 w-full items-center justify-center text-lg font-semibold text-white max-md:justify-start'>
         Статистика
       </h3>

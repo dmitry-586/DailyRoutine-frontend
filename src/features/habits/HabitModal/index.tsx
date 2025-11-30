@@ -4,13 +4,13 @@ import { Habit } from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
 import { Input } from '@/shared/ui/Input'
 import Modal from '@/shared/ui/Modal'
+import { RadioGroup } from '@/shared/ui/RadioGroup'
 import { Select } from '@/shared/ui/Select'
 import { TimeInput } from '@/shared/ui/TimeInput'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { COUNT_UNITS, habitFormatOptions, habitTypeOptions } from './config'
-import { RadioGroup } from './RadioGroup'
 import { HabitFormData, habitFormSchema } from './schema'
 
 interface HabitModalProps {
@@ -82,7 +82,7 @@ export function HabitModal({ open, onClose, onSave, habit }: HabitModalProps) {
       isOpen={open}
       onClose={onClose}
       title={isEditMode ? 'Редактировать привычку' : 'Создать новую привычку'}
-      className='max-w-lg max-sm:max-h-none max-sm:max-w-none max-sm:rounded-none'
+      className='max-w-lg max-sm:h-full max-sm:max-h-none max-sm:max-w-none max-sm:rounded-none'
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className='space-y-4'>
@@ -129,9 +129,9 @@ export function HabitModal({ open, onClose, onSave, habit }: HabitModalProps) {
                 error={errors.target?.message}
               />
               <div className='shrink-0 space-y-2'>
-                <label className='block text-sm'>Единица измерения</label>
                 <Select
                   {...register('unit')}
+                  label='Единица измерения'
                   value={unitValue}
                   className='w-full'
                   options={COUNT_UNITS.map((u) => ({

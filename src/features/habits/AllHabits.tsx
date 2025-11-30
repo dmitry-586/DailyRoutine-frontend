@@ -67,15 +67,18 @@ export function AllHabits({
       {/* Header */}
       <div className='mb-6 flex flex-col justify-between gap-4 sm:mb-8 sm:flex-row sm:items-center'>
         <div>
-          <h1 className='mb-2 text-white'>Все привычки</h1>
-          <p className='text-light-gray'>Управляйте своими привычками</p>
+          <h2 className='mb-2 text-2xl leading-none text-white'>
+            Все привычки
+          </h2>
+          <p className='text-light-gray max-sm:text-sm'>
+            Управляйте своими привычками
+          </p>
         </div>
         <Button
           onClick={() => {
             setEditingHabit(null)
             setIsModalOpen(true)
           }}
-          className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
         >
           <Plus className='mr-2 h-4 w-4' />
           Новая привычка
@@ -156,7 +159,6 @@ export function AllHabits({
                 setEditingHabit(null)
                 setIsModalOpen(true)
               }}
-              className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
             >
               <Plus className='mr-2 h-4 w-4' />
               Создать привычку

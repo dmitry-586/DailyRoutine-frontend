@@ -9,9 +9,8 @@ export const radioVariants = cva(
         error: 'border-red/50 text-red',
       },
       size: {
-        default: 'h-4 w-4',
-        sm: 'h-3.5 w-3.5',
-        lg: 'h-5 w-5',
+        default: 'size-4',
+        sm: 'size-3.5',
       },
     },
     defaultVariants: {
@@ -28,7 +27,6 @@ export const radioIndicatorVariants = cva(
       size: {
         default: 'inset-1',
         sm: 'inset-0.5',
-        lg: 'inset-1.5',
       },
     },
     defaultVariants: {

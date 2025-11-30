@@ -31,7 +31,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
       <BottomNavigation isActive={isActive} />
 
       <main
-        className={`bg-background min-h-screen flex-1 overflow-x-hidden p-6 transition-all duration-300 ease-in-out max-md:pb-16 max-sm:px-4 ${
+        className={`bg-background min-h-screen flex-1 overflow-x-hidden p-6 transition-all duration-300 ease-in-out max-md:pb-28 max-sm:px-4 ${
           sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
         }`}
       >
