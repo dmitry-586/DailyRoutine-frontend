@@ -8,7 +8,8 @@ export interface SelectOption {
 }
 
 export interface SelectProps
-  extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,
+  extends
+    Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'>,
     SelectVariantProps {
   options: SelectOption[]
   label?: string

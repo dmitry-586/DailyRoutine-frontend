@@ -26,5 +26,3 @@ export const getCardContainerClassName = ({
 
   return 'border-light-gray/10 hover:border-primary/30 hover:bg-gray/95 hover:shadow-primary/10 hover:shadow-lg'
 }
-
-

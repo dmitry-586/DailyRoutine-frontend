@@ -2,7 +2,8 @@ import type { InputHTMLAttributes } from 'react'
 import type { InputVariantProps } from './config'
 
 export interface InputProps
-  extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
+  extends
+    Omit<InputHTMLAttributes<HTMLInputElement>, 'size'>,
     Omit<InputVariantProps, 'inputSize'> {
   error?: string
   label?: string

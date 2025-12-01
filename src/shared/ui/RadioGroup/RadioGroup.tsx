@@ -40,7 +40,10 @@ export const RadioGroup = ({
             description={option.description}
             checked={selectedValue === option.value}
             disabled={option.disabled}
-            className={cn('hover:border-primary/50 cursor-pointer', radioClassName)}
+            className={cn(
+              'hover:border-primary/50 cursor-pointer',
+              radioClassName,
+            )}
             name={registerResult?.name ?? name}
             onBlur={registerResult?.onBlur}
             onChange={handleChange(option.value)}

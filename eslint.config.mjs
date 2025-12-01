@@ -14,8 +14,6 @@ const eslintConfig = [
   ...compat.extends(
     'next/core-web-vitals',
     'next/typescript',
-    'airbnb',
-    'airbnb-typescript',
     'plugin:prettier/recommended',
     'prettier',
   ),

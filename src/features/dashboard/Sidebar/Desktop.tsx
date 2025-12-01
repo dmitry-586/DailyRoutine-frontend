@@ -51,7 +51,7 @@ export function DesktopSidebar({
             sidebarCollapsed ? 'opacity-0' : 'opacity-100',
           )}
           titleClassName={cn(
-            'whitespace-nowrap transition-all duration-300 ',
+            'whitespace-nowrap transition-all duration-300',
             sidebarCollapsed ? 'text-sm' : 'text-lg',
           )}
           imageClassName={cn(
