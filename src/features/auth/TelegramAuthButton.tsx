@@ -28,7 +28,7 @@ export default function TelegramAuthButton({
         height={40}
         className='absolute top-[-1px] left-[-1px]'
       />
-      Начать в Telegrams
+      Войти через Telegram
     </Button>
   )
 }

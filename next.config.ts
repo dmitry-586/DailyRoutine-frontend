@@ -2,10 +2,16 @@ import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
   images: {
-    domains: ['t.me', 'telegram.org'],
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 't.me',
+      },
+      {
+        protocol: 'https',
+        hostname: 'telegram.org',
+      },
+    ],
   },
 }
 

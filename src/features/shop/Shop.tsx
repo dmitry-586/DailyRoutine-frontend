@@ -136,7 +136,7 @@ export function Shop() {
 
         {/* Balance Card */}
         <div className='from-primary to-green mb-8 rounded-lg border-none bg-gradient-to-r p-6'>
-          <div className='flex items-center justify-between'>
+          <div className='flex justify-between max-sm:flex-col max-sm:gap-4'>
             <div>
               <p className='mb-1 text-white/80'>Ваш баланс</p>
               <div className='flex items-center gap-2'>
@@ -145,7 +145,7 @@ export function Shop() {
                 <span className='text-xl text-white/80'>дейликов</span>
               </div>
             </div>
-            <div className='text-right'>
+            <div className='text-right max-sm:text-start'>
               <p className='text-sm text-white/80'>Заработано за неделю</p>
               <p className='text-2xl text-white'>+85</p>
             </div>

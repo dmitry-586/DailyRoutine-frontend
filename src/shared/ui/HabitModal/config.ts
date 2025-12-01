@@ -41,3 +41,11 @@ export const habitFormatOptions = [
     description: 'Отслеживание времени (минуты, часы)',
   },
 ] as const
+
+export const DEFAULT_FORM_VALUES = {
+  title: '',
+  type: 'good' as const,
+  format: 'binary' as const,
+  target: '1',
+  unit: 'раз',
+}

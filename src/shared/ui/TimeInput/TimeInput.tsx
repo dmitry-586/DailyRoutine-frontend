@@ -45,7 +45,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               disabled={disabled}
               placeholder='0'
               className={inputClass}
-              aria-label='Часы'
             />
             <span className={timeInputStyles.suffix}>ч</span>
           </div>
@@ -62,7 +61,6 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
               disabled={disabled}
               placeholder='0'
               className={inputClass}
-              aria-label='Минуты'
             />
             <span className={timeInputStyles.suffix}>мин</span>
           </div>

@@ -8,7 +8,7 @@ export default function DashboardPage() {
   return (
     <>
       <WeekCalendar />
-      <div className='mt-6 flex w-full gap-4 max-md:flex-col'>
+      <div className='mt-6 flex w-full gap-4 max-xl:flex-col'>
         <DashboardHabits />
         <Stats />
       </div>

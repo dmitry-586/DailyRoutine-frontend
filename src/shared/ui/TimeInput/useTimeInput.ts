@@ -11,20 +11,21 @@ import { timeInputLimits } from './config'
 import type { TimeInputProps } from './types'
 
 const sanitizeSegment = (value: string, limit: number) => {
-  let result = value
+  const numeric = value.replace(/[^\d]/g, '')
 
-  if (result.length > 1 && result.startsWith('0')) {
-    result = result.replace(/^0+/, '') || '0'
+  if (numeric === '') {
+    return ''
   }
 
-  if (
-    result !== '' &&
-    (!/^\d{1,2}$/.test(result) || parseInt(result, 10) > limit)
-  ) {
-    return null
+  const parsed = Number.parseInt(numeric, 10)
+
+  if (Number.isNaN(parsed) || parsed < 0) {
+    return ''
   }
 
-  return result
+  const clamped = Math.min(parsed, limit)
+
+  return clamped.toString()
 }
 
 const splitMinutes = (value: string) => {
@@ -70,14 +71,13 @@ export const useTimeInput = ({
   const handleSegmentChange = useCallback(
     (isHours: boolean) => (event: ChangeEvent<HTMLInputElement>) => {
       const limit = isHours ? timeInputLimits.hours : timeInputLimits.minutes
+      const numeric = event.target.value.replace(/[^\d]/g, '')
+      const rawNumber = numeric === '' ? 0 : Number.parseInt(numeric, 10) || 0
       const nextValue = sanitizeSegment(event.target.value, limit)
 
-      if (nextValue === null) return
-
-      const nextNumber = nextValue === '' ? 0 : parseInt(nextValue, 10)
-      const currentHours = isHours ? nextNumber : parseInt(hoursInput, 10) || 0
+      const currentHours = isHours ? rawNumber : parseInt(hoursInput, 10) || 0
       const currentMinutes = !isHours
-        ? nextNumber
+        ? rawNumber
         : parseInt(minutesInput, 10) || 0
 
       const total = currentHours * 60 + currentMinutes

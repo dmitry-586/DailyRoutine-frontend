@@ -2,11 +2,11 @@
 
 import { Habit } from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
+import { HabitCard } from '@/shared/ui/HabitCard'
+import { HabitModal } from '@/shared/ui/HabitModal'
 import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { HabitCard } from './HabitCard'
-import { HabitModal } from './HabitModal'
 
 interface AllHabitsProps {
   habits: Habit[]
@@ -132,16 +132,18 @@ export function AllHabits({
       {/* Habits Grid */}
       <div className='max-w-7xl'>
         {filteredHabits.length > 0 ? (
-          <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3'>
             {filteredHabits.map((habit) => (
               <HabitCard
                 key={habit.id}
-                {...habit}
-                onClick={() => onHabitClick?.(habit)}
-                onEdit={handleEdit}
-                onDelete={handleDelete}
-                onComplete={onCompleteHabit}
-                onToggleActive={handleToggleActive}
+                data={habit}
+                handlers={{
+                  onClick: () => onHabitClick?.(habit),
+                  onEdit: handleEdit,
+                  onDelete: handleDelete,
+                  onComplete: onCompleteHabit,
+                  onToggleActive: handleToggleActive,
+                }}
               />
             ))}
           </div>

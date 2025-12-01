@@ -1,5 +1,5 @@
 export const timeInputLimits = {
-  hours: 23,
+  hours: 1000,
   minutes: 59,
 } as const
 

@@ -1,10 +1,10 @@
 import { useHabits } from '@/shared/lib/hooks/useHabits'
 import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
 import { Button } from '@/shared/ui/Button'
+import { HabitCard } from '@/shared/ui/HabitCard'
+import { HabitModal } from '@/shared/ui/HabitModal'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
-import { HabitCard } from '../habits/HabitCard'
-import { HabitModal } from '../habits/HabitModal'
 
 export function DashboardHabits() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -36,11 +36,13 @@ export function DashboardHabits() {
           {activeHabits.map((habit) => (
             <HabitCard
               key={habit.id}
-              {...habit}
-              onClick={() => viewHabitDetails(habit)}
-              onEdit={updateHabit}
-              onDelete={deleteHabit}
-              onComplete={completeHabit}
+              data={habit}
+              handlers={{
+                onClick: () => viewHabitDetails(habit),
+                onEdit: updateHabit,
+                onDelete: deleteHabit,
+                onComplete: completeHabit,
+              }}
             />
           ))}
         </div>

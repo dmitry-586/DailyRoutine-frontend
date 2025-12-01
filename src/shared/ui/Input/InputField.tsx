@@ -26,7 +26,7 @@ export const InputField = forwardRef<HTMLInputElement, InputProps>(
     const hasError = Boolean(error)
 
     return (
-      <div className='w-full space-y-2'>
+      <div className='flex w-full flex-col gap-2'>
         {label && (
           <label
             htmlFor={finalId}
