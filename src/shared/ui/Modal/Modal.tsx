@@ -1,7 +1,7 @@
 'use client'
 
-import { useScrollLock } from '@/shared/lib/hooks/useScrollLock'
 import { cn } from '@/shared/lib/utils/cn'
+import { useScrollLock } from '@/shared/model/hooks/useScrollLock'
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
 

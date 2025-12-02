@@ -4,7 +4,6 @@ export type HabitCardData = Habit
 
 export interface HabitCardHandlers {
   onComplete?: (habit: HabitCardData) => void
-  onClick?: () => void
   onEdit?: (habit: HabitCardData) => void
   onDelete?: (id: string) => void
   onToggleActive?: (habit: HabitCardData) => void

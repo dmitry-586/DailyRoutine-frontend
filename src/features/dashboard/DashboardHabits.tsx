@@ -1,5 +1,5 @@
-import { useHabits } from '@/shared/lib/hooks/useHabits'
-import { useMediaQuery } from '@/shared/lib/hooks/useMediaQuery'
+import { useHabits } from '@/shared/model/hooks/useHabits'
+import { useMediaQuery } from '@/shared/model/hooks/useMediaQuery'
 import { Button } from '@/shared/ui/Button'
 import { HabitCard } from '@/shared/ui/HabitCard'
 import { HabitModal } from '@/shared/ui/HabitModal'
@@ -9,8 +9,7 @@ import { useState } from 'react'
 export function DashboardHabits() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const isMobile = useMediaQuery('(max-width: 640px)')
-  const { habits, updateHabit, deleteHabit, completeHabit, viewHabitDetails } =
-    useHabits()
+  const { habits, updateHabit, deleteHabit, completeHabit } = useHabits()
 
   const activeHabits = habits.filter((h) => h.isActive !== false)
 
@@ -38,7 +37,6 @@ export function DashboardHabits() {
               key={habit.id}
               data={habit}
               handlers={{
-                onClick: () => viewHabitDetails(habit),
                 onEdit: updateHabit,
                 onDelete: deleteHabit,
                 onComplete: completeHabit,

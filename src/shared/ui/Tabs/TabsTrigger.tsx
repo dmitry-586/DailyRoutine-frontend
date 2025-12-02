@@ -7,6 +7,7 @@ import type { TabsTriggerProps } from './types'
 
 export const TabsTrigger = ({
   active = false,
+  variant = 'default',
   className,
   ...props
 }: TabsTriggerProps) => (
@@ -15,7 +16,11 @@ export const TabsTrigger = ({
     role='tab'
     aria-selected={active}
     data-state={active ? 'active' : 'inactive'}
-    className={cn(tabsStyles.trigger, className)}
+    className={cn(
+      tabsStyles.trigger.base,
+      tabsStyles.trigger.variants[variant],
+      className,
+    )}
     {...props}
   />
 )

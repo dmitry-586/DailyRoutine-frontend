@@ -1,4 +1,4 @@
-import { useHabits } from '@/shared/lib/hooks/useHabits'
+import { useHabits } from '@/shared/model/hooks/useHabits'
 import { DailyFocusCard } from './components/DailyFocusCard'
 import { StatsPanel } from './components/StatsPanel'
 

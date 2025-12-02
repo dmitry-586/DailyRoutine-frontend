@@ -1,6 +1,7 @@
 'use client'
 
 import { Button } from '@/shared/ui/Button'
+import { PageHeader } from '@/shared/ui/PageHeader'
 import { Progress } from '@/shared/ui/Progress'
 import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
 import { Award, Clock, Target, Trophy } from 'lucide-react'
@@ -122,13 +123,11 @@ export function Sprints() {
   return (
     <div>
       <div className='mx-auto max-w-7xl'>
-        {/* Header */}
-        <div className='mb-6 sm:mb-8'>
-          <h2 className='mb-2 text-2xl leading-none text-white'>Спринты</h2>
-          <p className='text-light-gray max-sm:text-sm'>
-            Выполняйте задания и получайте награды
-          </p>
-        </div>
+        <PageHeader
+          title='Спринты'
+          icon={Target}
+          description='Выполняйте задания и получайте награды'
+        />
 
         {/* Sprint Progress */}
         <div className='mb-8 grid grid-cols-1 gap-4 md:grid-cols-3'>

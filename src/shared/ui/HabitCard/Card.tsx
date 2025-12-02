@@ -26,7 +26,7 @@ export function HabitCard(props: HabitCardProps) {
     handleCloseDeleteModal,
   } = useHabitCard(props)
 
-  const { data, handlers } = props
+  const { data } = props
   const { title, type } = data
 
   const cardClassName = getCardContainerClassName({
@@ -37,10 +37,7 @@ export function HabitCard(props: HabitCardProps) {
 
   return (
     <>
-      <div
-        className={cn(CARD_BASE_STYLES, cardClassName)}
-        onClick={handlers.onClick}
-      >
+      <div className={cn(CARD_BASE_STYLES, cardClassName)}>
         <HabitCardHeader data={data} />
 
         <HabitCardActions

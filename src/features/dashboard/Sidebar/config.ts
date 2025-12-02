@@ -1,9 +1,9 @@
 import {
   Home,
-  List,
+  ListChecks,
   LucideIcon,
   SettingsIcon,
-  ShoppingBag,
+  // ShoppingBag,
   Target,
 } from 'lucide-react'
 
@@ -16,9 +16,14 @@ interface INavItem {
 
 export const NAV_ITEMS: INavItem[] = [
   { id: 'dashboard', label: 'Главная', icon: Home, href: '/dashboard' },
-  { id: 'habits', label: 'Привычки', icon: List, href: '/dashboard/habits' },
+  {
+    id: 'habits',
+    label: 'Привычки',
+    icon: ListChecks,
+    href: '/dashboard/habits',
+  },
   { id: 'sprints', label: 'Спринты', icon: Target, href: '/dashboard/sprints' },
-  { id: 'shop', label: 'Магазин', icon: ShoppingBag, href: '/dashboard/shop' },
+  // { id: 'shop', label: 'Магазин', icon: ShoppingBag, href: '/dashboard/shop' },
   {
     id: 'settings',
     label: 'Настройки',

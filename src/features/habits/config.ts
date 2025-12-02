@@ -1,0 +1,107 @@
+import { generateHistoryForHabit } from '@/shared/lib/utils/habitHistory'
+import { Habit } from '@/shared/types/habit.types'
+import type { TabConfig } from './types'
+
+export const initialHabits: Habit[] = [
+  {
+    id: '1',
+    title: 'Утренняя пробежка',
+    type: 'good' as const,
+    format: 'time' as const,
+    current: 25,
+    target: 30,
+    unit: 'мин',
+    streak: 7,
+    completed: false,
+  },
+  {
+    id: '2',
+    title: 'Прочитать книгу',
+    type: 'good' as const,
+    format: 'count' as const,
+    current: 15,
+    target: 20,
+    unit: 'стр',
+    streak: 5,
+    completed: false,
+  },
+  {
+    id: '3',
+    title: 'Медитация',
+    type: 'good' as const,
+    format: 'binary' as const,
+    current: 0,
+    target: 1,
+    unit: '',
+    streak: 12,
+    completed: false,
+  },
+  {
+    id: '4',
+    title: 'Не курить',
+    type: 'bad' as const,
+    format: 'binary' as const,
+    current: 0,
+    target: 1,
+    unit: '',
+    streak: 30,
+    completed: false,
+  },
+  {
+    id: '5',
+    title: 'Выпить воды',
+    type: 'good' as const,
+    format: 'count' as const,
+    current: 6,
+    target: 8,
+    unit: 'стаканов',
+    streak: 3,
+    completed: false,
+  },
+  {
+    id: '6',
+    title: 'Не есть сладкое',
+    type: 'bad' as const,
+    format: 'binary' as const,
+    current: 0,
+    target: 1,
+    unit: '',
+    streak: 14,
+    completed: false,
+  },
+].map((habit) => ({
+  ...habit,
+  isActive: true,
+  history: generateHistoryForHabit(habit),
+}))
+
+export const HABIT_TABS: TabConfig[] = [
+  {
+    value: 'all',
+    label: 'Все',
+    variant: 'primary',
+    emptyMessage: 'У вас пока нет привычек',
+    filter: (h) => h.isActive !== false,
+  },
+  {
+    value: 'good',
+    label: 'Полезные',
+    variant: 'success',
+    emptyMessage: 'У вас нет полезных привычек',
+    filter: (h) => h.type === 'good' && h.isActive !== false,
+  },
+  {
+    value: 'bad',
+    label: 'Вредные',
+    variant: 'danger',
+    emptyMessage: 'У вас нет вредных привычек',
+    filter: (h) => h.type === 'bad' && h.isActive !== false,
+  },
+  {
+    value: 'inactive',
+    label: 'Неактивные',
+    variant: 'neutral',
+    emptyMessage: 'Нет неактивных привычек',
+    filter: (h) => h.isActive === false,
+  },
+]

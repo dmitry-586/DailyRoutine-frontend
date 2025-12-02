@@ -1,3 +1,4 @@
+import { TimezoneSync } from '@/features/timezone/TimezoneSync'
 import TanstackClientProvider from '@/shared/model/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
@@ -58,7 +59,10 @@ export default function RootLayout({
   return (
     <html lang='ru'>
       <body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
-        <TanstackClientProvider>{children}</TanstackClientProvider>
+        <TanstackClientProvider>
+          <TimezoneSync />
+          {children}
+        </TanstackClientProvider>
         <Toaster />
       </body>
     </html>

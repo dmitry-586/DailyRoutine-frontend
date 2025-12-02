@@ -1,4 +1,4 @@
-import { apiFetch, authKeys } from '@/shared/lib/api'
+import { apiFetch, authKeys, updateTimezone } from '@/shared/lib/api'
 import { postTelegramAuth } from '@/shared/lib/api/auth'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -42,5 +42,12 @@ export function useLogout() {
       }
       queryClient.clear()
     },
+  })
+}
+
+export function useUpdateTimezone() {
+  return useMutation({
+    mutationKey: authKeys.timezone(),
+    mutationFn: updateTimezone,
   })
 }

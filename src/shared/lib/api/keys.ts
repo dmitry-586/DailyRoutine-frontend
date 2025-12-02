@@ -1,6 +1,7 @@
 export const authKeys = {
   me: () => ['auth', 'me'] as const,
   telegram: () => ['auth', 'telegram'] as const,
+  timezone: () => ['auth', 'timezone'] as const,
 }
 
 export const routineKeys = {

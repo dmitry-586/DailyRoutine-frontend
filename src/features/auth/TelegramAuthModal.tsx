@@ -1,6 +1,7 @@
 'use client'
 
 import { postTelegramAuth } from '@/shared/lib/api/auth'
+import { useTimezone } from '@/shared/model/hooks/useTimezone'
 import type { TelegramUser } from '@/shared/types/auth.types'
 import Modal from '@/shared/ui/Modal'
 import { Loader2 } from 'lucide-react'
@@ -24,12 +25,14 @@ export default function TelegramAuthModal({
 }: TelegramAuthModalProps) {
   const telegramContainerRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
+  const { sendTimezoneToBackend } = useTimezone()
 
   useEffect(() => {
     if (!isOpen) return
 
     window.onTelegramAuth = async (user: TelegramUser) => {
       await postTelegramAuth(user)
+      setTimeout(() => sendTimezoneToBackend(), 100)
       onClose()
     }
 
