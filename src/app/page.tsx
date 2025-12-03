@@ -1,13 +1,24 @@
 'use client'
 
-import TelegramAuthModal from '@/features/auth/TelegramAuthModal'
 import CTA from '@/features/landing/CTA'
 import Header from '@/features/landing/Header'
 import HowWork from '@/features/landing/HowWork'
 import LandingLayout from '@/features/landing/LandingLayout'
 import MainBlock from '@/features/landing/MainBlock/MainBlock'
-import PWAInstallButton from '@/shared/ui/PWAInstallButton'
+import dynamic from 'next/dynamic'
 import { useState } from 'react'
+
+// Динамические импорты для компонентов, которые не критичны для первого рендера
+const TelegramAuthModal = dynamic(
+  () => import('@/features/auth/TelegramAuthModal'),
+  {
+    ssr: false,
+  },
+)
+
+const PWAInstallButton = dynamic(() => import('@/shared/ui/PWAInstallButton'), {
+  ssr: false,
+})
 
 export default function Home() {
   const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)

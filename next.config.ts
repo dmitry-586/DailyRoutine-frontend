@@ -1,6 +1,11 @@
 import type { NextConfig } from 'next'
 
 const nextConfig: NextConfig = {
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
+
+  // Оптимизация изображений
   images: {
     remotePatterns: [
       {
@@ -12,6 +17,7 @@ const nextConfig: NextConfig = {
         hostname: 'telegram.org',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
   },
 }
 
