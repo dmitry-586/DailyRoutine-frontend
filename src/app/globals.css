@@ -6,6 +6,7 @@
   --primary: #1cbecb;
   --light-gray: #b3b3b3;
   --gray: #3d4348;
+  --dark-gray: #252829;
   --muted: #32373a;
   --red: #f44336;
   --green: #4caf50;
@@ -23,6 +24,7 @@
   --color-primary: var(--primary);
   --color-light-gray: var(--light-gray);
   --color-gray: var(--gray);
+  --color-dark-gray: var(--dark-gray);
   --color-muted: var(--muted);
   --color-red: var(--red);
   --color-green: var(--green);

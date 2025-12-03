@@ -6,6 +6,7 @@ import Image from 'next/image'
 export default function TelegramAuthButton({
   setIsTelegramModalOpen,
   className,
+  title,
 }: TelegramAuthProps) {
   const handleTelegramClick = () => {
     setIsTelegramModalOpen(true)
@@ -24,11 +25,11 @@ export default function TelegramAuthButton({
       <Image
         src='/telegram.svg'
         alt='telegram'
-        width={40}
-        height={40}
+        width={38}
+        height={38}
         className='absolute top-[-1px] left-[-1px]'
       />
-      Войти через Telegram
+      {title || 'Войти через Telegram'}
     </Button>
   )
 }

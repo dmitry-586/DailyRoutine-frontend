@@ -10,6 +10,7 @@ export interface TelegramUser {
 
 export interface TelegramAuthProps {
   setIsTelegramModalOpen: (isOpen: boolean) => void
+  title?: string
   className?: string
 }
 

@@ -1,7 +1,21 @@
+import { cn } from '@/shared/lib'
+
+interface LandingLayoutProps {
+  children: React.ReactNode
+  backgroundColor?: string
+  className?: string
+}
+
 export default function LandingLayout({
   children,
-}: {
-  children: React.ReactNode
-}) {
-  return <main className='mx-auto max-w-6xl p-5'>{children}</main>
+  backgroundColor,
+  className,
+}: LandingLayoutProps) {
+  return (
+    <main className={`bg-${backgroundColor}`}>
+      <section className={cn('mx-auto max-w-6xl px-5 max-sm:px-3', className)}>
+        {children}
+      </section>
+    </main>
+  )
 }
