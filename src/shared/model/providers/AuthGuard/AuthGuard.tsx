@@ -1,7 +1,6 @@
 'use client'
 
-import { getCookie, hasCookie } from '@/shared/lib/utils/cookies'
-import { getUserIdFromToken } from '@/shared/lib/utils/jwt'
+import { hasCookie } from '@/shared/lib/utils/cookies'
 import { useMe } from '@/shared/model/hooks/useAuth'
 import { useRouter } from 'next/navigation'
 import { useEffect, type ReactNode } from 'react'
@@ -12,22 +11,19 @@ interface AuthGuardProps {
 }
 
 export function AuthGuard({ children, fallback }: AuthGuardProps) {
-  const { data: user, isLoading, isError, error } = useMe()
+  const { data: user, isLoading, isError, error, isFetching } = useMe()
   const router = useRouter()
-
-  // Проверяем, есть ли токен, но userId не извлекается
   const hasToken = typeof window !== 'undefined' && hasCookie('access_token')
-  const token = typeof window !== 'undefined' ? getCookie('access_token') : null
-  const userIdFromToken = token ? getUserIdFromToken(token) : null
-  const isTokenInvalid = hasToken && !userIdFromToken && !isLoading
 
   useEffect(() => {
-    // Если токен есть, но userId не извлекается - проблема с токеном
-    if (isTokenInvalid) {
-      console.error('AuthGuard: Token exists but user_id cannot be extracted')
-      router.push('/')
-      return
-    }
+    // Логируем состояние для отладки
+    console.log('AuthGuard state:', {
+      isLoading,
+      isError,
+      hasUser: !!user,
+      error,
+      isFetching,
+    })
 
     if (isError && !isLoading) {
       // Логируем ошибку для отладки
@@ -42,28 +38,18 @@ export function AuthGuard({ children, fallback }: AuthGuardProps) {
 
       // При любой ошибке редиректим на главную
       if (isAuthError) {
+        console.log('AuthGuard: 401 error, redirecting to home')
         router.push('/')
       } else {
         // Если ошибка не 401, все равно редиректим (возможно проблема с токеном)
-        console.warn('Non-401 error in AuthGuard, redirecting to home', error)
+        console.warn('AuthGuard: Non-401 error, redirecting to home', error)
         router.push('/')
       }
     }
-  }, [isError, isLoading, router, error, isTokenInvalid])
+  }, [isError, isLoading, router, error, user, isFetching])
 
   // Показываем fallback во время загрузки
-  if (isLoading) {
-    return (
-      fallback || (
-        <div className='bg-background flex min-h-screen items-center justify-center'>
-          <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
-        </div>
-      )
-    )
-  }
-
-  // Если токен невалидный, показываем fallback (редирект уже в useEffect)
-  if (isTokenInvalid) {
+  if (isLoading || isFetching) {
     return (
       fallback || (
         <div className='bg-background flex min-h-screen items-center justify-center'>
@@ -84,11 +70,26 @@ export function AuthGuard({ children, fallback }: AuthGuardProps) {
     )
   }
 
-  // Если пользователь не авторизован, не показываем контент
+  // Если пользователь не авторизован
   if (!user) {
+    // Если есть токен, но нет данных пользователя и нет загрузки - проблема
+    if (hasToken && !isLoading && !isFetching) {
+      console.error('AuthGuard: Token exists but no user data and not loading')
+      router.push('/')
+      return (
+        fallback || (
+          <div className='bg-background flex min-h-screen items-center justify-center'>
+            <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+          </div>
+        )
+      )
+    }
+
+    console.warn('AuthGuard: No user data, returning null')
     return null
   }
 
   // Показываем защищенный контент
+  console.log('AuthGuard: User authenticated, showing content')
   return <>{children}</>
 }
