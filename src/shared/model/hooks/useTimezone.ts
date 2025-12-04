@@ -1,3 +1,4 @@
+import { getCookie } from '@/shared/lib/utils/cookies'
 import {
   getStoredTimezone,
   getUserTimezone,
@@ -31,7 +32,7 @@ export function useTimezone() {
       if (typeof window === 'undefined') return
       if (!shouldSendTimezoneToBackend()) return
 
-      const token = localStorage.getItem('access_token')
+      const token = getCookie('access_token')
       if (!token) return
 
       const currentTimezone = getUserTimezone()

@@ -4,6 +4,7 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios'
+import { getCookie, removeAllCookies, setCookie } from '../utils/cookies'
 import { ApiError, handleApiError } from './errors'
 
 const ensureApiBaseUrl = (): string => {
@@ -29,7 +30,7 @@ apiClient.interceptors.request.use(
     config.baseURL = config.baseURL ?? ensureApiBaseUrl()
 
     if (typeof window !== 'undefined') {
-      const token = localStorage.getItem('access_token')
+      const token = getCookie('access_token')
       if (token && config.headers) {
         config.headers.Authorization = `Bearer ${token}`
       }
@@ -52,19 +53,30 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true
 
       try {
-        const refreshToken = localStorage.getItem('refresh_token')
+        const refreshToken = getCookie('refresh_token')
+
         if (refreshToken && typeof window !== 'undefined') {
           const baseUrl = ensureApiBaseUrl()
-          const response = await axios.post(`${baseUrl}/auth/refresh`, {
-            refresh_token: refreshToken,
-          })
+          const response = await axios.post(
+            `${baseUrl}/auth/refresh`,
+            {
+              refresh_token: refreshToken,
+            },
+            { withCredentials: true },
+          )
 
           const { access_token, refresh_token } = response.data
 
           if (access_token) {
-            localStorage.setItem('access_token', access_token)
+            const isSecure = location.protocol === 'https:'
+            setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
             if (refresh_token) {
-              localStorage.setItem('refresh_token', refresh_token)
+              setCookie(
+                'refresh_token',
+                refresh_token,
+                30 * 24 * 60 * 60,
+                isSecure,
+              )
             }
 
             if (originalRequest.headers) {
@@ -75,10 +87,20 @@ apiClient.interceptors.response.use(
         }
       } catch (refreshError) {
         if (typeof window !== 'undefined') {
-          localStorage.removeItem('access_token')
-          localStorage.removeItem('refresh_token')
+          removeAllCookies()
+
+          if (window.location.pathname.startsWith('/dashboard')) {
+            window.location.href = '/'
+          }
         }
         return Promise.reject(refreshError)
+      }
+    }
+
+    if (error.response?.status === 401 && typeof window !== 'undefined') {
+      if (window.location.pathname.startsWith('/dashboard')) {
+        removeAllCookies()
+        window.location.href = '/'
       }
     }
 

@@ -1,12 +1,14 @@
 'use client'
 
-import { postTelegramAuth } from '@/shared/lib/api/auth'
+import { useTelegramAuth } from '@/shared/model/hooks/useAuth'
 import { useTimezone } from '@/shared/model/hooks/useTimezone'
 import type { TelegramUser } from '@/shared/types/auth.types'
 import Modal from '@/shared/ui/Modal'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
+import { toast } from 'sonner'
 
 interface TelegramAuthModalProps {
   isOpen: boolean
@@ -26,25 +28,34 @@ export default function TelegramAuthModal({
   const telegramContainerRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { sendTimezoneToBackend } = useTimezone()
+  const { mutate: telegramAuth } = useTelegramAuth()
+  const router = useRouter()
 
   useEffect(() => {
     if (!isOpen) return
 
     window.onTelegramAuth = async (user: TelegramUser) => {
-      const authResponse = await postTelegramAuth(user)
+      telegramAuth(user, {
+        onSuccess: (authResponse) => {
+          const userId = authResponse.user.id
 
-      const userId = authResponse.user.id
+          setTimeout(() => {
+            void sendTimezoneToBackend(userId)
+          }, 100)
 
-      setTimeout(() => {
-        void sendTimezoneToBackend(userId)
-      }, 100)
-      onClose()
+          onClose()
+          router.push('/dashboard')
+        },
+        onError: () => {
+          toast.error('Ошибка при авторизации через Telegram')
+        },
+      })
     }
 
     return () => {
       delete window.onTelegramAuth
     }
-  }, [isOpen, onClose])
+  }, [isOpen, onClose, telegramAuth, router, sendTimezoneToBackend])
 
   useEffect(() => {
     if (!isOpen) return

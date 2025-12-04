@@ -6,7 +6,6 @@ import { PageHeader } from '@/shared/ui/PageHeader'
 import { HomeIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
-// Динамический импорт Stats для уменьшения начального бандла (recharts довольно тяжелый)
 const Stats = dynamic(
   () =>
     import('@/features/dashboard/Stats').then((mod) => ({

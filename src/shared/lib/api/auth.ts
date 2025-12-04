@@ -1,3 +1,4 @@
+import { setCookie } from '@/shared/lib/utils/cookies'
 import { AuthResponse, TelegramUser } from '@/shared/types/auth.types'
 import { apiFetch } from './client'
 
@@ -18,17 +19,27 @@ export async function postTelegramAuth(
   const response = await apiFetch<AuthResponse>('/login/telegram', {
     method: 'POST',
     data: payload,
-    withCredentials: false,
+    withCredentials: true,
   })
 
   const tokens = response.tokens
 
-  if (tokens?.access_token) {
-    localStorage.setItem('access_token', tokens.access_token)
+  if (tokens?.access_token && typeof window !== 'undefined') {
+    const isSecure = location.protocol === 'https:'
+
+    setCookie('access_token', tokens.access_token, 7 * 24 * 60 * 60, isSecure)
 
     if (tokens.refresh_token) {
-      localStorage.setItem('refresh_token', tokens.refresh_token)
+      setCookie(
+        'refresh_token',
+        tokens.refresh_token,
+        30 * 24 * 60 * 60,
+        isSecure,
+      )
     }
+
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
   }
 
   return response

@@ -1,15 +1,24 @@
 import { cn } from '@/shared/lib/utils/cn'
+import { useMe } from '@/shared/model/hooks/useAuth'
 import { TelegramAuthProps } from '@/shared/types/auth.types'
 import { Button } from '@/shared/ui/Button'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 export default function TelegramAuthButton({
   setIsTelegramModalOpen,
   className,
   title,
 }: TelegramAuthProps) {
+  const { data: user } = useMe()
+  const router = useRouter()
+
   const handleTelegramClick = () => {
     setIsTelegramModalOpen(true)
+
+    if (user) {
+      router.push('/dashboard')
+    }
   }
 
   return (
@@ -25,8 +34,8 @@ export default function TelegramAuthButton({
       <Image
         src='/telegram.svg'
         alt='telegram'
-        width={38}
-        height={38}
+        width={39}
+        height={39}
         className='absolute top-[-1px] left-[-1px]'
       />
       {title || 'Войти через Telegram'}

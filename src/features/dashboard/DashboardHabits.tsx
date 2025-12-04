@@ -11,7 +11,10 @@ export function DashboardHabits() {
   const isMobile = useMediaQuery('(max-width: 640px)')
   const { habits, updateHabit, deleteHabit, completeHabit } = useHabits()
 
-  const activeHabits = habits.filter((h) => h.isActive !== false)
+  const activeHabits = habits.filter(
+    (h): h is typeof h & { isActive: true } =>
+      h != null && h.isActive !== false,
+  )
 
   return (
     <>
@@ -31,19 +34,21 @@ export function DashboardHabits() {
           </Button>
         </div>
 
-        <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
-          {activeHabits.map((habit) => (
-            <HabitCard
-              key={habit.id}
-              data={habit}
-              handlers={{
-                onEdit: updateHabit,
-                onDelete: deleteHabit,
-                onComplete: completeHabit,
-              }}
-            />
-          ))}
-        </div>
+        {activeHabits.length > 0 && (
+          <div className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
+            {activeHabits.map((habit) => (
+              <HabitCard
+                key={habit.id}
+                data={habit}
+                handlers={{
+                  onEdit: updateHabit,
+                  onDelete: deleteHabit,
+                  onComplete: completeHabit,
+                }}
+              />
+            ))}
+          </div>
+        )}
 
         {activeHabits.length === 0 && (
           <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>

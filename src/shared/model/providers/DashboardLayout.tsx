@@ -1,0 +1,45 @@
+'use client'
+
+import { AuthGuard } from '@/shared/model/providers/AuthGuard'
+import { usePathname } from 'next/navigation'
+import { ReactNode, useState } from 'react'
+import { BottomNavigation } from '../../../features/dashboard/Sidebar/BottomNavigation'
+import { DesktopSidebar } from '../../../features/dashboard/Sidebar/Desktop'
+
+interface DashboardLayoutProps {
+  children: ReactNode
+}
+
+export function DashboardLayout({ children }: DashboardLayoutProps) {
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const pathname = usePathname()
+
+  const isActive = (href: string) => {
+    if (href === '/dashboard') {
+      return pathname === '/dashboard'
+    }
+    return pathname?.startsWith(href)
+  }
+
+  return (
+    <AuthGuard>
+      <section className='bg-background flex min-h-screen'>
+        <DesktopSidebar
+          sidebarCollapsed={sidebarCollapsed}
+          setSidebarCollapsed={setSidebarCollapsed}
+          isActive={isActive}
+        />
+
+        <BottomNavigation isActive={isActive} />
+
+        <main
+          className={`bg-background min-h-screen flex-1 overflow-x-hidden p-6 transition-all duration-300 ease-in-out max-lg:pb-28 max-sm:px-4 ${
+            sidebarCollapsed ? 'lg:ml-16' : 'lg:ml-64'
+          }`}
+        >
+          {children}
+        </main>
+      </section>
+    </AuthGuard>
+  )
+}

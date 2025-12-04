@@ -1,17 +1,45 @@
 import { apiFetch, authKeys, updateTimezone } from '@/shared/lib/api'
 import { postTelegramAuth } from '@/shared/lib/api/auth'
+import {
+  getCookie,
+  hasCookie,
+  removeAllCookies,
+} from '@/shared/lib/utils/cookies'
+import { getUserIdFromToken } from '@/shared/lib/utils/jwt'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
+function hasAccessToken(): boolean {
+  if (typeof window === 'undefined') return false
+
+  return hasCookie('access_token')
+}
+
+function getUserId(): number | null {
+  if (typeof window === 'undefined') return null
+
+  const token = getCookie('access_token')
+  if (!token) {
+    return null
+  }
+
+  return getUserIdFromToken(token)
+}
+
 export function useMe() {
+  const userId = getUserId()
+
   return useQuery<User>({
     queryKey: authKeys.me(),
     queryFn: async () => {
-      const response = await apiFetch<{ user: User }>('/auth/me')
+      if (!userId) {
+        throw new Error('User ID not found')
+      }
+      const response = await apiFetch<{ user: User }>(`/user/${userId}`)
       return response.user
     },
     enabled:
-      typeof window !== 'undefined' && !!localStorage.getItem('access_token'),
+      typeof window !== 'undefined' && hasAccessToken() && userId !== null,
     staleTime: 5 * 60_000,
   })
 }
@@ -37,10 +65,12 @@ export function useLogout() {
     },
     onSuccess: () => {
       if (typeof window !== 'undefined') {
-        localStorage.removeItem('access_token')
-        localStorage.removeItem('refresh_token')
+        removeAllCookies()
+        queryClient.clear()
+        window.location.href = '/'
+      } else {
+        queryClient.clear()
       }
-      queryClient.clear()
     },
   })
 }

@@ -21,7 +21,7 @@ export const Modal = ({
   className,
 }: ModalProps) => {
   return (
-    <RemoveScroll enabled={isOpen} removeScrollBar={false}>
+    <RemoveScroll enabled={isOpen} removeScrollBar={false} forwardProps>
       <section
         className={cn(
           'fixed inset-0 z-50 flex items-center justify-center transition-opacity duration-150',

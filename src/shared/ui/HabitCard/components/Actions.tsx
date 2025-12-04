@@ -26,7 +26,7 @@ export const HabitCardActions = ({
           onClick={onRelapse}
           variant={isCompleted ? 'primary' : 'default'}
           className={`h-9 flex-1 text-sm ${
-            !isCompleted && 'bg-red hover:bg-red/90'
+            !isCompleted && 'bg-red border-red hover:bg-red/80'
           }`}
         >
           <X className='mr-1.5 h-4 w-4' />
