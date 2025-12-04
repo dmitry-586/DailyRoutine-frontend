@@ -20,27 +20,36 @@ function getUserId(): number | null {
 
   const token = getCookie('access_token')
   if (!token) {
+    console.warn('getUserId: access_token not found in cookies')
     return null
   }
 
-  return getUserIdFromToken(token)
+  const userId = getUserIdFromToken(token)
+  if (!userId) {
+    console.warn('getUserId: failed to extract user_id from token', {
+      tokenLength: token.length,
+      tokenPreview: token.substring(0, 20) + '...',
+    })
+  }
+  return userId
 }
 
 export function useMe() {
   const userId = getUserId()
+  const hasToken = hasAccessToken()
 
   return useQuery<User>({
     queryKey: authKeys.me(),
     queryFn: async () => {
       if (!userId) {
-        throw new Error('User ID not found')
+        throw new Error('User ID not found in token')
       }
       const response = await apiFetch<{ user: User }>(`/user/${userId}`)
       return response.user
     },
-    enabled:
-      typeof window !== 'undefined' && hasAccessToken() && userId !== null,
+    enabled: typeof window !== 'undefined' && hasToken && userId !== null,
     staleTime: 5 * 60_000,
+    retry: false, // Не повторяем запрос при ошибке
   })
 }
 
