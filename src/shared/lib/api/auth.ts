@@ -24,14 +24,8 @@ export async function postTelegramAuth(
 
   const tokens = response.tokens
 
-  console.log('[Auth] Received tokens:', {
-    hasAccessToken: !!tokens?.access_token,
-    hasRefreshToken: !!tokens?.refresh_token,
-  })
-
   if (tokens?.access_token && typeof window !== 'undefined') {
     const isSecure = location.protocol === 'https:'
-    console.log('[Auth] Setting cookies, isSecure:', isSecure)
 
     setCookie('access_token', tokens.access_token, 7 * 24 * 60 * 60, isSecure)
 
@@ -44,9 +38,6 @@ export async function postTelegramAuth(
       )
     }
 
-    console.log('[Auth] Cookies set, checking...')
-    console.log('[Auth] document.cookie:', document.cookie)
-
     localStorage.removeItem('access_token')
     localStorage.removeItem('refresh_token')
   }
@@ -54,13 +45,8 @@ export async function postTelegramAuth(
   return response
 }
 
-export async function updateTimezone(params: {
-  userId: number
-  timezone: string
-}): Promise<void> {
-  const { userId, timezone } = params
-
-  await apiFetch(`/users/${userId}/settings/timezone`, {
+export async function updateTimezone(timezone: string): Promise<void> {
+  await apiFetch('/user/me/settings/timezone', {
     method: 'PUT',
     data: { timezone },
   })

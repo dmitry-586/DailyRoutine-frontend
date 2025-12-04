@@ -27,27 +27,20 @@ export function useTimezone() {
     saveTimezone(newTimezone)
   }
 
-  const sendTimezoneToBackend = useCallback(
-    async (userId: number) => {
-      if (typeof window === 'undefined') return
-      if (!shouldSendTimezoneToBackend()) return
+  const sendTimezoneToBackend = useCallback(async () => {
+    if (typeof window === 'undefined' || !shouldSendTimezoneToBackend()) return
 
-      const token = getCookie('access_token')
-      if (!token) return
+    const token = getCookie('access_token')
+    if (!token) return
 
-      const currentTimezone = getUserTimezone()
-      try {
-        await updateTimezoneMutation.mutateAsync({
-          userId,
-          timezone: currentTimezone,
-        })
-        saveLastSentTimezone(currentTimezone)
-      } catch (error) {
-        console.warn('Не удалось отправить часовой пояс на бэкенд:', error)
-      }
-    },
-    [updateTimezoneMutation],
-  )
+    const currentTimezone = getUserTimezone()
+    try {
+      await updateTimezoneMutation.mutateAsync(currentTimezone)
+      saveLastSentTimezone(currentTimezone)
+    } catch (error) {
+      console.warn('Не удалось отправить часовой пояс на бэкенд:', error)
+    }
+  }, [updateTimezoneMutation])
 
   return {
     timezone,

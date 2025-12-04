@@ -11,7 +11,7 @@ export function TimezoneSync() {
   useEffect(() => {
     if (!user) return
 
-    void sendTimezoneToBackend(user.id)
+    void sendTimezoneToBackend()
   }, [sendTimezoneToBackend, user])
 
   return null
