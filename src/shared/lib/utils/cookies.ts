@@ -20,7 +20,21 @@ export function setCookie(
   if (typeof window === 'undefined') return
 
   const secureFlag = secure && location.protocol === 'https:' ? '; Secure' : ''
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Strict${secureFlag}`
+  const cookieString = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secureFlag}`
+
+  console.log('[setCookie]', {
+    name,
+    maxAge,
+    secure,
+    protocol: location.protocol,
+    cookieString,
+  })
+
+  document.cookie = cookieString
+
+  // Проверяем что cookie установилась
+  const check = getCookie(name)
+  console.log('[setCookie] Cookie set successfully:', !!check)
 }
 
 export function removeCookie(name: string): void {
