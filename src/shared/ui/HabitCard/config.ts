@@ -1,11 +1,6 @@
-import type { Habit } from '@/shared/types/habit.types'
-
-type HabitType = Habit['type']
-
 interface HabitCardStyleParams {
   isActive: boolean
   isCompleted: boolean
-  type: HabitType
 }
 
 export const CARD_BASE_STYLES =
@@ -14,13 +9,12 @@ export const CARD_BASE_STYLES =
 export const getCardContainerClassName = ({
   isActive,
   isCompleted,
-  type,
 }: HabitCardStyleParams): string => {
   if (!isActive) {
     return 'border-light-gray/20 hover:border-light-gray/30 opacity-50'
   }
 
-  if (isCompleted && (type === 'good' || type === 'bad')) {
+  if (isCompleted) {
     return 'border-green/30 hover:border-green/50 hover:shadow-green/10 hover:shadow-lg'
   }
 

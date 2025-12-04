@@ -1,21 +1,24 @@
 'use client'
 
+import {
+  useCreateHabit,
+  useDeleteHabit,
+  useHabits,
+  useUpdateHabit,
+} from '@/shared/model/hooks/useHabits'
 import { Button } from '@/shared/ui/Button'
 import { HabitCard } from '@/shared/ui/HabitCard'
 import { HabitModal } from '@/shared/ui/HabitModal'
 import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
 import { Plus } from 'lucide-react'
 import { HABIT_TABS } from './config'
-import type { AllHabitsProps } from './types'
 import { useAllHabits } from './useAllHabits'
 
-export function AllHabits({
-  habits,
-  onAddHabit,
-  onUpdateHabit,
-  onDeleteHabit,
-  onCompleteHabit,
-}: AllHabitsProps) {
+export function AllHabits() {
+  const { data: habits = [] } = useHabits()
+  const { mutate: createHabit } = useCreateHabit()
+  const { mutate: updateHabit } = useUpdateHabit()
+  const { mutate: deleteHabit } = useDeleteHabit()
   const {
     filter,
     setFilter,
@@ -30,8 +33,8 @@ export function AllHabits({
     handleToggleActive,
   } = useAllHabits({
     habits,
-    onAddHabit,
-    onUpdateHabit,
+    onAddHabit: createHabit,
+    onUpdateHabit: (id, data) => updateHabit({ id, data }),
   })
 
   return (
@@ -61,8 +64,12 @@ export function AllHabits({
                 data={habit}
                 handlers={{
                   onEdit: handleModal,
-                  onDelete: onDeleteHabit,
-                  onComplete: onCompleteHabit,
+                  onDelete: deleteHabit,
+                  onComplete: (habit) =>
+                    updateHabit({
+                      id: habit.id,
+                      data: { is_done: !habit.is_done },
+                    }),
                   onToggleActive: handleToggleActive,
                 }}
               />
@@ -82,7 +89,10 @@ export function AllHabits({
       <HabitModal
         open={isModalOpen}
         onClose={handleClose}
-        onSave={handleSave}
+        onSave={(data) => {
+          handleSave(data)
+          handleClose()
+        }}
         habit={editingHabit}
       />
     </>

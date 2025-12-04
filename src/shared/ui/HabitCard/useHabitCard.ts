@@ -1,11 +1,12 @@
+import type { UpdateHabitRequest } from '@/shared/types/habit.types'
 import { useState } from 'react'
 import type { HabitCardProps } from './types'
 
 export function useHabitCard({ data, handlers }: HabitCardProps) {
-  const { id, completed = false, isActive = true } = data
+  const { id, is_done = false, is_active = true } = data
   const { onComplete, onEdit, onDelete, onToggleActive } = handlers
 
-  const [isCompleted, setIsCompleted] = useState(completed)
+  const [isCompleted, setIsCompleted] = useState(is_done)
   const [showDeleteDialog, setShowDeleteDialog] = useState(false)
   const [showEditModal, setShowEditModal] = useState(false)
 
@@ -13,13 +14,13 @@ export function useHabitCard({ data, handlers }: HabitCardProps) {
     e.stopPropagation()
     const nextCompleted = !isCompleted
     setIsCompleted(nextCompleted)
-    onComplete?.({ ...data, completed: nextCompleted })
+    onComplete?.({ ...data, is_done: nextCompleted })
   }
 
   const handleRelapse = (e: React.MouseEvent) => {
     e.stopPropagation()
     setIsCompleted(false)
-    onComplete?.({ ...data, completed: false })
+    onComplete?.({ ...data, is_done: false })
   }
 
   const handleEdit = (e: React.MouseEvent) => {
@@ -28,7 +29,7 @@ export function useHabitCard({ data, handlers }: HabitCardProps) {
   }
 
   const handleToggleActive = () => {
-    onToggleActive?.({ ...data, completed: isCompleted, isActive: !isActive })
+    onToggleActive?.({ ...data, is_done: isCompleted, is_active: !is_active })
   }
 
   const handleDeleteClick = (e: React.MouseEvent) => {
@@ -41,8 +42,8 @@ export function useHabitCard({ data, handlers }: HabitCardProps) {
     setShowDeleteDialog(false)
   }
 
-  const handleEditSave = (updatedHabit: typeof data) => {
-    onEdit?.(updatedHabit)
+  const handleEditSave = (updatedData: UpdateHabitRequest) => {
+    onEdit?.({ ...data, ...updatedData } as typeof data)
     setShowEditModal(false)
   }
 
@@ -56,7 +57,7 @@ export function useHabitCard({ data, handlers }: HabitCardProps) {
 
   return {
     isCompleted,
-    isActive,
+    isActive: is_active,
     showDeleteDialog,
     showEditModal,
     handleComplete,

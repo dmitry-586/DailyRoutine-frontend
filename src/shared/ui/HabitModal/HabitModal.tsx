@@ -15,10 +15,10 @@ export function HabitModal({ open, onClose, onSave, habit }: HabitModalProps) {
     control,
     errors,
     isSubmitting,
-    typeValue,
-    habitFormat,
+    isBeneficialValue,
+    habitType,
     unitValue,
-    handleFormatChange,
+    handleTypeChange,
     onSubmit,
     handleToggleActive,
   } = useHabitModal({ open, habit, onClose, onSave })
@@ -32,13 +32,13 @@ export function HabitModal({ open, onClose, onSave, habit }: HabitModalProps) {
     >
       <form onSubmit={handleSubmit(onSubmit)}>
         <HabitFormFields
-          typeValue={typeValue}
-          habitFormat={habitFormat}
+          isBeneficialValue={isBeneficialValue}
+          habitType={habitType}
           unitValue={unitValue}
           register={register}
           errors={errors}
           control={control}
-          onFormatChange={handleFormatChange}
+          onTypeChange={handleTypeChange}
         />
 
         <ModalActions

@@ -3,7 +3,7 @@ import { Check, Pencil, Trash2, X } from 'lucide-react'
 import type { HabitCardActionsProps } from '../types'
 
 export const HabitCardActions = ({
-  type,
+  isBeneficial,
   isCompleted,
   handlers,
 }: HabitCardActionsProps) => {
@@ -11,7 +11,7 @@ export const HabitCardActions = ({
 
   return (
     <div className='mt-auto flex items-center gap-2'>
-      {type === 'good' ? (
+      {isBeneficial ? (
         <Button
           onClick={onComplete}
           className={`h-9 flex-1 text-sm ${

@@ -1,4 +1,12 @@
-export { postTelegramAuth, updateTimezone } from './auth'
+export { postTelegramAuth } from './auth'
 export { apiClient, apiFetch } from './client'
 export { ApiError } from './errors'
-export { authKeys, routineKeys } from './keys'
+export {
+  createHabit,
+  deleteHabit,
+  getHabit,
+  getHabits,
+  updateHabit,
+} from './habits'
+export { authKeys, habitKeys, routineKeys, settingsKeys } from './keys'
+export { getSettings, updateSettings, updateTimezone } from './settings'

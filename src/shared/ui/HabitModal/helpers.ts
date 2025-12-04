@@ -1,4 +1,8 @@
-import type { Habit } from '@/shared/types'
+import type {
+  CreateHabitRequest,
+  Habit,
+  UpdateHabitRequest,
+} from '@/shared/types'
 import type { HabitFormData } from './schema'
 
 /**
@@ -6,44 +10,60 @@ import type { HabitFormData } from './schema'
  */
 export const habitToFormData = (habit: Habit): HabitFormData => ({
   title: habit.title,
+  is_beneficial: habit.is_beneficial,
   type: habit.type,
-  format: habit.format,
-  target: habit.format === 'binary' ? '1' : habit.target.toString(),
-  unit: habit.format === 'time' ? undefined : habit.unit || 'раз',
+  value: habit.type === 'binary' ? '1' : habit.value.toString(),
+  unit: habit.type === 'time' ? undefined : habit.unit || 'раз',
 })
 
 /**
- * Вычисляет целевое значение в зависимости от формата привычки
+ * Вычисляет целевое значение в зависимости от типа привычки
  */
-const calculateTarget = (format: string, target?: string): number => {
-  if (format === 'binary') return 1
-  if (format === 'time') return parseInt(target || '0', 10) || 0
-
-  return parseInt(target || '1', 10)
+const calculateValue = (
+  type: 'binary' | 'count' | 'time',
+  value?: string,
+): number => {
+  if (type === 'binary') return 1
+  return parseInt(value || '1', 10) || 1
 }
 
 /**
- * Преобразует данные формы в объект привычки для сохранения
+ * Преобразует данные формы в базовый объект запроса
  */
-export const formDataToHabit = (
-  data: HabitFormData,
-  existingHabit?: Habit | null,
-): Habit => {
-  const target = calculateTarget(data.format, data.target)
-
-  return {
-    id: existingHabit?.id || Date.now().toString(),
+const formDataToBaseRequest = (data: HabitFormData) => {
+  const value = calculateValue(data.type, data.value)
+  const baseRequest = {
     title: data.title,
+    is_beneficial: data.is_beneficial,
     type: data.type,
-    format: data.format,
-    current: existingHabit?.current || 0,
-    target,
-    unit:
-      data.format === 'binary' || data.format === 'time'
-        ? ''
-        : data.unit || 'раз',
-    streak: existingHabit?.streak || 0,
-    completed: existingHabit?.completed || false,
-    isActive: existingHabit?.isActive ?? true,
+    value,
   }
+
+  // unit нужен только для count
+  if (data.type === 'count') {
+    return { ...baseRequest, unit: data.unit || 'раз' }
+  }
+
+  return baseRequest
+}
+
+/**
+ * Преобразует данные формы в запрос создания привычки
+ */
+export const formDataToCreateRequest = (
+  data: HabitFormData,
+): CreateHabitRequest => {
+  return {
+    ...formDataToBaseRequest(data),
+    is_active: true,
+  } as CreateHabitRequest
+}
+
+/**
+ * Преобразует данные формы в запрос обновления привычки
+ */
+export const formDataToUpdateRequest = (
+  data: HabitFormData,
+): UpdateHabitRequest => {
+  return formDataToBaseRequest(data) as UpdateHabitRequest
 }

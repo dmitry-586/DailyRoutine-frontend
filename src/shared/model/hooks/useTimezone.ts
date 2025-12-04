@@ -6,7 +6,7 @@ import {
   saveTimezone,
   shouldSendTimezoneToBackend,
 } from '@/shared/lib/utils/timezone'
-import { useUpdateTimezone } from '@/shared/model/hooks/useAuth'
+import { useUpdateTimezone } from '@/shared/model/hooks/useSettings'
 import { useCallback, useEffect, useState } from 'react'
 
 export function useTimezone() {

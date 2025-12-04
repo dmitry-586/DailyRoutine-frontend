@@ -2,18 +2,22 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { DEFAULT_FORM_VALUES } from './config'
-import { formDataToHabit, habitToFormData } from './helpers'
+import {
+  formDataToCreateRequest,
+  formDataToUpdateRequest,
+  habitToFormData,
+} from './helpers'
 import { HabitFormData, habitFormSchema } from './schema'
-import { UseHabitModalProps } from './types'
+import type { HabitModalProps } from './types'
 
 export const useHabitModal = ({
   open,
   habit,
   onClose,
   onSave,
-}: UseHabitModalProps) => {
+}: HabitModalProps) => {
   const isEditMode = !!habit
-  const isActive = habit?.isActive !== false
+  const isActive = habit?.is_active !== false
 
   const {
     register,
@@ -29,44 +33,43 @@ export const useHabitModal = ({
     mode: 'onChange',
   })
 
-  const typeValue = watch('type')
-  const habitFormat = watch('format')
+  const isBeneficialValue = watch('is_beneficial')
+  const habitType = watch('type')
   const unitValue = watch('unit')
 
   useEffect(() => {
-    if (open && habit) {
-      reset(habitToFormData(habit))
-    } else if (!open) {
-      reset(DEFAULT_FORM_VALUES)
+    if (open) {
+      if (habit) {
+        reset(habitToFormData(habit))
+      } else {
+        reset(DEFAULT_FORM_VALUES)
+      }
     }
   }, [habit, open, reset])
 
-  const handleFormatChange = (nextFormat: string) => {
-    if (nextFormat === 'count') {
-      setValue('target', '')
+  const handleTypeChange = (nextType: string) => {
+    if (nextType === 'count') {
+      setValue('value', '')
       setValue('unit', DEFAULT_FORM_VALUES.unit)
     }
 
-    if (nextFormat === 'time') {
-      setValue('unit', undefined as never)
+    if (nextType === 'time') {
+      setValue('unit', undefined)
     }
   }
 
   const onSubmit = (data: HabitFormData) => {
-    const habitData = formDataToHabit(data, habit)
-    onSave(habitData)
+    if (isEditMode) {
+      onSave(formDataToUpdateRequest(data))
+    } else {
+      onSave(formDataToCreateRequest(data))
+    }
     onClose()
   }
 
   const handleToggleActive = () => {
     if (!habit) return
-
-    const updatedHabit = {
-      ...habit,
-      isActive: !isActive,
-    }
-
-    onSave(updatedHabit)
+    onSave({ is_active: !isActive })
     onClose()
   }
 
@@ -77,11 +80,11 @@ export const useHabitModal = ({
     handleSubmit,
     errors,
     isSubmitting,
-    typeValue,
-    habitFormat,
+    habitType,
     unitValue,
+    isBeneficialValue,
     control,
-    handleFormatChange,
+    handleTypeChange,
     onSubmit,
     handleToggleActive,
   }

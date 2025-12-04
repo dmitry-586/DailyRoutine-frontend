@@ -1,13 +1,16 @@
-import { Habit } from '@/shared/types/habit.types'
+import type {
+  CreateHabitRequest,
+  Habit,
+  UpdateHabitRequest,
+} from '@/shared/types/habit.types'
 import { useMemo, useState } from 'react'
 import { HABIT_TABS } from './config'
-import { toggleHabitActive } from './helpers'
 import type { FilterType } from './types'
 
 interface UseAllHabitsProps {
   habits: Habit[]
-  onAddHabit: (habit: Habit) => void
-  onUpdateHabit: (habit: Habit) => void
+  onAddHabit: (data: CreateHabitRequest) => void
+  onUpdateHabit: (id: number, data: UpdateHabitRequest) => void
 }
 
 export const useAllHabits = ({
@@ -57,11 +60,16 @@ export const useAllHabits = ({
       setIsModalOpen(false)
       setEditingHabit(null)
     },
-    handleSave: (habit: Habit) => {
-      editingHabit ? onUpdateHabit(habit) : onAddHabit(habit)
+    handleSave: (data: CreateHabitRequest | UpdateHabitRequest) => {
+      if (editingHabit) {
+        onUpdateHabit(editingHabit.id, data as UpdateHabitRequest)
+      } else {
+        onAddHabit(data as CreateHabitRequest)
+      }
       setEditingHabit(null)
     },
-    handleToggleActive: (habit: Habit) =>
-      onUpdateHabit(toggleHabitActive(habit)),
+    handleToggleActive: (habit: Habit) => {
+      onUpdateHabit(habit.id, { is_active: !habit.is_active })
+    },
   }
 }

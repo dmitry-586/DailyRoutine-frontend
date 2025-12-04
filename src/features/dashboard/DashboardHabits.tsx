@@ -1,5 +1,15 @@
-import { useHabits } from '@/shared/model/hooks/useHabits'
+import {
+  useCreateHabit,
+  useDeleteHabit,
+  useHabits,
+  useUpdateHabit,
+} from '@/shared/model/hooks/useHabits'
 import { useMediaQuery } from '@/shared/model/hooks/useMediaQuery'
+import type {
+  CreateHabitRequest,
+  Habit,
+  UpdateHabitRequest,
+} from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
 import { HabitCard } from '@/shared/ui/HabitCard'
 import { HabitModal } from '@/shared/ui/HabitModal'
@@ -8,13 +18,15 @@ import { useState } from 'react'
 
 export function DashboardHabits() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [habitToEdit, setHabitToEdit] = useState<Habit | null>(null)
   const isMobile = useMediaQuery('(max-width: 640px)')
-  const { habits, updateHabit, deleteHabit, completeHabit } = useHabits()
 
-  const activeHabits = habits.filter(
-    (h): h is typeof h & { isActive: true } =>
-      h != null && h.isActive !== false,
-  )
+  const { data: habits = [] } = useHabits()
+  const { mutate: createHabit } = useCreateHabit()
+  const { mutate: updateHabit } = useUpdateHabit()
+  const { mutate: deleteHabit } = useDeleteHabit()
+
+  const activeHabits = habits.filter((h) => h.is_active !== false)
 
   return (
     <>
@@ -26,6 +38,7 @@ export function DashboardHabits() {
           <Button
             size={isMobile ? 'sm' : 'default'}
             onClick={() => {
+              setHabitToEdit(null)
               setIsModalOpen(true)
             }}
           >
@@ -41,9 +54,16 @@ export function DashboardHabits() {
                 key={habit.id}
                 data={habit}
                 handlers={{
-                  onEdit: updateHabit,
+                  onEdit: (habit) => {
+                    setHabitToEdit(habit)
+                    setIsModalOpen(true)
+                  },
                   onDelete: deleteHabit,
-                  onComplete: completeHabit,
+                  onComplete: (habit) =>
+                    updateHabit({
+                      id: habit.id,
+                      data: { is_done: !habit.is_done },
+                    }),
                 }}
               />
             ))}
@@ -55,6 +75,7 @@ export function DashboardHabits() {
             <p className='text-light-gray mb-4'>У вас пока нет привычек</p>
             <Button
               onClick={() => {
+                setHabitToEdit(null)
                 setIsModalOpen(true)
               }}
               className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
@@ -70,9 +91,21 @@ export function DashboardHabits() {
         open={isModalOpen}
         onClose={() => {
           setIsModalOpen(false)
+          setHabitToEdit(null)
         }}
-        onSave={() => {}}
-        habit={null}
+        onSave={(data) => {
+          if (habitToEdit) {
+            updateHabit({
+              id: habitToEdit.id,
+              data: data as UpdateHabitRequest,
+            })
+          } else {
+            createHabit(data as CreateHabitRequest)
+          }
+          setIsModalOpen(false)
+          setHabitToEdit(null)
+        }}
+        habit={habitToEdit}
       />
     </>
   )

@@ -1,8 +1,3 @@
-export const TIME_UNITS = [
-  { value: 'мин', label: 'минут' },
-  { value: 'ч', label: 'часов' },
-] as const
-
 export const COUNT_UNITS = [
   { value: 'раз', label: 'раз' },
   { value: 'шт', label: 'штук' },
@@ -11,20 +6,20 @@ export const COUNT_UNITS = [
   { value: 'л', label: 'литров' },
 ] as const
 
-export const habitTypeOptions = [
+export const habitBeneficialOptions = [
   {
-    value: 'good',
+    value: true,
     label: 'Полезная привычка',
     description: 'Отмечайте выполнение каждый день',
   },
   {
-    value: 'bad',
+    value: false,
     label: 'Вредная привычка',
     description: 'Отмечайте день, когда сорвались',
   },
 ] as const
 
-export const habitFormatOptions = [
+export const habitTypeOptions = [
   {
     value: 'binary',
     label: 'Да / Нет',
@@ -44,8 +39,8 @@ export const habitFormatOptions = [
 
 export const DEFAULT_FORM_VALUES = {
   title: '',
-  type: 'good' as const,
-  format: 'binary' as const,
-  target: '1',
+  is_beneficial: true,
+  type: 'binary' as const,
+  value: '1',
   unit: 'раз',
 }

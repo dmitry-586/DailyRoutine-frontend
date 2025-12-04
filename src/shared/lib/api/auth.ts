@@ -44,10 +44,3 @@ export async function postTelegramAuth(
 
   return response
 }
-
-export async function updateTimezone(timezone: string): Promise<void> {
-  await apiFetch('/user/me/settings/timezone', {
-    method: 'PUT',
-    data: { timezone },
-  })
-}

@@ -3,17 +3,21 @@ import { RadioGroup } from '@/shared/ui/RadioGroup'
 import { Select } from '@/shared/ui/Select'
 import { TimeInput } from '@/shared/ui/TimeInput'
 import { Controller } from 'react-hook-form'
-import { COUNT_UNITS, habitFormatOptions, habitTypeOptions } from '../config'
+import {
+  COUNT_UNITS,
+  habitBeneficialOptions,
+  habitTypeOptions,
+} from '../config'
 import type { HabitFormFieldsProps } from '../types'
 
 export const HabitFormFields = ({
-  typeValue,
-  habitFormat,
+  habitType,
   unitValue,
+  isBeneficialValue,
   register,
   errors,
   control,
-  onFormatChange,
+  onTypeChange,
 }: HabitFormFieldsProps) => {
   return (
     <div className='space-y-4'>
@@ -26,26 +30,34 @@ export const HabitFormFields = ({
 
       <RadioGroup
         label='Тип привычки'
-        options={habitTypeOptions}
-        currentValue={typeValue}
-        defaultValue='good'
-        register={() => register('type')}
+        options={habitBeneficialOptions.map((opt) => ({
+          label: opt.label,
+          description: opt.description,
+          value: opt.value ? 'true' : 'false',
+        }))}
+        currentValue={isBeneficialValue ? 'true' : 'false'}
+        defaultValue='true'
+        register={() =>
+          register('is_beneficial', {
+            setValueAs: (value: string) => value === 'true',
+          })
+        }
         className='space-y-3'
       />
 
       <RadioGroup
         label='Формат отслеживания'
-        options={habitFormatOptions}
-        currentValue={habitFormat}
+        options={habitTypeOptions}
+        currentValue={habitType}
         defaultValue='binary'
-        onValueChange={onFormatChange}
-        register={() => register('format')}
+        onValueChange={onTypeChange}
+        register={() => register('type')}
         className='space-y-3'
       />
 
-      {habitFormat === 'time' && (
+      {habitType === 'time' && (
         <Controller
-          name='target'
+          name='value'
           control={control}
           render={({ field }) => (
             <TimeInput
@@ -54,21 +66,21 @@ export const HabitFormFields = ({
               value={field.value}
               onChange={field.onChange}
               onBlur={field.onBlur}
-              error={errors.target?.message}
+              error={errors.value?.message}
             />
           )}
         />
       )}
 
-      {habitFormat === 'count' && (
+      {habitType === 'count' && (
         <div className='flex gap-2'>
           <Input
             label='Целевое значение'
-            {...register('target')}
+            {...register('value')}
             type='number'
             min='1'
             placeholder='Например: 10'
-            error={errors.target?.message}
+            error={errors.value?.message}
           />
           <div className='shrink-0 space-y-2'>
             <Select

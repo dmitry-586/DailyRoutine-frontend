@@ -5,7 +5,7 @@ export type HabitCardData = Habit
 export interface HabitCardHandlers {
   onComplete?: (habit: HabitCardData) => void
   onEdit?: (habit: HabitCardData) => void
-  onDelete?: (id: string) => void
+  onDelete?: (id: number) => void
   onToggleActive?: (habit: HabitCardData) => void
 }
 
@@ -15,11 +15,11 @@ export interface HabitCardProps {
 }
 
 export interface HabitCardHeaderProps {
-  data: Pick<Habit, 'title' | 'format' | 'target' | 'unit' | 'streak'>
+  data: Pick<Habit, 'title' | 'type' | 'value' | 'unit' | 'series'>
 }
 
 export interface HabitCardActionsProps {
-  type: Habit['type']
+  isBeneficial: boolean
   isCompleted: boolean
   handlers: {
     onComplete: (e: React.MouseEvent) => void

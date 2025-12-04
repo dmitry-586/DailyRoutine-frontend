@@ -3,9 +3,9 @@ import { DailyFocusCard } from './components/DailyFocusCard'
 import { StatsPanel } from './components/StatsPanel'
 
 export function Stats() {
-  const { habits } = useHabits()
-  const completedToday = habits.filter((h) => h.completed).length
-  const activeHabits = habits.filter((h) => h.isActive !== false)
+  const { data: habits = [] } = useHabits()
+  const completedToday = habits.filter((h) => h.is_done).length
+  const activeHabits = habits.filter((h) => h.is_active !== false)
 
   return (
     <div className='max-w-[300px] shrink-0 max-xl:max-w-full max-md:w-full'>

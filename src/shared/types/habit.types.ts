@@ -5,15 +5,35 @@ export interface HabitHistoryEntry {
 }
 
 export interface Habit {
-  id: string
+  id: number
+  user_id: number
   title: string
-  type: 'good' | 'bad'
-  format: 'time' | 'count' | 'binary'
-  current: number
-  target: number
+  type: 'time' | 'count' | 'binary'
   unit?: string
-  streak: number
-  completed?: boolean
-  isActive?: boolean
-  history?: HabitHistoryEntry[]
+  value: number
+  is_active: boolean
+  is_done: boolean
+  is_beneficial: boolean
+  series: number
+  created_at: string
+}
+
+export interface CreateHabitRequest {
+  title: string
+  type: 'time' | 'count' | 'binary'
+  unit?: string
+  value: number
+  is_active?: boolean
+  is_beneficial?: boolean
+}
+
+export interface UpdateHabitRequest {
+  title?: string
+  type?: 'time' | 'count' | 'binary'
+  unit?: string
+  value?: number
+  is_active?: boolean
+  is_done?: boolean
+  is_beneficial?: boolean
+  series?: number
 }

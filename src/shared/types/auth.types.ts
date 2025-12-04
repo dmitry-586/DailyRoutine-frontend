@@ -16,11 +16,22 @@ export interface TelegramAuthProps {
 
 export interface User {
   id: number
-  firstName: string
-  lastName?: string
   username?: string
-  photoUrl?: string
-  telegramId: number
+  photo_url?: string
+  auth_date: string
+  tokentg?: string
+}
+
+export interface UserSettings {
+  user_id: number
+  timezone: string
+  do_not_disturb: boolean
+  notify_times: string[]
+}
+
+export interface UpdateSettingsRequest {
+  do_not_disturb?: boolean
+  notify_times?: string[]
 }
 
 export interface AuthTokens {

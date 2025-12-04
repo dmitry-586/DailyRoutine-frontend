@@ -27,12 +27,11 @@ export function HabitCard(props: HabitCardProps) {
   } = useHabitCard(props)
 
   const { data } = props
-  const { title, type } = data
+  const { title, is_beneficial } = data
 
   const cardClassName = getCardContainerClassName({
     isActive,
     isCompleted,
-    type,
   })
 
   return (
@@ -41,7 +40,7 @@ export function HabitCard(props: HabitCardProps) {
         <HabitCardHeader data={data} />
 
         <HabitCardActions
-          type={type}
+          isBeneficial={is_beneficial}
           isCompleted={isCompleted}
           handlers={{
             onComplete: handleComplete,

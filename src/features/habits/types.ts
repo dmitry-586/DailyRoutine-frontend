@@ -1,11 +1,15 @@
-import { Habit } from '@/shared/types/habit.types'
+import type {
+  CreateHabitRequest,
+  Habit,
+  UpdateHabitRequest,
+} from '@/shared/types/habit.types'
 import { TabVariant } from '@/shared/ui/Tabs/types'
 
 export interface AllHabitsProps {
   habits: Habit[]
-  onAddHabit: (habit: Habit) => void
-  onUpdateHabit: (habit: Habit) => void
-  onDeleteHabit: (id: string) => void
+  onAddHabit: (data: CreateHabitRequest) => void
+  onUpdateHabit: (id: number, data: UpdateHabitRequest) => void
+  onDeleteHabit: (id: number) => void
   onCompleteHabit?: (habit: Habit) => void
 }
 

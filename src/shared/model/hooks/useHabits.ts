@@ -1,99 +1,58 @@
 import {
-  addHistoryEntry,
-  generateHistoryForHabit,
-} from '@/shared/lib/utils/habitHistory'
-import { Habit } from '@/shared/types/habit.types'
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
-
-const initialHabits: Habit[] = [
-  {
-    id: '1',
-    title: 'Утренняя пробежка',
-    type: 'good' as const,
-    format: 'time' as const,
-    current: 25,
-    target: 30,
-    unit: 'мин',
-    streak: 7,
-    completed: false,
-  },
-  {
-    id: '2',
-    title: 'Прочитать книгу',
-    type: 'good' as const,
-    format: 'count' as const,
-    current: 15,
-    target: 20,
-    unit: 'стр',
-    streak: 5,
-    completed: false,
-  },
-  {
-    id: '3',
-    title: 'Медитация',
-    type: 'good' as const,
-    format: 'binary' as const,
-    current: 0,
-    target: 1,
-    streak: 12,
-    completed: false,
-  },
-  {
-    id: '4',
-    title: 'Не курить',
-    type: 'bad' as const,
-    format: 'binary' as const,
-    current: 0,
-    target: 1,
-    streak: 30,
-    completed: false,
-  },
-].map((habit) => ({
-  ...habit,
-  isActive: true,
-  history: generateHistoryForHabit(habit),
-}))
+  deleteHabit as apiDeleteHabit,
+  updateHabit as apiUpdateHabit,
+  createHabit,
+  getHabits,
+  habitKeys,
+} from '@/shared/lib/api'
+import type {
+  CreateHabitRequest,
+  Habit,
+  UpdateHabitRequest,
+} from '@/shared/types/habit.types'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useHabits() {
-  const router = useRouter()
-  const [habits, setHabits] = useState<Habit[]>(initialHabits)
+  return useQuery<Habit[]>({
+    queryKey: habitKeys.all(),
+    queryFn: getHabits,
+    staleTime: 1 * 60_000, // 1 минута
+  })
+}
 
-  const addHabit = (habit: Habit) => {
-    const habitWithHistory = {
-      ...habit,
-      history: habit.history || generateHistoryForHabit(habit),
-    }
-    setHabits([...habits, habitWithHistory])
-  }
+export function useCreateHabit() {
+  const queryClient = useQueryClient()
 
-  const updateHabit = (updatedHabit: Habit) => {
-    setHabits(habits.map((h) => (h.id === updatedHabit.id ? updatedHabit : h)))
-  }
+  return useMutation({
+    mutationFn: (data: CreateHabitRequest) => createHabit(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+    },
+  })
+}
 
-  const deleteHabit = (id: string) => {
-    setHabits(habits.filter((h) => h.id !== id))
-  }
+export function useUpdateHabit() {
+  const queryClient = useQueryClient()
 
-  const completeHabit = (habit: Habit) => {
-    const updatedHabit = addHistoryEntry(
-      habit,
-      habit.current,
-      habit.completed || false,
-    )
-    setHabits(habits.map((h) => (h.id === habit.id ? updatedHabit : h)))
-  }
+  return useMutation({
+    mutationFn: ({ id, data }: { id: number; data: UpdateHabitRequest }) =>
+      apiUpdateHabit(id, data),
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+      queryClient.invalidateQueries({
+        queryKey: habitKeys.detail(String(variables.id)),
+      })
+    },
+  })
+}
 
-  const viewHabitDetails = (habit: Habit) => {
-    router.push(`/dashboard/habits/${habit.id}`)
-  }
+export function useDeleteHabit() {
+  const queryClient = useQueryClient()
 
-  return {
-    habits,
-    addHabit,
-    updateHabit,
-    deleteHabit,
-    completeHabit,
-    viewHabitDetails,
-  }
+  return useMutation({
+    mutationFn: (id: number) => apiDeleteHabit(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+    },
+  })
 }
