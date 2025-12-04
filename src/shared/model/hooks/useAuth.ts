@@ -19,19 +19,9 @@ function getUserId(): number | null {
   if (typeof window === 'undefined') return null
 
   const token = getCookie('access_token')
-  if (!token) {
-    console.warn('getUserId: access_token not found in cookies')
-    return null
-  }
+  if (!token) return null
 
-  const userId = getUserIdFromToken(token)
-  if (!userId) {
-    console.warn('getUserId: failed to extract user_id from token', {
-      tokenLength: token.length,
-      tokenPreview: token.substring(0, 20) + '...',
-    })
-  }
-  return userId
+  return getUserIdFromToken(token)
 }
 
 export function useMe() {
@@ -49,7 +39,7 @@ export function useMe() {
     },
     enabled: typeof window !== 'undefined' && hasToken && userId !== null,
     staleTime: 5 * 60_000,
-    retry: false, // Не повторяем запрос при ошибке
+    retry: false,
   })
 }
 
