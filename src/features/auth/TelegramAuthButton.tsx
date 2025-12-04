@@ -10,22 +10,28 @@ export default function TelegramAuthButton({
   className,
   title,
 }: TelegramAuthProps) {
-  const { data: user } = useMe()
+  const { data: user, isLoading } = useMe()
   const router = useRouter()
 
   const handleTelegramClick = () => {
-    setIsTelegramModalOpen(true)
-
     if (user) {
       router.push('/dashboard')
+      return
     }
+
+    setIsTelegramModalOpen(true)
   }
+
+  const buttonText = user
+    ? 'Перейти в приложение'
+    : title || 'Войти через Telegram'
 
   return (
     <Button
       type='button'
       variant='primary'
       onClick={handleTelegramClick}
+      disabled={isLoading}
       className={cn(
         'relative h-10 min-w-0 rounded-full pr-[30px] pl-[60px]',
         className,
@@ -38,7 +44,7 @@ export default function TelegramAuthButton({
         height={39}
         className='absolute top-[-1px] left-[-1px]'
       />
-      {title || 'Войти через Telegram'}
+      {buttonText}
     </Button>
   )
 }
