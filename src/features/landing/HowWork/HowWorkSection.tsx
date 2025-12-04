@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { ComponentType } from 'react'
-
+import LandingLayout from '../LandingLayout'
 import { howWorkStages } from './config'
 import StageCard from './stages/StageCard'
 import HabitFormPreview from './stages/previews/HabitFormPreview'
@@ -28,25 +28,31 @@ const VISUAL_COMPONENTS: Record<
 
 export default function HowWorkSection() {
   return (
-    <section id='how-it-works' className='py-16 max-sm:py-12'>
-      <div className='mb-12 text-center max-sm:mb-8'>
-        <h2 className='mb-3 text-4xl font-semibold max-sm:text-3xl'>
-          Как это работает
-        </h2>
-        <p className='text-light-gray mx-auto max-w-2xl text-base leading-relaxed max-sm:px-4 max-sm:text-sm'>
-          Умный трекер привычек с гибкой настройкой и удобным отслеживанием
-          прогресса
-        </p>
-      </div>
+    <LandingLayout className='max-lg:max-w-3xl' backgroundColor='dark-gray'>
+      <section id='how-it-works' className='py-16 max-sm:py-12'>
+        <div className='flex flex-col gap-3 text-center'>
+          <h2 className='text-4xl font-semibold max-sm:text-3xl'>
+            Как это работает
+          </h2>
+          <p className='text-light-gray mx-auto max-w-2xl max-sm:px-4 max-sm:text-sm'>
+            Умный трекер привычек с гибкой настройкой и удобным отслеживанием
+            прогресса
+          </p>
+        </div>
 
-      <div className='space-y-12 max-sm:space-y-8'>
-        {howWorkStages.map(({ visualId, ...stage }) => {
-          const VisualComponent = VISUAL_COMPONENTS[visualId]
-          return (
-            <StageCard key={stage.id} {...stage} visual={<VisualComponent />} />
-          )
-        })}
-      </div>
-    </section>
+        <div className='mt-12 space-y-12 max-lg:mt-8 max-sm:space-y-8'>
+          {howWorkStages.map(({ visualId, ...stage }) => {
+            const VisualComponent = VISUAL_COMPONENTS[visualId]
+            return (
+              <StageCard
+                key={stage.id}
+                {...stage}
+                visual={<VisualComponent />}
+              />
+            )
+          })}
+        </div>
+      </section>
+    </LandingLayout>
   )
 }

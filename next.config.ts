@@ -5,7 +5,6 @@ const nextConfig: NextConfig = {
     removeConsole: process.env.NODE_ENV === 'production',
   },
 
-  // Оптимизация изображений
   images: {
     remotePatterns: [
       {

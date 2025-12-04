@@ -8,7 +8,6 @@ import MainBlock from '@/features/landing/MainBlock/MainBlock'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
-// Динамические импорты для компонентов, которые не критичны для первого рендера
 const TelegramAuthModal = dynamic(
   () => import('@/features/auth/TelegramAuthModal'),
   {
@@ -29,9 +28,7 @@ export default function Home() {
       <LandingLayout className='pb-20 max-sm:pb-12'>
         <MainBlock setIsTelegramModalOpen={setIsTelegramModalOpen} />
       </LandingLayout>
-      <LandingLayout className='max-lg:max-w-3xl' backgroundColor='dark-gray'>
-        <HowWork />
-      </LandingLayout>
+      <HowWork />
       <CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
       <TelegramAuthModal
         isOpen={isTelegramModalOpen}

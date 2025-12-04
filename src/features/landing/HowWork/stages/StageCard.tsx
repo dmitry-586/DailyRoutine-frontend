@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { cn } from '@/shared/lib'
 import { HowWorkStage } from '../types'
 import StageFeatures from './StageFeatures'
 
@@ -27,16 +28,14 @@ export default function StageCard({
 
   return (
     <article className='grid items-center gap-10 max-sm:gap-5 lg:grid-cols-2'>
-      <div className={content}>
-        <div className='mb-5 max-sm:mb-3 max-sm:flex max-sm:items-center max-sm:gap-3'>
-          <div className='bg-primary inline-flex h-12 w-12 items-center justify-center rounded-lg text-xl font-semibold max-sm:h-10 max-sm:w-10 max-sm:shrink-0 max-sm:text-lg'>
+      <div className={cn(content, 'flex flex-col gap-3')}>
+        <div className='flex flex-col gap-3 max-lg:flex-row max-lg:items-center'>
+          <div className='bg-primary inline-flex size-12 items-center justify-center rounded-lg text-xl font-semibold max-lg:size-10 max-lg:shrink-0 max-lg:text-lg'>
             {number}
           </div>
-          <h3 className='mb-3 text-3xl leading-tight font-semibold max-sm:mb-0 max-sm:text-xl max-sm:leading-tight'>
-            {title}
-          </h3>
+          <h3 className='text-3xl font-semibold max-lg:text-2xl'>{title}</h3>
         </div>
-        <p className='text-light-gray/90 mb-5 text-base leading-relaxed max-sm:mb-3 max-sm:text-sm max-sm:leading-relaxed'>
+        <p className='text-light-gray/90 text-base max-sm:text-sm'>
           {description}
         </p>
         <StageFeatures features={features} />

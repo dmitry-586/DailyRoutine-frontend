@@ -22,25 +22,27 @@ export default function MainBlock({
           PWA • Telegram интеграция • Работает везде
         </p>
       </div>
-      <h2 className='mt-8 text-5xl leading-tight font-bold max-lg:text-4xl max-sm:mt-5 max-sm:text-[28px]'>
-        Привычки, которые <span className='text-primary'>работают!</span>
-      </h2>
-      <p className='text-light-gray mx-auto mt-4 max-w-2xl text-center max-lg:max-w-xl max-lg:text-sm max-sm:mt-3 max-sm:max-w-[340px]'>
-        Умный трекер привычек, который не мешает жить. Настройте привычки один
-        раз в веб-интерфейсе, а дальше получайте напоминания и отмечайте
-        выполнение прямо в Telegram - без лишних приложений.
-      </p>
+      <div className='flex flex-col gap-4 px-3 max-sm:gap-3'>
+        <h2 className='mt-8 text-5xl leading-tight font-bold max-lg:text-4xl max-sm:mt-5 max-sm:text-[28px]'>
+          Привычки, которые <span className='text-primary'>работают!</span>
+        </h2>
+        <p className='text-light-gray mx-auto max-w-2xl text-center max-lg:max-w-xl max-lg:text-sm'>
+          Умный трекер привычек, который не мешает жить. Настройте привычки один
+          раз в веб-интерфейсе, а дальше получайте напоминания и отмечайте
+          выполнение прямо в Telegram - без лишних приложений.
+        </p>
+      </div>
 
       <div className='mt-10 flex items-center justify-center gap-3 max-sm:mt-6 max-sm:flex-col'>
         <Button
-          className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[340px]'
+          className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[360px]'
           onClick={() => setIsTelegramModalOpen(true)}
         >
           <ListChecks className='size-5 max-sm:size-4' />
           Начать бесплатно
         </Button>
         <Button
-          className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[340px]'
+          className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[360px]'
           variant='primary'
           onClick={scrollToHowItWorks}
         >

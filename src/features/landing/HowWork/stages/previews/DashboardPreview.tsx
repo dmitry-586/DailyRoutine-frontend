@@ -74,7 +74,7 @@ export default function DashboardPreview() {
         </div>
       </div>
 
-      <div className='bg-gray rounded-lg p-3.5 max-sm:rounded-md max-sm:p-3'>
+      <div className='bg-gray pointer-events-none rounded-lg p-3.5 max-sm:rounded-md max-sm:p-3'>
         <ResponsiveContainer width='100%' height={150}>
           <LineChart data={weekData}>
             <XAxis
