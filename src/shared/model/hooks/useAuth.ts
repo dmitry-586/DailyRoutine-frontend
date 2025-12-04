@@ -16,8 +16,8 @@ export function useMe() {
   return useQuery<User>({
     queryKey: authKeys.me(),
     queryFn: async () => {
-      const response = await apiFetch<{ user: User }>('/user/me')
-      return response.user
+      const response = await apiFetch<User>('/user/me')
+      return response
     },
     enabled: typeof window !== 'undefined' && hasToken,
     staleTime: 5 * 60_000,
