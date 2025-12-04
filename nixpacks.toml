@@ -1,14 +1,14 @@
 [phases.setup]
-nixPkgs = ["nodejs_22", "bun"]
+nixPkgs = ["nodejs_22"]
 
 [phases.install]
 cmds = [
-  "bun install --frozen-lockfile --no-save",
+  "npm ci",
 ]
 
 [phases.build]
-cmds = ["bun run build"]
+cmds = ["npm run build"]
 
 [start]
-cmd = "bun run start"
+cmd = "npm run start"
 
