@@ -29,5 +29,15 @@ export function AuthGuard({ children, fallback }: AuthGuardProps) {
     )
   }
 
+  if (!user) {
+    return (
+      fallback || (
+        <div className='bg-background flex min-h-screen items-center justify-center'>
+          <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+        </div>
+      )
+    )
+  }
+
   return <>{children}</>
 }

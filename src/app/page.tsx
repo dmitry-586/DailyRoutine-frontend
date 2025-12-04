@@ -7,6 +7,7 @@ import LandingLayout from '@/features/landing/LandingLayout'
 import MainBlock from '@/features/landing/MainBlock/MainBlock'
 import { useMe } from '@/shared/model/hooks/useAuth'
 import dynamic from 'next/dynamic'
+import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
 const TelegramAuthModal = dynamic(
@@ -22,30 +23,27 @@ const PWAInstallButton = dynamic(() => import('@/shared/ui/PWAInstallButton'), {
 
 export default function Home() {
   const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
-  const { data: user, isLoading } = useMe()
+  const { data: user } = useMe()
+  const router = useRouter()
 
-  // Показываем лоадер, пока проверяем авторизацию
-  if (isLoading) {
-    return (
-      <div className='bg-background flex min-h-screen items-center justify-center'>
-        <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
-      </div>
-    )
-  }
-
-  // Если пользователь авторизован, не показываем контент (редирект уже произошел)
-  if (user) {
-    return null
+  const handleOpenAuth = () => {
+    // Если пользователь уже авторизован, редиректим на dashboard
+    if (user) {
+      router.push('/dashboard')
+    } else {
+      // Иначе открываем модалку авторизации
+      setIsTelegramModalOpen(true)
+    }
   }
 
   return (
     <>
-      <Header setIsTelegramModalOpen={setIsTelegramModalOpen} />
+      <Header setIsTelegramModalOpen={handleOpenAuth} />
       <LandingLayout className='pb-20 max-sm:pb-12'>
-        <MainBlock setIsTelegramModalOpen={setIsTelegramModalOpen} />
+        <MainBlock setIsTelegramModalOpen={handleOpenAuth} />
       </LandingLayout>
       <HowWork />
-      <CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
+      <CTA setIsTelegramModalOpen={handleOpenAuth} />
       <TelegramAuthModal
         isOpen={isTelegramModalOpen}
         onClose={() => setIsTelegramModalOpen(false)}
