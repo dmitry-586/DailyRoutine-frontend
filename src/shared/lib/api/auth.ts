@@ -21,18 +21,26 @@ export async function postTelegramAuth(
     withCredentials: false,
   })
 
-  if (response.access_token) {
-    localStorage.setItem('access_token', response.access_token)
-    if (response.refresh_token) {
-      localStorage.setItem('refresh_token', response.refresh_token)
+  const tokens = response.tokens
+
+  if (tokens?.access_token) {
+    localStorage.setItem('access_token', tokens.access_token)
+
+    if (tokens.refresh_token) {
+      localStorage.setItem('refresh_token', tokens.refresh_token)
     }
   }
 
   return response
 }
 
-export async function updateTimezone(timezone: string): Promise<void> {
-  await apiFetch('/auth/timezone', {
+export async function updateTimezone(params: {
+  userId: number
+  timezone: string
+}): Promise<void> {
+  const { userId, timezone } = params
+
+  await apiFetch(`/users/${userId}/settings/timezone`, {
     method: 'PUT',
     data: { timezone },
   })

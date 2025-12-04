@@ -31,8 +31,13 @@ export default function TelegramAuthModal({
     if (!isOpen) return
 
     window.onTelegramAuth = async (user: TelegramUser) => {
-      await postTelegramAuth(user)
-      setTimeout(() => sendTimezoneToBackend(), 100)
+      const authResponse = await postTelegramAuth(user)
+
+      const userId = authResponse.user.id
+
+      setTimeout(() => {
+        void sendTimezoneToBackend(userId)
+      }, 100)
       onClose()
     }
 

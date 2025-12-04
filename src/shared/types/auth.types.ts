@@ -23,9 +23,13 @@ export interface User {
   telegramId: number
 }
 
-export interface AuthResponse {
+export interface AuthTokens {
   access_token: string
   refresh_token?: string
+}
+
+export interface AuthResponse {
+  tokens: AuthTokens
   user: User
   message?: string
 }
