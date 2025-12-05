@@ -24,11 +24,21 @@ export const apiClient: AxiosInstance = axios.create({
   timeout: 30000,
 })
 
-let refreshPromise: Promise<string> | null = null
-let retriedRequests = new WeakSet<InternalAxiosRequestConfig>()
+let isRefreshing = false
+let refreshSubscribers: Array<(token: string) => void> = []
+
+const onRefreshed = (token: string) => {
+  refreshSubscribers.forEach((callback) => callback(token))
+  refreshSubscribers = []
+}
+
+const addRefreshSubscriber = (callback: (token: string) => void) => {
+  refreshSubscribers.push(callback)
+}
 
 const handleLogout = () => {
-  refreshPromise = null
+  isRefreshing = false
+  refreshSubscribers = []
   logout()
 }
 
@@ -54,13 +64,30 @@ apiClient.interceptors.response.use(
       return Promise.reject(error)
     }
 
-    const isRefreshRequest = originalRequest.url?.includes(
-      '/auth/getrefreshtoken',
-    )
-    if (isRefreshRequest || retriedRequests.has(originalRequest)) {
+    const isRefreshRequest =
+      originalRequest.url?.includes('/auth/getaccesstoken') ||
+      originalRequest.url?.includes('/auth/getrefreshtoken')
+
+    // Если это запрос на обновление токена вернул 401 - refresh token протух
+    if (isRefreshRequest) {
       handleLogout()
       return Promise.reject(error)
     }
+
+    // Если уже идет обновление токена - добавляем запрос в очередь
+    if (isRefreshing) {
+      return new Promise((resolve) => {
+        addRefreshSubscriber((token: string) => {
+          if (originalRequest.headers) {
+            originalRequest.headers.Authorization = `Bearer ${token}`
+          }
+          resolve(apiClient(originalRequest))
+        })
+      })
+    }
+
+    // Начинаем процесс обновления токена
+    isRefreshing = true
 
     try {
       const refreshToken = getCookie('refresh_token')
@@ -68,56 +95,55 @@ apiClient.interceptors.response.use(
         throw new Error('Refresh token не найден')
       }
 
-      if (!refreshPromise) {
-        refreshPromise = (async () => {
-          try {
-            const baseUrl = ensureApiBaseUrl()
-            const response = await axios.post<{
-              access_token: string
-              refresh_token?: string
-            }>(`${baseUrl}/auth/getrefreshtoken`, {
-              refresh_token: refreshToken,
-            })
+      const baseUrl = ensureApiBaseUrl()
 
-            const { access_token, refresh_token } = response.data
-            if (!access_token) {
-              throw new Error('Access token не получен')
-            }
+      // Определяем, нужно ли обновлять refresh token
+      const shouldRotateRefreshToken = isTokenExpiringSoon(
+        refreshToken,
+        2 * 24 * 60 * 60 * 1000,
+      )
 
-            const isSecure = location.protocol === 'https:'
-            setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
+      // Если refresh token скоро истечет - используем /auth/getrefreshtoken (обновляет оба)
+      // Иначе используем /auth/getaccesstoken (обновляет только access)
+      const endpoint = shouldRotateRefreshToken
+        ? '/auth/getrefreshtoken'
+        : '/auth/getaccesstoken'
 
-            if (
-              refresh_token &&
-              isTokenExpiringSoon(refreshToken, 2 * 24 * 60 * 60 * 1000)
-            ) {
-              setCookie(
-                'refresh_token',
-                refresh_token,
-                7 * 24 * 60 * 60,
-                isSecure,
-              )
-            }
+      const response = await axios.post<{
+        access_token: string
+        refresh_token?: string
+      }>(`${baseUrl}${endpoint}`, {
+        refresh_token: refreshToken,
+      })
 
-            retriedRequests = new WeakSet<InternalAxiosRequestConfig>()
-
-            return access_token
-          } finally {
-            refreshPromise = null
-          }
-        })()
+      const { access_token, refresh_token } = response.data
+      if (!access_token) {
+        throw new Error('Access token не получен')
       }
 
-      const newToken = await refreshPromise
+      const isSecure = location.protocol === 'https:'
+      setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
 
-      retriedRequests.add(originalRequest)
+      // Если бэк вернул новый refresh_token (при использовании /auth/getrefreshtoken), сохраняем его
+      if (refresh_token) {
+        setCookie('refresh_token', refresh_token, 7 * 24 * 60 * 60, isSecure)
+      }
 
+      // Обновляем токен в оригинальном запросе
       if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${newToken}`
+        originalRequest.headers.Authorization = `Bearer ${access_token}`
       }
 
+      // Уведомляем все запросы в очереди о новом токене
+      onRefreshed(access_token)
+
+      // Завершаем процесс обновления
+      isRefreshing = false
+
+      // Повторяем оригинальный запрос с новым токеном
       return apiClient(originalRequest)
     } catch (refreshError) {
+      isRefreshing = false
       handleLogout()
       return Promise.reject(error)
     }
