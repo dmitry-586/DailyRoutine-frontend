@@ -73,14 +73,14 @@ apiClient.interceptors.response.use(
         throw new Error('Refresh token не найден')
       }
 
-      const shouldRotateRefreshToken = isTokenExpiringSoon(
-        refreshToken,
-        2 * 24 * 60 * 60 * 1000,
-      )
-
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
+            const shouldRotateRefreshToken = isTokenExpiringSoon(
+              refreshToken,
+              2 * 24 * 60 * 60 * 1000,
+            )
+
             const baseUrl = ensureApiBaseUrl()
             const response = await axios.post<{
               access_token: string
@@ -96,6 +96,7 @@ apiClient.interceptors.response.use(
 
             const isSecure = location.protocol === 'https:'
             setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
+
             if (refresh_token && shouldRotateRefreshToken) {
               setCookie(
                 'refresh_token',
@@ -113,10 +114,14 @@ apiClient.interceptors.response.use(
       }
 
       const newToken = await refreshPromise
-      if (originalRequest.headers) {
-        originalRequest.headers.Authorization = `Bearer ${newToken}`
+
+      const { _retry, ...retryConfig } = originalRequest
+
+      if (retryConfig.headers) {
+        retryConfig.headers.Authorization = `Bearer ${newToken}`
       }
-      return apiClient(originalRequest)
+
+      return apiClient(retryConfig)
     } catch {
       refreshPromise = null
       if (typeof window !== 'undefined') {
