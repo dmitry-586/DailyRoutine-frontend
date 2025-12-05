@@ -19,7 +19,6 @@ export async function postTelegramAuth(
   const response = await apiFetch<AuthResponse>('/login/telegram', {
     method: 'POST',
     data: payload,
-    withCredentials: true,
   })
 
   const tokens = response.tokens
@@ -33,13 +32,42 @@ export async function postTelegramAuth(
       setCookie(
         'refresh_token',
         tokens.refresh_token,
-        30 * 24 * 60 * 60,
+        7 * 24 * 60 * 60,
         isSecure,
       )
     }
+  }
 
-    localStorage.removeItem('access_token')
-    localStorage.removeItem('refresh_token')
+  return response
+}
+
+export interface TestAuthRequest {
+  user_id?: number
+}
+
+export async function postTestAuth(
+  request?: TestAuthRequest,
+): Promise<AuthResponse> {
+  const response = await apiFetch<AuthResponse>('/auth/test/token', {
+    method: 'POST',
+    data: request || {},
+  })
+
+  const tokens = response.tokens
+
+  if (tokens?.access_token && typeof window !== 'undefined') {
+    const isSecure = location.protocol === 'https:'
+
+    setCookie('access_token', tokens.access_token, 7 * 24 * 60 * 60, isSecure)
+
+    if (tokens.refresh_token) {
+      setCookie(
+        'refresh_token',
+        tokens.refresh_token,
+        7 * 24 * 60 * 60,
+        isSecure,
+      )
+    }
   }
 
   return response

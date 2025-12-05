@@ -1,5 +1,9 @@
 import { apiFetch, authKeys } from '@/shared/lib/api'
-import { postTelegramAuth } from '@/shared/lib/api/auth'
+import {
+  postTelegramAuth,
+  postTestAuth,
+  type TestAuthRequest,
+} from '@/shared/lib/api/auth'
 import { hasCookie, removeAllCookies } from '@/shared/lib/utils/cookies'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -31,6 +35,19 @@ export function useTelegramAuth() {
   return useMutation<AuthResponse, Error, TelegramUser>({
     mutationKey: authKeys.telegram(),
     mutationFn: postTelegramAuth,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: authKeys.me() })
+    },
+  })
+}
+
+// для тестового режима
+export function useTestAuth() {
+  const queryClient = useQueryClient()
+
+  return useMutation<AuthResponse, Error, TestAuthRequest | undefined>({
+    mutationKey: authKeys.test(),
+    mutationFn: postTestAuth,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: authKeys.me() })
     },

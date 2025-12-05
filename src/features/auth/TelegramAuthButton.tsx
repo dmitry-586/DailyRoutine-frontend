@@ -1,5 +1,6 @@
 import { cn } from '@/shared/lib/utils/cn'
-import { useMe } from '@/shared/model/hooks/useAuth'
+import { getCookie } from '@/shared/lib/utils/cookies'
+import { isTokenExpired } from '@/shared/lib/utils/token'
 import { TelegramAuthProps } from '@/shared/types/auth.types'
 import { Button } from '@/shared/ui/Button'
 import Image from 'next/image'
@@ -10,11 +11,19 @@ export default function TelegramAuthButton({
   className,
   title,
 }: TelegramAuthProps) {
-  const { data: user, isLoading } = useMe()
   const router = useRouter()
 
+  const isAuthenticated = (() => {
+    if (typeof window === 'undefined') return false
+
+    const accessToken = getCookie('access_token')
+    if (!accessToken) return false
+
+    return !isTokenExpired(accessToken)
+  })()
+
   const handleTelegramClick = () => {
-    if (user) {
+    if (isAuthenticated) {
       router.push('/dashboard')
       return
     }
@@ -22,7 +31,7 @@ export default function TelegramAuthButton({
     setIsTelegramModalOpen(true)
   }
 
-  const buttonText = user
+  const buttonText = isAuthenticated
     ? 'Перейти в приложение'
     : title || 'Войти через Telegram'
 
@@ -31,7 +40,6 @@ export default function TelegramAuthButton({
       type='button'
       variant='primary'
       onClick={handleTelegramClick}
-      disabled={isLoading}
       className={cn(
         'relative h-10 min-w-0 rounded-full pr-[30px] pl-[60px]',
         className,

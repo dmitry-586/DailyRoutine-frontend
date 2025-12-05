@@ -1,6 +1,9 @@
 export const authKeys = {
   me: () => ['auth', 'me'] as const,
   telegram: () => ['auth', 'telegram'] as const,
+
+  // для тестового режима
+  test: () => ['auth', 'test'] as const,
 }
 
 export const settingsKeys = {

@@ -5,6 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios'
 import { getCookie, removeAllCookies, setCookie } from '../utils/cookies'
+import { isTokenExpired, isTokenExpiringSoon } from '../utils/token'
 import { ApiError, handleApiError } from './errors'
 
 const ensureApiBaseUrl = (): string => {
@@ -21,26 +22,22 @@ export const apiClient: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true,
   timeout: 30000,
 })
 
-apiClient.interceptors.request.use(
-  (config: InternalAxiosRequestConfig) => {
-    config.baseURL = config.baseURL ?? ensureApiBaseUrl()
+let refreshPromise: Promise<string> | null = null
 
-    if (typeof window !== 'undefined') {
-      const token = getCookie('access_token')
-      if (token && config.headers) {
-        config.headers.Authorization = `Bearer ${token}`
-      }
+apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  config.baseURL = config.baseURL ?? ensureApiBaseUrl()
+
+  if (typeof window !== 'undefined') {
+    const token = getCookie('access_token')
+    if (token && config.headers) {
+      config.headers.Authorization = `Bearer ${token}`
     }
-    return config
-  },
-  (error) => {
-    return Promise.reject(error)
-  },
-)
+  }
+  return config
+})
 
 apiClient.interceptors.response.use(
   (response) => response,
@@ -49,62 +46,88 @@ apiClient.interceptors.response.use(
       _retry?: boolean
     }
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true
+    const isRefreshRequest = originalRequest.url?.includes(
+      '/auth/getrefreshtoken',
+    )
+    const is401 = error.response?.status === 401
 
-      try {
-        const refreshToken = getCookie('refresh_token')
+    if (isRefreshRequest || !is401 || originalRequest._retry) {
+      if (is401 && !isRefreshRequest && typeof window !== 'undefined') {
+        removeAllCookies()
+        if (window.location.pathname.startsWith('/dashboard')) {
+          window.location.href = '/'
+        }
+      }
+      return Promise.reject(error)
+    }
 
-        if (refreshToken && typeof window !== 'undefined') {
-          const baseUrl = ensureApiBaseUrl()
-          const response = await axios.post(
-            `${baseUrl}/auth/refresh`,
-            {
+    originalRequest._retry = true
+
+    try {
+      const refreshToken = getCookie('refresh_token')
+      if (!refreshToken || typeof window === 'undefined') {
+        throw new Error('Refresh token не найден')
+      }
+
+      if (isTokenExpired(refreshToken)) {
+        throw new Error('Refresh token истек')
+      }
+
+      // Если осталось <= 2 дней до истечения, обновляем refresh_token
+      const shouldRefreshRefreshToken = isTokenExpiringSoon(
+        refreshToken,
+        2 * 24 * 60 * 60 * 1000,
+      )
+
+      if (!refreshPromise) {
+        refreshPromise = (async () => {
+          try {
+            const baseUrl = ensureApiBaseUrl()
+            const response = await axios.post<{
+              access_token: string
+              refresh_token: string
+            }>(`${baseUrl}/auth/getrefreshtoken`, {
               refresh_token: refreshToken,
-            },
-            { withCredentials: true },
-          )
+            })
 
-          const { access_token, refresh_token } = response.data
+            const { access_token, refresh_token } = response.data
+            if (!access_token || !refresh_token) {
+              throw new Error('Токены не получены')
+            }
 
-          if (access_token) {
             const isSecure = location.protocol === 'https:'
             setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
-            if (refresh_token) {
+            if (shouldRefreshRefreshToken) {
               setCookie(
                 'refresh_token',
                 refresh_token,
-                30 * 24 * 60 * 60,
+                7 * 24 * 60 * 60,
                 isSecure,
               )
             }
 
-            if (originalRequest.headers) {
-              originalRequest.headers.Authorization = `Bearer ${access_token}`
-            }
-            return apiClient(originalRequest)
+            return access_token
+          } finally {
+            refreshPromise = null
           }
-        }
-      } catch (refreshError) {
-        if (typeof window !== 'undefined') {
-          removeAllCookies()
-
-          if (window.location.pathname.startsWith('/dashboard')) {
-            window.location.href = '/'
-          }
-        }
-        return Promise.reject(refreshError)
+        })()
       }
-    }
 
-    if (error.response?.status === 401 && typeof window !== 'undefined') {
-      if (window.location.pathname.startsWith('/dashboard')) {
+      const newToken = await refreshPromise
+      if (originalRequest.headers) {
+        originalRequest.headers.Authorization = `Bearer ${newToken}`
+      }
+      return apiClient(originalRequest)
+    } catch {
+      refreshPromise = null
+      if (typeof window !== 'undefined') {
         removeAllCookies()
-        window.location.href = '/'
+        if (window.location.pathname.startsWith('/dashboard')) {
+          window.location.href = '/'
+        }
       }
+      return Promise.reject(error)
     }
-
-    return Promise.reject(error)
   },
 )
 

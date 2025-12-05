@@ -10,6 +10,8 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 
+import TestAuthButton from './TestAuthButton'
+
 interface TelegramAuthModalProps {
   isOpen: boolean
   onClose: () => void
@@ -21,6 +23,14 @@ declare global {
   }
 }
 
+const isTestModeEnabled = (): boolean => {
+  if (typeof window === 'undefined') return false
+  return (
+    process.env.NODE_ENV === 'development' ||
+    process.env.NEXT_PUBLIC_ENABLE_TEST_MODE === 'true'
+  )
+}
+
 export default function TelegramAuthModal({
   isOpen,
   onClose,
@@ -30,6 +40,8 @@ export default function TelegramAuthModal({
   const { sendTimezoneToBackend } = useTimezone()
   const { mutate: telegramAuth } = useTelegramAuth()
   const router = useRouter()
+
+  const testModeEnabled = isTestModeEnabled()
 
   useEffect(() => {
     if (!isOpen) return
@@ -121,6 +133,8 @@ export default function TelegramAuthModal({
           />
         )}
       </div>
+
+      {testModeEnabled && <TestAuthButton onSuccess={onClose} />}
     </Modal>
   )
 }
