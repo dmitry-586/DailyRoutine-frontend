@@ -14,8 +14,16 @@ const Stats = dynamic(
   {
     ssr: false,
     loading: () => (
-      <div className='border-light-gray/20 bg-gray flex h-[400px] w-full items-center justify-center rounded-lg border'>
-        <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+      <div className='flex max-w-[500px] flex-col gap-4'>
+        <h3 className='flex h-9 w-full items-center justify-center text-lg font-semibold text-white max-xl:justify-start'>
+          Статистика
+        </h3>
+        <div className='bg-gray flex h-[200px] min-w-[300px] items-center justify-center rounded-lg max-xl:h-[110px]'>
+          <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+        </div>
+        <div className='bg-gray flex h-[95px] min-w-[300px] items-center justify-center rounded-lg'>
+          <div className='border-primary h-8 w-8 animate-spin rounded-full border-4 border-t-transparent' />
+        </div>
       </div>
     ),
   },

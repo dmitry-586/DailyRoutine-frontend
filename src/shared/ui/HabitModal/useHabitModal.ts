@@ -2,23 +2,14 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { DEFAULT_FORM_VALUES } from './config'
-import {
-  formDataToCreateRequest,
-  formDataToUpdateRequest,
-  habitToFormData,
-} from './helpers'
+import { formDataToCreateRequest } from './helpers'
 import { HabitFormData, habitFormSchema } from './schema'
 import type { HabitModalProps } from './types'
 
 export const useHabitModal = ({
   open,
-  habit,
-  onClose,
   onSave,
-}: HabitModalProps) => {
-  const isEditMode = !!habit
-  const isActive = habit?.is_active !== false
-
+}: Omit<HabitModalProps, 'onClose'>) => {
   const {
     register,
     handleSubmit,
@@ -39,13 +30,9 @@ export const useHabitModal = ({
 
   useEffect(() => {
     if (open) {
-      if (habit) {
-        reset(habitToFormData(habit))
-      } else {
-        reset(DEFAULT_FORM_VALUES)
-      }
+      reset(DEFAULT_FORM_VALUES)
     }
-  }, [habit, open, reset])
+  }, [open, reset])
 
   const handleTypeChange = (nextType: string) => {
     if (nextType === 'count') {
@@ -59,23 +46,10 @@ export const useHabitModal = ({
   }
 
   const onSubmit = (data: HabitFormData) => {
-    if (isEditMode) {
-      onSave(formDataToUpdateRequest(data))
-    } else {
-      onSave(formDataToCreateRequest(data))
-    }
-    onClose()
-  }
-
-  const handleToggleActive = () => {
-    if (!habit) return
-    onSave({ is_active: !isActive })
-    onClose()
+    onSave(formDataToCreateRequest(data))
   }
 
   return {
-    isEditMode,
-    isActive,
     register,
     handleSubmit,
     errors,
@@ -86,6 +60,5 @@ export const useHabitModal = ({
     control,
     handleTypeChange,
     onSubmit,
-    handleToggleActive,
   }
 }

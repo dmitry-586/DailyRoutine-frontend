@@ -1,0 +1,17 @@
+import type { Habit, UpdateHabitRequest } from '@/shared/types'
+import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form'
+import type { EditHabitFormData } from './editHabitSchema'
+
+export interface EditHabitModalProps {
+  open: boolean
+  onClose: () => void
+  onSave: (data: UpdateHabitRequest) => void | Promise<void>
+  habit: Habit
+}
+
+export interface EditHabitFormProps {
+  habit: Habit
+  register: UseFormRegister<EditHabitFormData>
+  errors: FieldErrors<EditHabitFormData>
+  control: Control<EditHabitFormData>
+}

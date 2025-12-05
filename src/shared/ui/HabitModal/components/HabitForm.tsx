@@ -13,7 +13,6 @@ import type { HabitFormFieldsProps } from '../types'
 export const HabitFormFields = ({
   habitType,
   unitValue,
-  isBeneficialValue,
   register,
   errors,
   control,
@@ -28,21 +27,24 @@ export const HabitFormFields = ({
         error={errors.title?.message}
       />
 
-      <RadioGroup
-        label='Тип привычки'
-        options={habitBeneficialOptions.map((opt) => ({
-          label: opt.label,
-          description: opt.description,
-          value: opt.value ? 'true' : 'false',
-        }))}
-        currentValue={isBeneficialValue ? 'true' : 'false'}
-        defaultValue='true'
-        register={() =>
-          register('is_beneficial', {
-            setValueAs: (value: string) => value === 'true',
-          })
-        }
-        className='space-y-3'
+      <Controller
+        name='is_beneficial'
+        control={control}
+        render={({ field }) => (
+          <RadioGroup
+            label='Тип привычки'
+            options={habitBeneficialOptions.map((opt) => ({
+              label: opt.label,
+              description: opt.description,
+              value: opt.value ? 'true' : 'false',
+            }))}
+            currentValue={field.value ? 'true' : 'false'}
+            defaultValue='true'
+            onValueChange={(value) => field.onChange(value === 'true')}
+            name={field.name}
+            className='space-y-3'
+          />
+        )}
       />
 
       <RadioGroup

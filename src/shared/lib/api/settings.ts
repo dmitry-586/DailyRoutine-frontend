@@ -4,21 +4,25 @@ import type {
 } from '@/shared/types/auth.types'
 import { apiFetch } from './client'
 
-export async function getSettings(): Promise<UserSettings> {
-  return await apiFetch<UserSettings>('/user/me/settings')
+export type Settings = UserSettings
+
+export async function getSettings(): Promise<Settings> {
+  return apiFetch<Settings>('/user/me/settings', {
+    method: 'GET',
+  })
 }
 
 export async function updateSettings(
   data: UpdateSettingsRequest,
-): Promise<UserSettings> {
-  return await apiFetch<UserSettings>('/user/me/settings', {
-    method: 'PUT',
+): Promise<Settings> {
+  return apiFetch<Settings>('/user/me/settings', {
+    method: 'PATCH',
     data,
   })
 }
 
-export async function updateTimezone(timezone: string): Promise<UserSettings> {
-  return await apiFetch<UserSettings>('/user/me/settings/timezone', {
+export async function updateTimezone(timezone: string): Promise<Settings> {
+  return apiFetch<Settings>('/user/me/settings/timezone', {
     method: 'PUT',
     data: { timezone },
   })

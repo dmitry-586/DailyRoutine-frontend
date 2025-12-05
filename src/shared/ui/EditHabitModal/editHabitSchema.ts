@@ -2,26 +2,23 @@ import z from 'zod'
 
 const MAX_TIME_MINUTES = 1000 * 60 + 59
 
-// Базовые поля для всех типов привычек
-const baseHabitFormSchema = z.object({
+// Базовая схема с обязательным title
+const baseEditSchema = z.object({
   title: z
     .string()
     .min(1, 'Название привычки обязательно')
     .max(100, 'Название не должно превышать 100 символов')
     .trim(),
-  is_beneficial: z.boolean('Выберите тип привычки'),
 })
 
-// Схема для binary типа (не требует value и unit)
-const binaryHabitFormSchema = baseHabitFormSchema.extend({
-  type: z.literal('binary'),
+// Схема для binary типа (только title)
+export const binaryEditSchema = baseEditSchema.extend({
   value: z.string().optional(),
   unit: z.string().optional(),
 })
 
-// Схема для count типа (требует value и unit)
-const countHabitFormSchema = baseHabitFormSchema.extend({
-  type: z.literal('count'),
+// Схема для count типа (title + value + unit)
+export const countEditSchema = baseEditSchema.extend({
   value: z
     .string()
     .min(1, 'Укажите целевое значение')
@@ -40,9 +37,8 @@ const countHabitFormSchema = baseHabitFormSchema.extend({
     .max(20, 'Единица измерения слишком длинная'),
 })
 
-// Схема для time типа (требует value, не требует unit)
-const timeHabitFormSchema = baseHabitFormSchema.extend({
-  type: z.literal('time'),
+// Схема для time типа (title + value)
+export const timeEditSchema = baseEditSchema.extend({
   value: z
     .string()
     .min(1, 'Укажите целевое время')
@@ -67,11 +63,9 @@ const timeHabitFormSchema = baseHabitFormSchema.extend({
   unit: z.string().optional(),
 })
 
-// Объединенная схема с discriminated union
-export const habitFormSchema = z.discriminatedUnion('type', [
-  binaryHabitFormSchema,
-  countHabitFormSchema,
-  timeHabitFormSchema,
-])
-
-export type HabitFormData = z.infer<typeof habitFormSchema>
+// Базовый тип с опциональными полями для удобства работы
+export type EditHabitFormData = {
+  title: string
+  value?: string
+  unit?: string
+}

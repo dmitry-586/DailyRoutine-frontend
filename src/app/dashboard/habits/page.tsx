@@ -1,5 +1,3 @@
-'use client'
-
 import { AllHabits } from '@/features/habits'
 import { PageHeader } from '@/shared/ui/PageHeader'
 import { ListChecks } from 'lucide-react'
@@ -7,11 +5,7 @@ import { ListChecks } from 'lucide-react'
 export default function HabitsPage() {
   return (
     <>
-      <PageHeader
-        title='Привычки'
-        description='Управляйте своими привычками'
-        icon={ListChecks}
-      />
+      <PageHeader title='Привычки' icon={ListChecks} />
       <AllHabits />
     </>
   )

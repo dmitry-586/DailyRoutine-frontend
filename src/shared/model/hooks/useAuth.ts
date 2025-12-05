@@ -15,14 +15,14 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
-function hasAccessToken(): boolean {
+function hasAccessOrRefreshToken(): boolean {
   if (typeof window === 'undefined') return false
 
-  return hasCookie('access_token')
+  return hasCookie('access_token') || hasCookie('refresh_token')
 }
 
 export function useMe() {
-  const hasToken = hasAccessToken()
+  const hasToken = hasAccessOrRefreshToken()
 
   return useQuery<User>({
     queryKey: authKeys.me(),
@@ -99,8 +99,7 @@ export function useAuthButton(
       const refreshToken = getCookie('refresh_token')
 
       const hasValidAccessToken = !!accessToken && !isTokenExpired(accessToken)
-      const hasValidRefreshToken =
-        !!refreshToken && !isTokenExpired(refreshToken)
+      const hasValidRefreshToken = !!refreshToken
 
       const authenticated = Boolean(hasValidAccessToken || hasValidRefreshToken)
 

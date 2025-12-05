@@ -1,32 +1,35 @@
-import type { TabConfig } from './types'
+import type { Habit } from '@/shared/types/habit.types'
+import { ListChecks } from 'lucide-react'
+import type { FilterType } from './types'
 
-export const HABIT_TABS: TabConfig[] = [
+export interface HabitTab {
+  value: FilterType
+  label: string
+  icon: typeof ListChecks
+  filter: (habit: Habit) => boolean
+  emptyMessage: string
+}
+
+export const HABIT_TABS: HabitTab[] = [
   {
     value: 'all',
     label: 'Все',
-    variant: 'primary',
+    icon: ListChecks,
+    filter: () => true,
     emptyMessage: 'У вас пока нет привычек',
-    filter: (h) => h.is_active !== false,
   },
   {
-    value: 'good',
-    label: 'Полезные',
-    variant: 'success',
-    emptyMessage: 'У вас нет полезных привычек',
-    filter: (h) => h.is_beneficial === true && h.is_active !== false,
-  },
-  {
-    value: 'bad',
-    label: 'Вредные',
-    variant: 'danger',
-    emptyMessage: 'У вас нет вредных привычек',
-    filter: (h) => h.is_beneficial === false && h.is_active !== false,
+    value: 'active',
+    label: 'Активные',
+    icon: ListChecks,
+    filter: (habit) => habit.is_active !== false,
+    emptyMessage: 'У вас нет активных привычек',
   },
   {
     value: 'inactive',
     label: 'Неактивные',
-    variant: 'neutral',
-    emptyMessage: 'Нет неактивных привычек',
-    filter: (h) => h.is_active === false,
+    icon: ListChecks,
+    filter: (habit) => habit.is_active === false,
+    emptyMessage: 'У вас нет неактивных привычек',
   },
 ]

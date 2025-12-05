@@ -9,9 +9,11 @@ export function proxy(request: NextRequest) {
     const accessToken = request.cookies.get('access_token')?.value
     const refreshToken = request.cookies.get('refresh_token')?.value
 
-    // Проверяем наличие хотя бы одного валидного токена
+    // Проверяем наличие хотя бы одного "рабочего" токена:
+    // - access_token считаем валидным по локальному exp
+    // - refresh_token считаем валидным по факту наличия (его срок жизни контролирует бэк)
     const hasValidAccessToken = !!accessToken && !isTokenExpired(accessToken)
-    const hasValidRefreshToken = !!refreshToken && !isTokenExpired(refreshToken)
+    const hasValidRefreshToken = !!refreshToken
 
     // Если нет ни одного валидного токена, редиректим на главную
     if (!hasValidAccessToken && !hasValidRefreshToken) {

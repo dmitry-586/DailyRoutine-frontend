@@ -15,7 +15,7 @@ export const HabitCardActions = ({
         <Button
           onClick={onComplete}
           className={`h-9 flex-1 text-sm ${
-            isCompleted && 'bg-green hover:bg-green/90'
+            isCompleted && 'bg-green border-green hover:bg-green/90'
           }`}
         >
           <Check className='mr-1.5 h-4 w-4' />

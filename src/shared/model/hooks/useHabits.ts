@@ -16,7 +16,7 @@ export function useHabits() {
   return useQuery<Habit[]>({
     queryKey: habitKeys.all(),
     queryFn: getHabits,
-    staleTime: 1 * 60_000, // 1 минута
+    staleTime: 1 * 60_000,
   })
 }
 
@@ -37,11 +37,8 @@ export function useUpdateHabit() {
   return useMutation({
     mutationFn: ({ id, data }: { id: number; data: UpdateHabitRequest }) =>
       apiUpdateHabit(id, data),
-    onSuccess: (_, variables) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: habitKeys.all() })
-      queryClient.invalidateQueries({
-        queryKey: habitKeys.detail(String(variables.id)),
-      })
     },
   })
 }

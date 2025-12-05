@@ -1,7 +1,6 @@
 'use client'
 
 import { cn } from '@/shared/lib'
-import { HabitModal } from '@/shared/ui/HabitModal'
 import { HabitCardActions } from './components/Actions'
 import { HabitCardDeleteModal } from './components/DeleteModal'
 import { HabitCardHeader } from './components/Header'
@@ -14,16 +13,13 @@ export function HabitCard(props: HabitCardProps) {
     isCompleted,
     isActive,
     showDeleteDialog,
-    showEditModal,
     handleComplete,
     handleRelapse,
     handleEdit,
     handleToggleActive,
     handleDeleteClick,
-    handleEditSave,
-    handleCloseEditModal,
     handleDeleteConfirm,
-    handleCloseDeleteModal,
+    closeDeleteDialog,
   } = useHabitCard(props)
 
   const { data } = props
@@ -52,18 +48,11 @@ export function HabitCard(props: HabitCardProps) {
         />
       </div>
 
-      <HabitModal
-        open={showEditModal}
-        onClose={handleCloseEditModal}
-        onSave={handleEditSave}
-        habit={data}
-      />
-
       <HabitCardDeleteModal
         title={title}
         isOpen={showDeleteDialog}
         handlers={{
-          onClose: handleCloseDeleteModal,
+          onClose: closeDeleteDialog,
           onConfirm: handleDeleteConfirm,
         }}
       />

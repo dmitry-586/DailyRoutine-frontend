@@ -1,51 +1,31 @@
-import { getCookie } from '@/shared/lib/utils/cookies'
+import { updateTimezone } from '@/shared/lib/api'
 import {
-  getStoredTimezone,
   getUserTimezone,
   saveLastSentTimezone,
   saveTimezone,
   shouldSendTimezoneToBackend,
 } from '@/shared/lib/utils/timezone'
-import { useUpdateTimezone } from '@/shared/model/hooks/useSettings'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 
 export function useTimezone() {
-  const [timezone, setTimezone] = useState<string>(() => {
-    if (typeof window === 'undefined') return 'UTC'
-    return getStoredTimezone()
-  })
-  const updateTimezoneMutation = useUpdateTimezone()
+  const sendTimezoneToBackend = useCallback(async () => {
+    if (typeof window === 'undefined') return
 
-  useEffect(() => {
-    const currentTimezone = getUserTimezone()
-    setTimezone(currentTimezone)
-    saveTimezone(currentTimezone)
+    if (!shouldSendTimezoneToBackend()) {
+      return
+    }
+
+    const timezone = getUserTimezone()
+
+    try {
+      await updateTimezone(timezone)
+      saveTimezone(timezone)
+      saveLastSentTimezone(timezone)
+    } catch (error) {
+      // Логируем, но не ломаем UI — часовой пояс не критичен для работы приложения
+      console.error('Не удалось отправить часовой пояс на бэкенд', error)
+    }
   }, [])
 
-  const updateTimezone = (newTimezone: string) => {
-    setTimezone(newTimezone)
-    saveTimezone(newTimezone)
-  }
-
-  const sendTimezoneToBackend = useCallback(async () => {
-    if (typeof window === 'undefined' || !shouldSendTimezoneToBackend()) return
-
-    const token = getCookie('access_token')
-    if (!token) return
-
-    const currentTimezone = getUserTimezone()
-    try {
-      await updateTimezoneMutation.mutateAsync(currentTimezone)
-      saveLastSentTimezone(currentTimezone)
-    } catch (error) {
-      console.warn('Не удалось отправить часовой пояс на бэкенд:', error)
-    }
-  }, [updateTimezoneMutation])
-
-  return {
-    timezone,
-    updateTimezone,
-    sendTimezoneToBackend,
-    isUpdating: updateTimezoneMutation.isPending,
-  }
+  return { sendTimezoneToBackend }
 }

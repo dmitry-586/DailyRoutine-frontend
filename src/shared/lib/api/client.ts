@@ -5,7 +5,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios'
 import { getCookie, removeAllCookies, setCookie } from '../utils/cookies'
-import { isTokenExpired, isTokenExpiringSoon } from '../utils/token'
+import { isTokenExpiringSoon } from '../utils/token'
 import { ApiError, handleApiError } from './errors'
 
 const ensureApiBaseUrl = (): string => {
@@ -57,15 +57,9 @@ apiClient.interceptors.response.use(
 
     if (originalRequest._retry) {
       if (typeof window !== 'undefined') {
-        const refreshToken = getCookie('refresh_token')
-        const isRefreshTokenValid =
-          refreshToken && !isTokenExpired(refreshToken)
-
-        if (!isRefreshTokenValid) {
-          removeAllCookies()
-          if (window.location.pathname.startsWith('/dashboard')) {
-            window.location.href = '/'
-          }
+        removeAllCookies()
+        if (window.location.pathname.startsWith('/dashboard')) {
+          window.location.href = '/'
         }
       }
       return Promise.reject(error)
@@ -79,12 +73,7 @@ apiClient.interceptors.response.use(
         throw new Error('Refresh token не найден')
       }
 
-      if (isTokenExpired(refreshToken)) {
-        throw new Error('Refresh token истек')
-      }
-
-      // Если осталось <= 2 дней до истечения, обновляем refresh_token
-      const shouldRefreshRefreshToken = isTokenExpiringSoon(
+      const shouldRotateRefreshToken = isTokenExpiringSoon(
         refreshToken,
         2 * 24 * 60 * 60 * 1000,
       )
@@ -95,19 +84,19 @@ apiClient.interceptors.response.use(
             const baseUrl = ensureApiBaseUrl()
             const response = await axios.post<{
               access_token: string
-              refresh_token: string
+              refresh_token?: string
             }>(`${baseUrl}/auth/getrefreshtoken`, {
               refresh_token: refreshToken,
             })
 
             const { access_token, refresh_token } = response.data
-            if (!access_token || !refresh_token) {
-              throw new Error('Токены не получены')
+            if (!access_token) {
+              throw new Error('Access token не получен')
             }
 
             const isSecure = location.protocol === 'https:'
             setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
-            if (shouldRefreshRefreshToken) {
+            if (refresh_token && shouldRotateRefreshToken) {
               setCookie(
                 'refresh_token',
                 refresh_token,

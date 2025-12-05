@@ -1,41 +1,46 @@
 'use client'
 
-import {
-  useCreateHabit,
-  useDeleteHabit,
-  useHabits,
-  useUpdateHabit,
-} from '@/shared/model/hooks/useHabits'
+import { useHabitMutations } from '@/shared/model/hooks/useHabitMutations'
+import { useHabits } from '@/shared/model/hooks/useHabits'
+import type { CreateHabitRequest, Habit } from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
+import { EditHabitModal } from '@/shared/ui/EditHabitModal'
 import { HabitCard } from '@/shared/ui/HabitCard'
 import { HabitModal } from '@/shared/ui/HabitModal'
 import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
 import { Plus } from 'lucide-react'
+import { useState } from 'react'
 import { HABIT_TABS } from './config'
 import { useAllHabits } from './useAllHabits'
 
 export function AllHabits() {
-  const { data: habits = [] } = useHabits()
-  const { mutate: createHabit } = useCreateHabit()
-  const { mutate: updateHabit } = useUpdateHabit()
-  const { mutate: deleteHabit } = useDeleteHabit()
-  const {
-    filter,
-    setFilter,
-    isModalOpen,
-    editingHabit,
-    activeTab,
-    filteredHabits,
-    tabCounts,
-    handleModal,
-    handleClose,
-    handleSave,
-    handleToggleActive,
-  } = useAllHabits({
-    habits,
-    onAddHabit: createHabit,
-    onUpdateHabit: (id, data) => updateHabit({ id, data }),
-  })
+  const { data: habits = [], isLoading } = useHabits()
+  const { handleCreate, handleUpdate, handleDelete } = useHabitMutations()
+
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [habitToEdit, setHabitToEdit] = useState<Habit | null>(null)
+
+  const { filter, setFilter, activeTab, filteredHabits, tabCounts } =
+    useAllHabits(habits)
+
+  const openCreateModal = () => {
+    setIsCreateModalOpen(true)
+  }
+
+  const closeCreateModal = () => {
+    setIsCreateModalOpen(false)
+  }
+
+  const openEditModal = (habit: Habit) => {
+    setHabitToEdit(habit)
+    setIsEditModalOpen(true)
+  }
+
+  const closeEditModal = () => {
+    setIsEditModalOpen(false)
+    setHabitToEdit(null)
+  }
 
   return (
     <>
@@ -45,7 +50,7 @@ export function AllHabits() {
             <TabsTrigger
               key={tab.value}
               active={filter === tab.value}
-              variant={tab.variant}
+              variant='default'
               onClick={() => setFilter(tab.value)}
               className='flex-shrink-0 px-2.5 text-xs whitespace-nowrap sm:px-3 sm:text-sm'
             >
@@ -56,21 +61,25 @@ export function AllHabits() {
       </div>
 
       <div className='max-w-7xl'>
-        {filteredHabits.length > 0 ? (
+        {isLoading ? (
+          <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
+            <p className='text-light-gray'>Загрузка привычек...</p>
+          </div>
+        ) : filteredHabits.length > 0 ? (
           <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3'>
             {filteredHabits.map((habit) => (
               <HabitCard
                 key={habit.id}
                 data={habit}
                 handlers={{
-                  onEdit: handleModal,
-                  onDelete: deleteHabit,
-                  onComplete: (habit) =>
-                    updateHabit({
-                      id: habit.id,
-                      data: { is_done: !habit.is_done },
+                  onEdit: openEditModal,
+                  onDelete: handleDelete,
+                  onComplete: (updated) =>
+                    void handleUpdate(habit.id, { is_done: updated.is_done }),
+                  onToggleActive: (updated) =>
+                    void handleUpdate(habit.id, {
+                      is_active: updated.is_active,
                     }),
-                  onToggleActive: handleToggleActive,
                 }}
               />
             ))}
@@ -78,7 +87,7 @@ export function AllHabits() {
         ) : (
           <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
             <p className='text-light-gray mb-4'>{activeTab.emptyMessage}</p>
-            <Button onClick={() => handleModal()}>
+            <Button onClick={openCreateModal}>
               <Plus className='mr-2 h-4 w-4' />
               Создать привычку
             </Button>
@@ -87,14 +96,25 @@ export function AllHabits() {
       </div>
 
       <HabitModal
-        open={isModalOpen}
-        onClose={handleClose}
-        onSave={(data) => {
-          handleSave(data)
-          handleClose()
+        open={isCreateModalOpen}
+        onClose={closeCreateModal}
+        onSave={async (data) => {
+          await handleCreate(data as CreateHabitRequest)
+          closeCreateModal()
         }}
-        habit={editingHabit}
       />
+
+      {habitToEdit && (
+        <EditHabitModal
+          open={isEditModalOpen}
+          onClose={closeEditModal}
+          onSave={async (data) => {
+            await handleUpdate(habitToEdit.id, data)
+            closeEditModal()
+          }}
+          habit={habitToEdit}
+        />
+      )}
     </>
   )
 }
