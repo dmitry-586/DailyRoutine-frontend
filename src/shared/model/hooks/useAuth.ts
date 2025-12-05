@@ -4,9 +4,16 @@ import {
   postTestAuth,
   type TestAuthRequest,
 } from '@/shared/lib/api/auth'
-import { hasCookie, removeAllCookies } from '@/shared/lib/utils/cookies'
+import {
+  getCookie,
+  hasCookie,
+  removeAllCookies,
+} from '@/shared/lib/utils/cookies'
+import { isTokenExpired } from '@/shared/lib/utils/token'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
 function hasAccessToken(): boolean {
   if (typeof window === 'undefined') return false
@@ -71,4 +78,60 @@ export function useLogout() {
       }
     },
   })
+}
+
+export function useAuthButton(
+  setIsTelegramModalOpen: (isOpen: boolean) => void,
+  defaultText?: string,
+) {
+  const router = useRouter()
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    const checkAuth = () => {
+      if (typeof window === 'undefined') {
+        setIsLoading(false)
+        return
+      }
+
+      const accessToken = getCookie('access_token')
+      const refreshToken = getCookie('refresh_token')
+
+      const hasValidAccessToken = !!accessToken && !isTokenExpired(accessToken)
+      const hasValidRefreshToken =
+        !!refreshToken && !isTokenExpired(refreshToken)
+
+      const authenticated = Boolean(hasValidAccessToken || hasValidRefreshToken)
+
+      setIsAuthenticated(authenticated)
+      setIsLoading(false)
+    }
+
+    checkAuth()
+  }, [])
+
+  const buttonText = isLoading
+    ? 'Загрузка...'
+    : isAuthenticated
+      ? 'Перейти в приложение'
+      : defaultText || 'Войти через Telegram'
+
+  const handleAuthClick = () => {
+    if (isLoading) return
+
+    if (isAuthenticated) {
+      router.push('/dashboard')
+      return
+    }
+
+    setIsTelegramModalOpen(true)
+  }
+
+  return {
+    isAuthenticated,
+    handleAuthClick,
+    buttonText,
+    isLoading,
+  }
 }

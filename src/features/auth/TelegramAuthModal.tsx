@@ -23,14 +23,6 @@ declare global {
   }
 }
 
-const isTestModeEnabled = (): boolean => {
-  if (typeof window === 'undefined') return false
-  return (
-    process.env.NODE_ENV === 'development' ||
-    process.env.NEXT_PUBLIC_ENABLE_TEST_MODE === 'true'
-  )
-}
-
 export default function TelegramAuthModal({
   isOpen,
   onClose,
@@ -41,7 +33,14 @@ export default function TelegramAuthModal({
   const { mutate: telegramAuth } = useTelegramAuth()
   const router = useRouter()
 
-  const testModeEnabled = isTestModeEnabled()
+  const [testModeEnabled, setTestModeEnabled] = useState(false)
+
+  useEffect(() => {
+    setTestModeEnabled(
+      process.env.NODE_ENV === 'development' ||
+        process.env.NEXT_PUBLIC_ENABLE_TEST_MODE === 'true',
+    )
+  }, [])
 
   useEffect(() => {
     if (!isOpen) return

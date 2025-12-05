@@ -51,11 +51,21 @@ apiClient.interceptors.response.use(
     )
     const is401 = error.response?.status === 401
 
-    if (isRefreshRequest || !is401 || originalRequest._retry) {
-      if (is401 && !isRefreshRequest && typeof window !== 'undefined') {
-        removeAllCookies()
-        if (window.location.pathname.startsWith('/dashboard')) {
-          window.location.href = '/'
+    if (isRefreshRequest || !is401) {
+      return Promise.reject(error)
+    }
+
+    if (originalRequest._retry) {
+      if (typeof window !== 'undefined') {
+        const refreshToken = getCookie('refresh_token')
+        const isRefreshTokenValid =
+          refreshToken && !isTokenExpired(refreshToken)
+
+        if (!isRefreshTokenValid) {
+          removeAllCookies()
+          if (window.location.pathname.startsWith('/dashboard')) {
+            window.location.href = '/'
+          }
         }
       }
       return Promise.reject(error)

@@ -1,12 +1,18 @@
+import { useAuthButton } from '@/shared/model/hooks/useAuth'
 import { TelegramAuthProps } from '@/shared/types'
 import { Button } from '@/shared/ui/Button'
-import { ArrowDown, ListChecks, Rocket } from 'lucide-react'
+import { ArrowDown, ListChecks, Loader2, Rocket } from 'lucide-react'
 import BlockCard from './BlockCard'
 import { steps } from './config'
 
 export default function MainBlock({
   setIsTelegramModalOpen,
 }: TelegramAuthProps) {
+  const { handleAuthClick, buttonText, isLoading } = useAuthButton(
+    setIsTelegramModalOpen,
+    'Начать бесплатно',
+  )
+
   const scrollToHowItWorks = () => {
     const element = document.getElementById('how-it-works')
     if (element) {
@@ -36,10 +42,15 @@ export default function MainBlock({
       <div className='mt-10 flex items-center justify-center gap-3 max-sm:mt-6 max-sm:flex-col'>
         <Button
           className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[360px]'
-          onClick={() => setIsTelegramModalOpen(true)}
+          onClick={handleAuthClick}
+          disabled={isLoading}
         >
-          <ListChecks className='size-5 max-sm:size-4' />
-          Начать бесплатно
+          {isLoading ? (
+            <Loader2 className='size-5 animate-spin max-sm:size-4' />
+          ) : (
+            <ListChecks className='size-5 max-sm:size-4' />
+          )}
+          {buttonText}
         </Button>
         <Button
           className='p-6 text-base max-lg:p-5 max-lg:text-sm max-sm:w-full max-sm:max-w-[360px]'
