@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { forwardRef, type FocusEvent } from 'react'
 import { inputVariants } from '../Input/config'
 import { timeInputStyles } from './config'

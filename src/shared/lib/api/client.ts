@@ -4,8 +4,7 @@ import axios, {
   AxiosInstance,
   InternalAxiosRequestConfig,
 } from 'axios'
-import { getCookie, removeAllCookies, setCookie } from '../utils/cookies'
-import { isTokenExpiringSoon } from '../utils/token'
+import { getCookie, isTokenExpiringSoon, logout, setCookie } from '../utils'
 import { ApiError, handleApiError } from './errors'
 
 const ensureApiBaseUrl = (): string => {
@@ -26,6 +25,12 @@ export const apiClient: AxiosInstance = axios.create({
 })
 
 let refreshPromise: Promise<string> | null = null
+let retriedRequests = new WeakSet<InternalAxiosRequestConfig>()
+
+const handleLogout = () => {
+  refreshPromise = null
+  logout()
+}
 
 apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
   config.baseURL = config.baseURL ?? ensureApiBaseUrl()
@@ -42,30 +47,20 @@ apiClient.interceptors.request.use((config: InternalAxiosRequestConfig) => {
 apiClient.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
-    const originalRequest = error.config as InternalAxiosRequestConfig & {
-      _retry?: boolean
+    const originalRequest = error.config as InternalAxiosRequestConfig
+    const is401 = error.response?.status === 401
+
+    if (!is401) {
+      return Promise.reject(error)
     }
 
     const isRefreshRequest = originalRequest.url?.includes(
       '/auth/getrefreshtoken',
     )
-    const is401 = error.response?.status === 401
-
-    if (isRefreshRequest || !is401) {
+    if (isRefreshRequest || retriedRequests.has(originalRequest)) {
+      handleLogout()
       return Promise.reject(error)
     }
-
-    if (originalRequest._retry) {
-      if (typeof window !== 'undefined') {
-        removeAllCookies()
-        if (window.location.pathname.startsWith('/dashboard')) {
-          window.location.href = '/'
-        }
-      }
-      return Promise.reject(error)
-    }
-
-    originalRequest._retry = true
 
     try {
       const refreshToken = getCookie('refresh_token')
@@ -76,11 +71,6 @@ apiClient.interceptors.response.use(
       if (!refreshPromise) {
         refreshPromise = (async () => {
           try {
-            const shouldRotateRefreshToken = isTokenExpiringSoon(
-              refreshToken,
-              2 * 24 * 60 * 60 * 1000,
-            )
-
             const baseUrl = ensureApiBaseUrl()
             const response = await axios.post<{
               access_token: string
@@ -97,7 +87,10 @@ apiClient.interceptors.response.use(
             const isSecure = location.protocol === 'https:'
             setCookie('access_token', access_token, 7 * 24 * 60 * 60, isSecure)
 
-            if (refresh_token && shouldRotateRefreshToken) {
+            if (
+              refresh_token &&
+              isTokenExpiringSoon(refreshToken, 2 * 24 * 60 * 60 * 1000)
+            ) {
               setCookie(
                 'refresh_token',
                 refresh_token,
@@ -105,6 +98,8 @@ apiClient.interceptors.response.use(
                 isSecure,
               )
             }
+
+            retriedRequests = new WeakSet<InternalAxiosRequestConfig>()
 
             return access_token
           } finally {
@@ -115,21 +110,15 @@ apiClient.interceptors.response.use(
 
       const newToken = await refreshPromise
 
-      const { _retry, ...retryConfig } = originalRequest
+      retriedRequests.add(originalRequest)
 
-      if (retryConfig.headers) {
-        retryConfig.headers.Authorization = `Bearer ${newToken}`
+      if (originalRequest.headers) {
+        originalRequest.headers.Authorization = `Bearer ${newToken}`
       }
 
-      return apiClient(retryConfig)
-    } catch {
-      refreshPromise = null
-      if (typeof window !== 'undefined') {
-        removeAllCookies()
-        if (window.location.pathname.startsWith('/dashboard')) {
-          window.location.href = '/'
-        }
-      }
+      return apiClient(originalRequest)
+    } catch (refreshError) {
+      handleLogout()
       return Promise.reject(error)
     }
   },

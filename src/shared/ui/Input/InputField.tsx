@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { forwardRef, useId } from 'react'
 import { inputVariants } from './config'
 import type { InputProps } from './types'

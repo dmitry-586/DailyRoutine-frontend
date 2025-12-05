@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 
 import { badgeVariants } from './config'
 import type { BadgeProps } from './types'

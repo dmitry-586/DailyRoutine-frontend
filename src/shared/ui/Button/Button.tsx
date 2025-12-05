@@ -1,7 +1,7 @@
 'use client'
 
+import { cn } from '@/shared/lib/utils'
 import { forwardRef } from 'react'
-import { cn } from '@/shared/lib/utils/cn'
 import { buttonVariants } from './config'
 import type { ButtonProps } from './types'
 

@@ -2,7 +2,7 @@
 
 import * as React from 'react'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 
 import { radioIndicatorVariants, radioVariants } from './config'
 import type { RadioProps } from './types'

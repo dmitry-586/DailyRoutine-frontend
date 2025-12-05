@@ -1,4 +1,4 @@
-import { setCookie } from '@/shared/lib/utils/cookies'
+import { setCookie } from '@/shared/lib/utils'
 import { AuthResponse, TelegramUser } from '@/shared/types/auth.types'
 import { apiFetch } from './client'
 

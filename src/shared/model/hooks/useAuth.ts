@@ -4,12 +4,7 @@ import {
   postTestAuth,
   type TestAuthRequest,
 } from '@/shared/lib/api/auth'
-import {
-  getCookie,
-  hasCookie,
-  removeAllCookies,
-} from '@/shared/lib/utils/cookies'
-import { isTokenExpired } from '@/shared/lib/utils/token'
+import { getCookie, hasCookie, logout } from '@/shared/lib/utils'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useRouter } from 'next/navigation'
@@ -69,13 +64,8 @@ export function useLogout() {
       await apiFetch('/auth/logout', { method: 'POST' })
     },
     onSuccess: () => {
-      if (typeof window !== 'undefined') {
-        removeAllCookies()
-        queryClient.clear()
-        window.location.href = '/'
-      } else {
-        queryClient.clear()
-      }
+      queryClient.clear()
+      logout()
     },
   })
 }
@@ -98,10 +88,7 @@ export function useAuthButton(
       const accessToken = getCookie('access_token')
       const refreshToken = getCookie('refresh_token')
 
-      const hasValidAccessToken = !!accessToken && !isTokenExpired(accessToken)
-      const hasValidRefreshToken = !!refreshToken
-
-      const authenticated = Boolean(hasValidAccessToken || hasValidRefreshToken)
+      const authenticated = Boolean(accessToken || refreshToken)
 
       setIsAuthenticated(authenticated)
       setIsLoading(false)

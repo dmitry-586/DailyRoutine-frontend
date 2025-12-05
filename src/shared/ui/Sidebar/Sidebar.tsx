@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { ISidebarProps } from '@/shared/types/ui.types'
 import { X } from 'lucide-react'
 

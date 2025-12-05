@@ -1,7 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
-
+import { cn } from '@/shared/lib/utils'
 import { tabsStyles } from './config'
 import type { TabsTriggerProps } from './types'
 

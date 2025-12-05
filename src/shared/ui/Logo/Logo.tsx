@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import Image from 'next/image'
 
 export interface LogoProps {

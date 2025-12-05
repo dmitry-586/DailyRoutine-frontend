@@ -17,14 +17,6 @@ function decodeJWT(token: string): { exp?: number } | null {
   }
 }
 
-// Проверяет, истек ли JWT токен
-export function isTokenExpired(token: string): boolean {
-  const payload = decodeJWT(token)
-  if (!payload || !payload.exp) return true
-
-  return payload.exp * 1000 < Date.now()
-}
-
 // Проверяет, близок ли JWT токен к истечению
 export function isTokenExpiringSoon(
   token: string,

@@ -4,7 +4,7 @@ import {
   saveLastSentTimezone,
   saveTimezone,
   shouldSendTimezoneToBackend,
-} from '@/shared/lib/utils/timezone'
+} from '@/shared/lib/utils'
 import { useCallback } from 'react'
 
 export function useTimezone() {

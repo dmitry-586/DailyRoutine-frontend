@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
 import { RemoveScroll } from 'react-remove-scroll'

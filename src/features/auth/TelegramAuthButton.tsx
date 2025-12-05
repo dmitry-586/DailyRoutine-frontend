@@ -1,4 +1,4 @@
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { useAuthButton } from '@/shared/model/hooks/useAuth'
 import { TelegramAuthProps } from '@/shared/types/auth.types'
 import { Button } from '@/shared/ui/Button'

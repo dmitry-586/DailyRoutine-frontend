@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib/utils/cn'
+import { cn } from '@/shared/lib/utils'
 import { ChevronDown } from 'lucide-react'
 import type { ComponentPropsWithoutRef } from 'react'
 import type { SelectVariantProps } from '../config'
