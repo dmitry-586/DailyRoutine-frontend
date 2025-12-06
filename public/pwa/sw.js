@@ -2,8 +2,8 @@ const CACHE_NAME = 'daily-routine-v1'
 const urlsToCache = [
   '/',
   '/pwa/manifest.json',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png',
+  '/icons/PWA-icon-192.png.png',
+  '/icons/PWA-icon-512.png',
 ]
 
 self.addEventListener('install', (event) => {
