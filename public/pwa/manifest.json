@@ -2,7 +2,7 @@
   "name": "Daily Routine",
   "short_name": "DailyRoutine",
   "description": "Daily Routine - управляйте своими ежедневными задачами",
-  "start_url": "/",
+  "start_url": "/dashboard",
   "display": "standalone",
   "background_color": "#32373a",
   "theme_color": "#32373a",

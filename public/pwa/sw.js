@@ -1,4 +1,4 @@
-const CACHE_NAME = 'daily-routine-v1'
+const CACHE_NAME = 'daily-routine-v2'
 const urlsToCache = [
   '/',
   '/pwa/manifest.json',
@@ -43,7 +43,7 @@ self.addEventListener('fetch', (event) => {
 
       return fetch(request).catch(() => {
         if (request.mode === 'navigate') {
-          return caches.match('/')
+          return caches.match('/dashboard') || caches.match('/')
         }
         return new Response('', { status: 404, statusText: 'Not Found' })
       })

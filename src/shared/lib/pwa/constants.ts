@@ -12,5 +12,5 @@ export const PWA_CONSTANTS = {
   LANG: 'ru',
   CATEGORIES: ['productivity', 'utilities'],
   CACHE_NAME_PREFIX: 'daily-routine',
-  CACHE_VERSION: 'v1',
+  CACHE_VERSION: 'v2',
 } as const
