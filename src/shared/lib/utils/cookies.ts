@@ -19,8 +19,14 @@ export function setCookie(
 ): void {
   if (typeof window === 'undefined') return
 
+  // Вычисляем дату истечения для параметра expires
+  const expires = new Date()
+  expires.setTime(expires.getTime() + maxAge * 1000)
+  const expiresString = expires.toUTCString()
+
   const secureFlag = secure ? '; Secure' : ''
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; SameSite=Lax${secureFlag}`
+  // Используем и max-age и expires для максимальной совместимости
+  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; expires=${expiresString}; SameSite=Lax${secureFlag}`
 }
 
 export function removeCookie(name: string): void {
