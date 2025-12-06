@@ -1,5 +1,6 @@
 import { TimezoneSync } from '@/features/timezone/TimezoneSync'
-import TanstackClientProvider from '@/shared/model/TanstackClientProvider'
+import { getPWAMetadata, getPWAViewport } from '@/shared/lib/pwa'
+import TanstackClientProvider from '@/shared/model/providers/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
 import { Toaster } from 'sonner'
@@ -21,39 +22,9 @@ const inter = Inter({
   preload: true,
 })
 
-export const metadata: Metadata = {
-  title: 'Daily Routine',
-  description: 'Daily Routine - управляйте своими ежедневными задачами',
-  manifest: '/pwa/manifest.json',
-  applicationName: 'Daily Routine',
-  appleWebApp: {
-    title: 'Daily Routine',
-    statusBarStyle: 'black-translucent',
-    capable: true,
-  },
-  icons: {
-    icon: [
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/icons/icon-512.png', sizes: '512x512', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/icons/icon-192.png', sizes: '192x192', type: 'image/png' },
-    ],
-  },
-  other: {
-    'mobile-web-app-capable': 'yes',
-    'apple-mobile-web-app-capable': 'yes',
-  },
-}
+export const metadata: Metadata = getPWAMetadata()
 
-export const viewport: Viewport = {
-  width: 'device-width',
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
-  viewportFit: 'cover',
-  themeColor: '#32373a',
-}
+export const viewport: Viewport = getPWAViewport()
 
 export default function RootLayout({
   children,

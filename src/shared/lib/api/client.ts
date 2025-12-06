@@ -86,7 +86,6 @@ apiClient.interceptors.response.use(
       })
     }
 
-    // Начинаем процесс обновления токена
     isRefreshing = true
 
     try {
@@ -97,7 +96,6 @@ apiClient.interceptors.response.use(
 
       const baseUrl = ensureApiBaseUrl()
 
-      // Определяем, нужно ли обновлять refresh token
       const shouldRotateRefreshToken = isTokenExpiringSoon(
         refreshToken,
         2 * 24 * 60 * 60 * 1000,
@@ -137,7 +135,6 @@ apiClient.interceptors.response.use(
       // Уведомляем все запросы в очереди о новом токене
       onRefreshed(access_token)
 
-      // Завершаем процесс обновления
       isRefreshing = false
 
       // Повторяем оригинальный запрос с новым токеном

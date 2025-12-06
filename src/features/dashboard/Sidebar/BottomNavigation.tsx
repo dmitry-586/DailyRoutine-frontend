@@ -10,7 +10,7 @@ interface BottomNavigationProps {
 
 export function BottomNavigation({ isActive }: BottomNavigationProps) {
   return (
-    <nav className='border-light-gray/20 bg-gray fixed right-0 bottom-0 left-0 z-50 border-t lg:hidden'>
+    <nav className='border-light-gray/20 bg-gray safe-area-bottom fixed right-0 bottom-0 left-0 z-50 border-t lg:hidden'>
       <div className='mx-auto flex w-fit items-center gap-8 px-2 py-2 max-sm:gap-6'>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon
