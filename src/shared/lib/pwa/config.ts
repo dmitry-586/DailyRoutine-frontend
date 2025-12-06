@@ -1,6 +1,18 @@
 import { PWA_CONSTANTS } from './constants'
 import type { PWAConfig } from './types'
 
+const iconSmall = {
+  url: PWA_CONSTANTS.ICONS.SMALL,
+  sizes: '192x192',
+  type: 'image/png',
+}
+
+const iconLarge = {
+  url: PWA_CONSTANTS.ICONS.LARGE,
+  sizes: '512x512',
+  type: 'image/png',
+}
+
 export const pwaConfig: PWAConfig = {
   manifest: {
     name: PWA_CONSTANTS.APP_NAME,
@@ -27,7 +39,7 @@ export const pwaConfig: PWAConfig = {
         purpose: 'any maskable',
       },
     ],
-    categories: [...PWA_CONSTANTS.CATEGORIES],
+    categories: PWA_CONSTANTS.CATEGORIES,
     prefer_related_applications: false,
   },
   metadata: {
@@ -41,25 +53,8 @@ export const pwaConfig: PWAConfig = {
       capable: true,
     },
     icons: {
-      icon: [
-        {
-          url: PWA_CONSTANTS.ICONS.SMALL,
-          sizes: '192x192',
-          type: 'image/png',
-        },
-        {
-          url: PWA_CONSTANTS.ICONS.LARGE,
-          sizes: '512x512',
-          type: 'image/png',
-        },
-      ],
-      apple: [
-        {
-          url: PWA_CONSTANTS.ICONS.SMALL,
-          sizes: '192x192',
-          type: 'image/png',
-        },
-      ],
+      icon: [iconSmall, iconLarge],
+      apple: [iconSmall],
     },
     other: {
       'mobile-web-app-capable': 'yes',

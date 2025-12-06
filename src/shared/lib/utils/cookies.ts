@@ -19,30 +19,31 @@ export function setCookie(
 ): void {
   if (typeof window === 'undefined') return
 
-  // Вычисляем дату истечения для параметра expires
   const expires = new Date()
   expires.setTime(expires.getTime() + maxAge * 1000)
-  const expiresString = expires.toUTCString()
 
   const secureFlag = secure ? '; Secure' : ''
-  // Используем и max-age и expires для максимальной совместимости
-  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; expires=${expiresString}; SameSite=Lax${secureFlag}`
+  document.cookie = `${name}=${value}; path=/; max-age=${maxAge}; expires=${expires.toUTCString()}; SameSite=Lax${secureFlag}`
 }
 
 export function removeCookie(name: string): void {
   if (typeof window === 'undefined') return
-  document.cookie = `${name}=; path=/; max-age=0`
+
+  // Устанавливаем expires в прошлом для гарантированного удаления
+  const expires = new Date(0).toUTCString()
+  document.cookie = `${name}=; path=/; max-age=0; expires=${expires}`
 }
 
 export function removeAllCookies(): void {
   if (typeof window === 'undefined') return
 
   const cookies = document.cookie.split('; ')
+  const expires = new Date(0).toUTCString()
 
   cookies.forEach((cookie) => {
     const name = cookie.split('=')[0]
     if (name) {
-      document.cookie = `${name}=; path=/; max-age=0`
+      document.cookie = `${name}=; path=/; max-age=0; expires=${expires}`
     }
   })
 }

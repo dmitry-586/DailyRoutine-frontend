@@ -2,7 +2,7 @@ const CACHE_NAME = 'daily-routine-v1'
 const urlsToCache = [
   '/',
   '/pwa/manifest.json',
-  '/icons/PWA-icon-192.png.png',
+  '/icons/PWA-icon-192.png',
   '/icons/PWA-icon-512.png',
 ]
 
@@ -17,16 +17,32 @@ self.addEventListener('install', (event) => {
 })
 
 self.addEventListener('fetch', (event) => {
+  const { request } = event
+  const url = new URL(request.url)
+
+  if (url.origin !== self.location.origin) {
+    return
+  }
+
+  const isStaticResource =
+    url.pathname === '/' ||
+    url.pathname.startsWith('/icons/') ||
+    url.pathname.startsWith('/pwa/') ||
+    url.pathname.startsWith('/_next/static/') ||
+    /\.(js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2)$/.test(url.pathname)
+
+  if (!isStaticResource) {
+    return
+  }
+
   event.respondWith(
-    caches.match(event.request).then((response) => {
+    caches.match(request).then((response) => {
       if (response) {
         return response
       }
 
-      const fetchRequest = event.request.clone()
-
-      return fetch(fetchRequest).catch(() => {
-        if (event.request.mode === 'navigate') {
+      return fetch(request).catch(() => {
+        if (request.mode === 'navigate') {
           return caches.match('/')
         }
         return new Response('', { status: 404, statusText: 'Not Found' })
