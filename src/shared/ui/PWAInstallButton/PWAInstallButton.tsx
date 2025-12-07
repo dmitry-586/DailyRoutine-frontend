@@ -15,23 +15,17 @@ interface BeforeInstallPromptEvent extends Event {
   prompt(): Promise<void>
 }
 
-/**
- * Проверяет, запущено ли приложение в PWA режиме (standalone)
- */
 const isStandalone = (): boolean => {
   if (typeof window === 'undefined') return false
 
-  // Проверка для iOS Safari через navigator.standalone
   if ((window.navigator as { standalone?: boolean }).standalone === true) {
     return true
   }
 
-  // Проверка через media query для всех платформ
   if (window.matchMedia('(display-mode: standalone)').matches) {
     return true
   }
 
-  // Дополнительная проверка через window.matchMedia для старых браузеров
   if (
     window.matchMedia('(display-mode: standalone)').matches ||
     (window.navigator as { standalone?: boolean }).standalone === true
@@ -48,7 +42,6 @@ export const PWAInstallButton = () => {
   const [showInstallButton, setShowInstallButton] = useState(false)
 
   useEffect(() => {
-    // Не показываем кнопку, если приложение уже запущено как PWA
     if (isStandalone()) {
       return
     }
@@ -63,7 +56,6 @@ export const PWAInstallButton = () => {
 
     const handleBeforeInstallPrompt = (e: Event) => {
       e.preventDefault()
-      // Дополнительная проверка перед показом кнопки
       if (!isStandalone()) {
         setDeferredPrompt(e as BeforeInstallPromptEvent)
         setShowInstallButton(true)
@@ -97,7 +89,6 @@ export const PWAInstallButton = () => {
     setShowInstallButton(false)
   }
 
-  // Не показываем кнопку, если приложение запущено как PWA или кнопка скрыта
   if (isStandalone() || !showInstallButton) {
     return null
   }
@@ -106,10 +97,7 @@ export const PWAInstallButton = () => {
     <Button
       onClick={handleInstallClick}
       variant='primary'
-      className='safe-area-bottom fixed right-4 bottom-4 z-50 flex min-w-[180px] items-center gap-2 bg-black/30 px-4 py-2 text-sm'
-      style={{
-        marginBottom: 'var(--safe-area-inset-bottom)',
-      }}
+      className='fixed right-4 bottom-4 z-50 flex w-fit min-w-[180px] items-center gap-2 bg-black/30 px-4 py-2 text-sm'
     >
       <Download size={16} />
       Установить приложение

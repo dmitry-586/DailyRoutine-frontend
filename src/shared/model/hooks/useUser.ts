@@ -1,0 +1,14 @@
+import { authKeys, updateUser } from '@/shared/lib/api'
+import type { UpdateUserRequest } from '@/shared/lib/api/user'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient()
+
+  return useMutation({
+    mutationFn: (data: UpdateUserRequest) => updateUser(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: authKeys.me() })
+    },
+  })
+}

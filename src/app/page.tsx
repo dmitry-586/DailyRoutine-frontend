@@ -3,8 +3,8 @@
 import CTA from '@/features/landing/CTA'
 import Header from '@/features/landing/Header'
 import HowWork from '@/features/landing/HowWork'
-import LandingLayout from '@/features/landing/LandingLayout'
 import MainBlock from '@/features/landing/MainBlock/MainBlock'
+import LandingLayout from '@/shared/model/providers/LandingLayout'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 

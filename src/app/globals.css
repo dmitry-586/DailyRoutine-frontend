@@ -94,7 +94,7 @@ h1 {
 }
 
 .safe-area-bottom {
-  padding-bottom: calc(1rem + var(--safe-area-inset-bottom));
+  padding-bottom: calc(var(--safe-area-inset-bottom));
 }
 
 .safe-area-left {

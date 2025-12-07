@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic'
 import { ComponentType } from 'react'
-import LandingLayout from '../LandingLayout'
+import LandingLayout from '../../../shared/model/providers/LandingLayout'
 import { howWorkStages } from './config'
 import StageCard from './stages/StageCard'
 import HabitFormPreview from './stages/previews/HabitFormPreview'
