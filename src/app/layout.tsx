@@ -1,4 +1,5 @@
 import { TimezoneSync } from '@/features/timezone/TimezoneSync'
+import { YandexMetrika } from '@/shared/lib/analytics'
 import { getPWAMetadata, getPWAViewport } from '@/shared/lib/pwa'
 import TanstackClientProvider from '@/shared/model/providers/TanstackClientProvider'
 import type { Metadata, Viewport } from 'next'
@@ -34,6 +35,7 @@ export default function RootLayout({
   return (
     <html lang='ru'>
       <body className={`${reggaeOne.variable} ${inter.variable} antialiased`}>
+        <YandexMetrika />
         <TanstackClientProvider>
           <TimezoneSync />
           {children}
