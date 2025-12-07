@@ -72,3 +72,14 @@ export async function postTestAuth(
 
   return response
 }
+
+interface RevokeTokenRequest {
+  token: string
+}
+
+export async function revokeToken(token: string): Promise<void> {
+  await apiFetch('/auth/revoke', {
+    method: 'POST',
+    data: { token } satisfies RevokeTokenRequest,
+  })
+}

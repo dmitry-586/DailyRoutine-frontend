@@ -2,6 +2,7 @@ import { apiFetch, authKeys } from '@/shared/lib/api'
 import {
   postTelegramAuth,
   postTestAuth,
+  revokeToken,
   type TestAuthRequest,
 } from '@/shared/lib/api/auth'
 import { getCookie, hasCookie, logout } from '@/shared/lib/utils'
@@ -61,7 +62,16 @@ export function useLogout() {
 
   return useMutation({
     mutationFn: async () => {
-      await apiFetch('/auth/logout', { method: 'POST' })
+      if (typeof window === 'undefined') return
+
+      const refreshToken = getCookie('refresh_token')
+      const accessToken = getCookie('access_token')
+
+      const tokenToRevoke = refreshToken || accessToken
+
+      if (tokenToRevoke) {
+        await revokeToken(tokenToRevoke)
+      }
     },
     onSuccess: () => {
       queryClient.clear()
