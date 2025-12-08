@@ -25,7 +25,10 @@ export const HabitCardDeleteModal = ({
         <Button variant='primary' onClick={onClose}>
           Отмена
         </Button>
-        <Button onClick={onConfirm} className='bg-red hover:bg-red/90'>
+        <Button
+          onClick={onConfirm}
+          className='bg-red border-red hover:bg-red/80'
+        >
           Удалить
         </Button>
       </div>

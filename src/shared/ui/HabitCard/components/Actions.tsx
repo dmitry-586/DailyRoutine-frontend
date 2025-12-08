@@ -5,6 +5,7 @@ import type { HabitCardActionsProps } from '../types'
 export const HabitCardActions = ({
   isBeneficial,
   isCompleted,
+  isActive,
   handlers,
 }: HabitCardActionsProps) => {
   const { onComplete, onRelapse, onEdit, onDelete } = handlers
@@ -14,6 +15,7 @@ export const HabitCardActions = ({
       {isBeneficial ? (
         <Button
           onClick={onComplete}
+          disabled={!isActive}
           className={`h-9 flex-1 text-sm ${
             isCompleted && 'bg-green border-green hover:bg-green/90'
           }`}
@@ -24,6 +26,7 @@ export const HabitCardActions = ({
       ) : (
         <Button
           onClick={onRelapse}
+          disabled={!isActive}
           variant={isCompleted ? 'primary' : 'default'}
           className={`h-9 flex-1 text-sm ${
             !isCompleted && 'bg-red border-red hover:bg-red/80'

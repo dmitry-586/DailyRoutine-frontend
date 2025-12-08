@@ -38,6 +38,7 @@ export function HabitCard(props: HabitCardProps) {
         <HabitCardActions
           isBeneficial={is_beneficial}
           isCompleted={isCompleted}
+          isActive={isActive}
           handlers={{
             onComplete: handleComplete,
             onRelapse: handleRelapse,

@@ -1,6 +1,5 @@
 import { useHabitMutations } from '@/shared/model/hooks/useHabitMutations'
 import { useHabits } from '@/shared/model/hooks/useHabits'
-import { useMediaQuery } from '@/shared/model/hooks/useMediaQuery'
 import type { CreateHabitRequest, Habit } from '@/shared/types/habit.types'
 import { Button } from '@/shared/ui/Button'
 import { EditHabitModal } from '@/shared/ui/EditHabitModal'
@@ -13,7 +12,6 @@ export function DashboardHabits() {
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
   const [habitToEdit, setHabitToEdit] = useState<Habit | null>(null)
-  const isMobile = useMediaQuery('(max-width: 640px)')
 
   const { data: habits = [], isLoading } = useHabits()
   const { handleCreate, handleUpdate, handleDelete } = useHabitMutations()
@@ -48,9 +46,9 @@ export function DashboardHabits() {
           <h2 className='text-xl font-semibold max-sm:text-lg'>
             Привычки на сегодня
           </h2>
-          <Button size={isMobile ? 'sm' : 'default'} onClick={openCreateModal}>
-            <Plus className='size-4' />
-            <p>Добавить</p>
+          <Button onClick={openCreateModal} className='h-9 max-sm:h-8'>
+            <Plus className='size-4 shrink-0' />
+            <span>Добавить</span>
           </Button>
         </div>
 

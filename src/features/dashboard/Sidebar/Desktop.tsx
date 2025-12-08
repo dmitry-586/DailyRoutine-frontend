@@ -1,9 +1,11 @@
 'use client'
 
 import { cn } from '@/shared/lib'
+import { useHabits } from '@/shared/model/hooks/useHabits'
 import Logo from '@/shared/ui/Logo'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
+import { useMemo } from 'react'
 import { NAV_ITEMS } from './config'
 
 interface DesktopSidebarProps {
@@ -17,6 +19,17 @@ export function DesktopSidebar({
   isActive,
   setSidebarCollapsed,
 }: DesktopSidebarProps) {
+  const { data: habits = [] } = useHabits()
+
+  const progress = useMemo(() => {
+    const activeHabits = habits.filter((h) => h.is_active !== false)
+    const completedToday = activeHabits.filter((h) => h.is_done).length
+
+    if (activeHabits.length === 0) return 0
+
+    return Math.round((completedToday / activeHabits.length) * 100)
+  }, [habits])
+
   return (
     <section
       className={`border-light-gray/20 bg-gray hidden border-r transition-all duration-300 ease-in-out lg:flex lg:flex-col ${
@@ -113,7 +126,7 @@ export function DesktopSidebar({
             Ваш прогресс
           </p>
           <div className='flex items-baseline gap-2 whitespace-nowrap'>
-            <span className='text-2xl text-white'>85%</span>
+            <span className='text-2xl text-white'>{progress}%</span>
           </div>
         </div>
       </div>

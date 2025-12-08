@@ -21,6 +21,7 @@ export interface HabitCardHeaderProps {
 export interface HabitCardActionsProps {
   isBeneficial: boolean
   isCompleted: boolean
+  isActive: boolean
   handlers: {
     onComplete: (e: React.MouseEvent) => void
     onRelapse: (e: React.MouseEvent) => void
