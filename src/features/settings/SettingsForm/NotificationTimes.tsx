@@ -48,7 +48,7 @@ export function NotificationTimes({
         </p>
       </div>
 
-      <div className='flex gap-2'>
+      <div className='flex items-center gap-2'>
         <Input
           type='time'
           value={newTime}
@@ -56,16 +56,16 @@ export function NotificationTimes({
           onKeyDown={handleKeyDown}
           placeholder='Выберите время'
           disabled={disabled}
-          className='flex-1'
+          className='w-fit text-base font-medium'
         />
         <Button
           type='button'
           onClick={handleAdd}
           disabled={disabled || !newTime.trim()}
           variant='primary'
-          className='shrink-0'
+          className='h-10 shrink-0'
         >
-          <Plus className='h-4 w-4' />
+          <Plus className='size-4' />
         </Button>
       </div>
 

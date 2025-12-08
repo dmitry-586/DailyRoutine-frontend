@@ -1,5 +1,4 @@
 export { LogoutButton } from './LogoutButton/LogoutButton'
 export { PWAInstallCard } from './PWAInstall/PWAInstallCard'
-export { Settings } from './Settings'
 export { SettingsForm } from './SettingsForm/SettingsForm'
 export { UserProfile } from './UserProfile/UserProfile'

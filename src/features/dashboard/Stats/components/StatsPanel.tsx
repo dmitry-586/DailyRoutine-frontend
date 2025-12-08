@@ -1,19 +1,17 @@
 'use client'
 
-import { Award, Flame, Target, TrendingUp } from 'lucide-react'
+import { Award, Target, TrendingUp } from 'lucide-react'
 import { StatsField } from './StatsField'
 
 interface StatsPanelProps {
   totalHabits: number
   completedToday: number
-  currentStreak: number
   dailyCoins: number
 }
 
 export function StatsPanel({
   totalHabits,
   completedToday,
-  currentStreak,
   dailyCoins,
 }: StatsPanelProps) {
   const completionRate =
@@ -21,12 +19,6 @@ export function StatsPanel({
 
   return (
     <div className='bg-gray grid shrink-0 gap-3 rounded-lg p-4 max-xl:grid-cols-2 max-xl:gap-x-6 max-sm:grid-cols-1'>
-      <StatsField
-        title='Текущая серия'
-        icon={<Flame className='text-orange h-4 w-4' />}
-        value={`${currentStreak} дней`}
-        iconColor='bg-orange/10'
-      />
       <StatsField
         title='Выполнено сегодня'
         icon={<Target className='text-primary h-4 w-4' />}

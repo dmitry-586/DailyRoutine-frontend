@@ -40,7 +40,7 @@ export function LogoutButton() {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         title='Выход из аккаунта'
-        className='max-w-md'
+        className='max-w-md max-sm:max-w-[90vw]'
       >
         <div className='space-y-4'>
           <p className='text-light-gray text-sm'>
@@ -59,8 +59,7 @@ export function LogoutButton() {
             <Button
               type='button'
               onClick={handleLogout}
-              variant='default'
-              className='flex-1'
+              className='bg-red hover:bg-red/80 border-red flex-1 text-white'
               disabled={isPending}
             >
               {isPending ? 'Выход...' : 'Выйти'}

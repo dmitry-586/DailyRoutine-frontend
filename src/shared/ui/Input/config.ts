@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
 export const inputVariants = cva(
-  'flex w-full rounded-md border px-3 py-1 text-sm transition-all focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 [&[type=number]]:[-moz-appearance:textfield] [&[type=number]]:[&::-webkit-inner-spin-button]:appearance-none [&[type=number]]:[&::-webkit-outer-spin-button]:appearance-none',
+  'flex w-full rounded-md border px-3 py-1 text-sm transition-all focus:outline-none focus:ring-1 disabled:cursor-not-allowed disabled:opacity-50 [&[type=number]]:[-moz-appearance:textfield] [&[type=number]]:[&::-webkit-inner-spin-button]:appearance-none [&[type=number]]:[&::-webkit-outer-spin-button]:appearance-none [&[type=time]]:text-center [&[type=time]]:px-5 [&[type=time]]:font-medium',
   {
     variants: {
       variant: {

@@ -15,7 +15,6 @@
   --gold: #ffd700;
   --silver: #c0c0c0;
   --bronze: #cd7f32;
-  --border: rgba(179, 179, 179, 0.2);
 }
 
 @theme inline {
@@ -233,4 +232,16 @@ nav[class*='fixed'][class*='bottom'] {
   opacity: 1;
   background: var(--gray);
   color: var(--foreground);
+}
+
+/* Стилизация иконки часов в input[type="time"] для WebKit браузеров */
+input[type='time']::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.2);
+  cursor: pointer;
+}
+
+/* Стилизация для Firefox input[type="time"] */
+input[type='time']::-moz-calendar-picker-indicator {
+  filter: invert(1) brightness(1.2);
+  cursor: pointer;
 }

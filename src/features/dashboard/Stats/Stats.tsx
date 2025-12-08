@@ -16,7 +16,6 @@ export function Stats() {
         <StatsPanel
           totalHabits={activeHabits.length}
           completedToday={completedToday}
-          currentStreak={7}
           dailyCoins={340}
         />
 

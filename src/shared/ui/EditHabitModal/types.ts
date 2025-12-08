@@ -1,6 +1,6 @@
 import type { Habit, UpdateHabitRequest } from '@/shared/types'
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form'
-import type { EditHabitFormData } from './editHabitSchema'
+import type { EditHabitFormData } from './components/editHabitSchema'
 
 export interface EditHabitModalProps {
   open: boolean

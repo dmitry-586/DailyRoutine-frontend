@@ -102,7 +102,7 @@ export default function TelegramAuthModal({
       isOpen={isOpen}
       onClose={onClose}
       title='Вход через Telegram'
-      className='max-w-lg'
+      className='max-w-lg max-sm:max-w-[90vw]'
     >
       <div className='bg-primary/20 mx-auto flex h-16 w-16 items-center justify-center rounded-full'>
         <Image

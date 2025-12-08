@@ -9,6 +9,7 @@ export interface InputProps
   label?: string
   labelClassName?: string
   errorClassName?: string
+  wrapperClassName?: string
   inputSize?: InputVariantProps['inputSize']
 }
 

@@ -7,7 +7,7 @@ import {
   countEditSchema,
   timeEditSchema,
   type EditHabitFormData,
-} from './editHabitSchema'
+} from './components/editHabitSchema'
 
 const habitToFormData = (habit: Habit): EditHabitFormData => {
   const base = {

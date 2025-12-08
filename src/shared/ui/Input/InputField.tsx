@@ -15,6 +15,7 @@ export const InputField = forwardRef<HTMLInputElement, InputProps>(
       errorClassName,
       label,
       labelClassName,
+      wrapperClassName,
       id,
       ...props
     },
@@ -26,7 +27,7 @@ export const InputField = forwardRef<HTMLInputElement, InputProps>(
     const hasError = Boolean(error)
 
     return (
-      <div className='flex w-full flex-col gap-2'>
+      <div className={`flex flex-col gap-2 ${wrapperClassName}`}>
         {label && (
           <label
             htmlFor={finalId}
