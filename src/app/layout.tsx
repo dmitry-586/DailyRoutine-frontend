@@ -1,6 +1,7 @@
 import { TimezoneSync } from '@/features/timezone/TimezoneSync'
 import { YandexMetrika } from '@/shared/lib/analytics'
 import { getPWAMetadata, getPWAViewport } from '@/shared/lib/pwa'
+import { generateLandingMetadata } from '@/shared/lib/seo'
 import TanstackClientProvider from '@/shared/model/providers/TanstackClientProvider'
 import { Toaster } from '@/shared/ui/Toaster'
 import type { Metadata, Viewport } from 'next'
@@ -23,7 +24,28 @@ const inter = Inter({
   preload: true,
 })
 
-export const metadata: Metadata = getPWAMetadata()
+const pwaMetadata = getPWAMetadata()
+const seoMetadata = generateLandingMetadata()
+
+export const metadata: Metadata = {
+  ...pwaMetadata,
+  ...seoMetadata,
+  title: seoMetadata.title,
+  description: seoMetadata.description,
+  keywords: seoMetadata.keywords,
+  metadataBase: seoMetadata.metadataBase,
+  alternates: seoMetadata.alternates,
+  openGraph: seoMetadata.openGraph,
+  robots: seoMetadata.robots,
+  other: {
+    ...pwaMetadata.other,
+    ...seoMetadata.other,
+  },
+  icons: pwaMetadata.icons,
+  applicationName: pwaMetadata.applicationName,
+  manifest: pwaMetadata.manifest,
+  appleWebApp: pwaMetadata.appleWebApp,
+}
 
 export const viewport: Viewport = getPWAViewport()
 

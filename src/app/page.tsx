@@ -3,6 +3,7 @@
 import CTA from '@/features/landing/CTA'
 import Header from '@/features/landing/Header'
 import HowWork from '@/features/landing/HowWork'
+import LandingStructuredData from '@/features/landing/LandingStructuredData'
 import MainBlock from '@/features/landing/MainBlock/MainBlock'
 import LandingLayout from '@/shared/model/providers/LandingLayout'
 import dynamic from 'next/dynamic'
@@ -24,6 +25,7 @@ export default function Home() {
 
   return (
     <>
+      <LandingStructuredData />
       <Header setIsTelegramModalOpen={setIsTelegramModalOpen} />
       <LandingLayout className='pb-20 max-sm:pb-12'>
         <MainBlock setIsTelegramModalOpen={setIsTelegramModalOpen} />
