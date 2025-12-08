@@ -23,7 +23,7 @@ export default function InfoBlock({ habit }: InfoBlockProps) {
     <div className='border-light-gray bg-gray/90 rounded-lg border p-4'>
       <h3 className='mb-3 text-sm font-medium'>Параметры привычки</h3>
       <div className='space-y-2'>
-        <div className='grid grid-cols-2 gap-5'>
+        <div className='grid grid-cols-2 max-sm:grid-cols-[1.5fr_1fr]'>
           <span className='text-light-gray text-sm'>Тип привычки:</span>
           <span className='text-center text-sm font-medium'>
             {habit.is_beneficial ? (
@@ -39,7 +39,7 @@ export default function InfoBlock({ habit }: InfoBlockProps) {
             )}
           </span>
         </div>
-        <div className='grid grid-cols-2 gap-5'>
+        <div className='grid grid-cols-2 max-sm:grid-cols-[1.5fr_1fr]'>
           <span className='text-light-gray text-sm'>Формат отслеживания:</span>
           <span className='text-center text-sm'>
             {getHabitTypeLabel(habit.type)}
