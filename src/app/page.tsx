@@ -1,6 +1,8 @@
 'use client'
 
 import CTA from '@/features/landing/CTA'
+import Features from '@/features/landing/Features'
+import Footer from '@/features/landing/Footer'
 import Header from '@/features/landing/Header'
 import HowWork from '@/features/landing/HowWork'
 import LandingStructuredData from '@/features/landing/LandingStructuredData'
@@ -31,7 +33,9 @@ export default function Home() {
         <MainBlock setIsTelegramModalOpen={setIsTelegramModalOpen} />
       </LandingLayout>
       <HowWork />
+      <Features />
       <CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
+      <Footer />
       <TelegramAuthModal
         isOpen={isTelegramModalOpen}
         onClose={() => setIsTelegramModalOpen(false)}

@@ -28,19 +28,19 @@ const VISUAL_COMPONENTS: Record<
 
 export default function HowWorkSection() {
   return (
-    <LandingLayout className='max-lg:max-w-3xl' backgroundColor='dark-gray'>
-      <section id='how-it-works' className='py-16 max-sm:py-12'>
-        <div className='flex flex-col gap-3 text-center'>
-          <h2 className='text-4xl font-semibold max-sm:text-3xl'>
+    <LandingLayout backgroundColor='dark-gray'>
+      <section id='how-it-works' className='py-20 max-md:py-16 max-sm:py-12'>
+        <div className='mb-16 flex flex-col gap-4 text-center max-md:mb-12 max-sm:mb-10'>
+          <h2 className='text-4xl font-bold max-md:text-3xl max-sm:text-2xl'>
             Как это работает
           </h2>
-          <p className='text-light-gray mx-auto max-w-2xl max-sm:px-4 max-sm:text-sm'>
+          <p className='text-light-gray mx-auto max-w-2xl text-lg max-md:text-base max-sm:text-sm'>
             Умный трекер привычек с гибкой настройкой и удобным отслеживанием
             прогресса
           </p>
         </div>
 
-        <div className='mt-12 space-y-12 max-lg:mt-8 max-sm:space-y-8'>
+        <div className='space-y-12 max-md:space-y-10 max-sm:space-y-8'>
           {howWorkStages.map(({ visualId, ...stage }) => {
             const VisualComponent = VISUAL_COMPONENTS[visualId]
             return (
