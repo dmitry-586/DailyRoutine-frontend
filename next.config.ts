@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'telegram.org',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.telegram.org',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
   },
