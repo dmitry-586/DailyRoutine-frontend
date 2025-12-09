@@ -13,7 +13,6 @@ export function BottomNavigation({ isActive }: BottomNavigationProps) {
     <nav
       className='bg-gray/30 fixed left-1/2 z-50 w-fit -translate-x-1/2 rounded-full border border-white/20 backdrop-blur-sm lg:hidden'
       style={{
-        bottom: 'calc(1.25rem + env(safe-area-inset-bottom, 0px))',
         paddingBottom: 0,
         WebkitBackdropFilter: 'blur(10px)',
         backdropFilter: 'blur(10px)',
