@@ -92,10 +92,6 @@ h1 {
   padding-top: calc(1rem + var(--safe-area-inset-top));
 }
 
-.safe-area-bottom {
-  padding-bottom: calc(var(--safe-area-inset-bottom));
-}
-
 .safe-area-left {
   padding-left: calc(1rem + var(--safe-area-inset-left));
 }
@@ -110,7 +106,7 @@ header {
 }
 
 /* Для fixed bottom элементов - добавляем отступ снизу для safe area */
-nav[class*='fixed'][class*='bottom'] {
+nav[class*='fixed'][class*='bottom']:not(.no-safe-area-padding) {
   padding-bottom: var(--safe-area-inset-bottom);
 }
 
