@@ -10,7 +10,15 @@ interface BottomNavigationProps {
 
 export function BottomNavigation({ isActive }: BottomNavigationProps) {
   return (
-    <nav className='bg-gray/30 fixed bottom-5 left-1/2 z-50 w-fit -translate-x-1/2 rounded-full border border-white/20 backdrop-blur-sm lg:hidden'>
+    <nav
+      className='bg-gray/30 fixed left-1/2 z-50 w-fit -translate-x-1/2 rounded-full border border-white/20 backdrop-blur-sm lg:hidden'
+      style={{
+        bottom: 'calc(1.25rem + env(safe-area-inset-bottom, 0px))',
+        paddingBottom: 0,
+        WebkitBackdropFilter: 'blur(10px)',
+        backdropFilter: 'blur(10px)',
+      }}
+    >
       <div className='flex items-center gap-8 px-8 py-2'>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon
