@@ -21,7 +21,7 @@ export function DashboardLayout({ children }: DashboardLayoutProps) {
   }
 
   return (
-    <section className='bg-background flex min-h-screen'>
+    <section className='safe-area-top bg-background flex min-h-screen'>
       <DesktopSidebar
         sidebarCollapsed={sidebarCollapsed}
         setSidebarCollapsed={setSidebarCollapsed}

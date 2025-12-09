@@ -89,7 +89,7 @@ h1 {
 
 /* Safe area для header и других элементов, которые должны учитывать вырез/Dynamic Island */
 .safe-area-top {
-  padding-top: calc(1rem + var(--safe-area-inset-top));
+  padding-top: calc(var(--safe-area-inset-top));
 }
 
 .safe-area-left {
