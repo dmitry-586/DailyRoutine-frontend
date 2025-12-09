@@ -18,7 +18,7 @@ export function BottomNavigation({ isActive }: BottomNavigationProps) {
         backdropFilter: 'blur(10px)',
       }}
     >
-      <div className='flex items-center gap-8 px-8 py-2'>
+      <div className='flex items-center gap-8 px-8 py-2.5'>
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon
           const active = isActive(item.href)
