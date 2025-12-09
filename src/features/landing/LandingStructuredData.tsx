@@ -2,7 +2,6 @@ import {
   generateFAQSchema,
   generateSoftwareApplicationSchema,
 } from '@/shared/lib/seo'
-import { StructuredData } from '@/shared/ui/StructuredData'
 
 export default function LandingStructuredData() {
   const structuredData = [
@@ -10,5 +9,17 @@ export default function LandingStructuredData() {
     generateFAQSchema(),
   ]
 
-  return <StructuredData data={structuredData} />
+  return (
+    <>
+      {structuredData.map((item, index) => (
+        <script
+          key={index}
+          type='application/ld+json'
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(item),
+          }}
+        />
+      ))}
+    </>
+  )
 }

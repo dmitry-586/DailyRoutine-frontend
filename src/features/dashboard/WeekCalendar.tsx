@@ -47,7 +47,7 @@ export function WeekCalendar() {
           <button
             key={date.toISOString()}
             type='button'
-            className={`flex flex-col items-center justify-center rounded-lg py-2 text-sm max-sm:px-3.5 ${
+            className={`flex flex-col items-center justify-center rounded-lg py-2 text-sm max-sm:px-3.5 max-sm:py-1.5 ${
               isToday ? 'bg-primary text-white' : 'bg-gray text-light-gray'
             }`}
           >
