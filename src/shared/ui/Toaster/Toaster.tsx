@@ -1,6 +1,6 @@
 'use client'
 
-import { useMediaQuery } from '@/shared/model/hooks/useMediaQuery'
+import { useMediaQuery } from '@/shared/model/hooks'
 import { Toaster as SonnerToaster } from 'sonner'
 
 export function Toaster() {

@@ -1,9 +1,7 @@
 'use client'
 
-import { useMe } from '@/shared/model/hooks/useAuth'
-import { useUpdateUser } from '@/shared/model/hooks/useUser'
-import { Button } from '@/shared/ui/Button'
-import { Input } from '@/shared/ui/Input'
+import { useMe, useUpdateUser } from '@/shared/model/hooks'
+import { Button, Input } from '@/shared/ui'
 import { Edit2, Save, X } from 'lucide-react'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'

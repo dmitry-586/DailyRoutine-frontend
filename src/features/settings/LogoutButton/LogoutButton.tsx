@@ -1,8 +1,7 @@
 'use client'
 
-import { useLogout } from '@/shared/model/hooks/useAuth'
-import { Button } from '@/shared/ui/Button'
-import { Modal } from '@/shared/ui/Modal'
+import { useLogout } from '@/shared/model/hooks'
+import { Button, Modal } from '@/shared/ui'
 import { LogOut } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'

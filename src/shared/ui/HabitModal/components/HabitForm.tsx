@@ -1,7 +1,4 @@
-import { Input } from '@/shared/ui/Input'
-import { RadioGroup } from '@/shared/ui/RadioGroup'
-import { Select } from '@/shared/ui/Select'
-import { TimeInput } from '@/shared/ui/TimeInput'
+import { Input, RadioGroup, Select, TimeInput } from '@/shared/ui'
 import { Controller } from 'react-hook-form'
 import {
   COUNT_UNITS,

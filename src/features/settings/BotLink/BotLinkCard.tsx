@@ -1,6 +1,6 @@
 'use client'
 
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { ExternalLink } from 'lucide-react'
 
 export function BotLinkCard() {

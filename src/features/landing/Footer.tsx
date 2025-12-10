@@ -1,5 +1,5 @@
 import LandingLayout from '@/shared/model/providers/LandingLayout'
-import Logo from '@/shared/ui/Logo'
+import { Logo } from '@/shared/ui'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()

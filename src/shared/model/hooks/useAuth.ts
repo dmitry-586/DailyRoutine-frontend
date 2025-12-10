@@ -1,10 +1,11 @@
-import { apiFetch, authKeys } from '@/shared/lib/api'
 import {
+  authKeys,
+  getUser,
   postTelegramAuth,
   postTestAuth,
   revokeToken,
   type TestAuthRequest,
-} from '@/shared/lib/api/auth'
+} from '@/shared/lib/api'
 import { getCookie, hasCookie, logout } from '@/shared/lib/utils'
 import { AuthResponse, TelegramUser, User } from '@/shared/types/auth.types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -22,12 +23,8 @@ export function useMe() {
 
   return useQuery<User>({
     queryKey: authKeys.me(),
-    queryFn: async () => {
-      const response = await apiFetch<User>('/user/me')
-      return response
-    },
+    queryFn: getUser,
     enabled: typeof window !== 'undefined' && hasToken,
-    staleTime: 5 * 60_000,
     retry: false,
   })
 }

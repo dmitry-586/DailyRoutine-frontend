@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/shared/lib/utils'
-import { Radio } from '@/shared/ui/Radio'
+import { Radio } from '@/shared/ui'
 import type { ChangeEvent } from 'react'
 import { RadioGroupProps } from './types'
 

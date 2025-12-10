@@ -1,9 +1,8 @@
 'use client'
 
+import { BottomNavigation, DesktopSidebar } from '@/features/dashboard/Sidebar'
 import { usePathname } from 'next/navigation'
 import { ReactNode, useState } from 'react'
-import { BottomNavigation } from '../../../features/dashboard/Sidebar/BottomNavigation'
-import { DesktopSidebar } from '../../../features/dashboard/Sidebar/Desktop'
 
 interface DashboardLayoutProps {
   children: ReactNode

@@ -1,8 +1,7 @@
 'use client'
 
-import { useTestAuth } from '@/shared/model/hooks/useAuth'
-import { useTimezone } from '@/shared/model/hooks/useTimezone'
-import { Button } from '@/shared/ui/Button'
+import { useTestAuth, useTimezone } from '@/shared/model/hooks'
+import { Button } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'

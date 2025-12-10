@@ -1,10 +1,6 @@
-import { useHabitMutations } from '@/shared/model/hooks/useHabitMutations'
-import { useHabits } from '@/shared/model/hooks/useHabits'
-import type { CreateHabitRequest, Habit } from '@/shared/types/habit.types'
-import { Button } from '@/shared/ui/Button'
-import { EditHabitModal } from '@/shared/ui/EditHabitModal'
-import { HabitCard } from '@/shared/ui/HabitCard'
-import { HabitModal } from '@/shared/ui/HabitModal'
+import { useHabitMutations, useHabits } from '@/shared/model/hooks'
+import type { CreateHabitRequest, Habit } from '@/shared/types'
+import { Button, EditHabitModal, HabitCard, HabitModal } from '@/shared/ui'
 import { Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 

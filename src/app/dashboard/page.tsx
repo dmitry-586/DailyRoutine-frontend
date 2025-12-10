@@ -2,7 +2,7 @@
 
 import { DashboardHabits } from '@/features/dashboard/DashboardHabits'
 import { WeekCalendar } from '@/features/dashboard/WeekCalendar'
-import { PageHeader } from '@/shared/ui/PageHeader'
+import { PageHeader } from '@/shared/ui'
 import { HomeIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 

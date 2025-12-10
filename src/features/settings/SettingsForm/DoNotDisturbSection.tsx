@@ -1,6 +1,6 @@
 'use client'
 
-import { Switch } from '@/shared/ui/Switch'
+import { Switch } from '@/shared/ui'
 import { Bell, BellOff } from 'lucide-react'
 
 interface DoNotDisturbSectionProps {

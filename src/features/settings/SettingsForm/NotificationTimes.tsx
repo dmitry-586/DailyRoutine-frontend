@@ -1,7 +1,6 @@
 'use client'
 
-import { Button } from '@/shared/ui/Button'
-import { Input } from '@/shared/ui/Input'
+import { Button, Input } from '@/shared/ui'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { TimeTag } from './TimeTag'

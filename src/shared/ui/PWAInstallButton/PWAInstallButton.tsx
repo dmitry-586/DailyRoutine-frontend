@@ -1,10 +1,9 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
 import { PWA_CONSTANTS } from '@/shared/lib/pwa'
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { Download } from 'lucide-react'
+import { useEffect, useState } from 'react'
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[]

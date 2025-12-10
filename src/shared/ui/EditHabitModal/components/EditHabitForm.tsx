@@ -1,6 +1,4 @@
-import { Input } from '@/shared/ui/Input'
-import { Select } from '@/shared/ui/Select'
-import { TimeInput } from '@/shared/ui/TimeInput'
+import { Input, Select, TimeInput } from '@/shared/ui'
 import { Controller } from 'react-hook-form'
 import { COUNT_UNITS } from '../../HabitModal/config'
 import type { EditHabitFormProps } from '../types'

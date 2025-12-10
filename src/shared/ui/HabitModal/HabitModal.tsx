@@ -1,7 +1,6 @@
 'use client'
 
-import Modal from '@/shared/ui/Modal'
-import { Button } from '../Button'
+import { Button, Modal } from '@/shared/ui'
 import { HabitFormFields } from './components/HabitForm'
 import type { HabitModalProps } from './types'
 import { useHabitModal } from './useHabitModal'

@@ -1,13 +1,15 @@
 'use client'
 
-import { useHabitMutations } from '@/shared/model/hooks/useHabitMutations'
-import { useHabits } from '@/shared/model/hooks/useHabits'
-import type { CreateHabitRequest, Habit } from '@/shared/types/habit.types'
-import { Button } from '@/shared/ui/Button'
-import { EditHabitModal } from '@/shared/ui/EditHabitModal'
-import { HabitCard } from '@/shared/ui/HabitCard'
-import { HabitModal } from '@/shared/ui/HabitModal'
-import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
+import { useHabitMutations, useHabits } from '@/shared/model/hooks'
+import type { CreateHabitRequest, Habit } from '@/shared/types'
+import {
+  Button,
+  EditHabitModal,
+  HabitCard,
+  HabitModal,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/ui'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
 import { HABIT_TABS } from './config'

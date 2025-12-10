@@ -1,5 +1,9 @@
-import { getSettings, settingsKeys, updateSettings } from '@/shared/lib/api'
-import type { Settings } from '@/shared/lib/api/settings'
+import {
+  getSettings,
+  settingsKeys,
+  updateSettings,
+  type Settings,
+} from '@/shared/lib/api'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 
 export function useSettings() {

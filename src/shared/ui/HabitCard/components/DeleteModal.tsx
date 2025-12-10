@@ -1,5 +1,4 @@
-import { Button } from '@/shared/ui/Button'
-import Modal from '@/shared/ui/Modal'
+import { Button, Modal } from '@/shared/ui'
 import type { HabitCardDeleteModalProps } from '../types'
 
 export const HabitCardDeleteModal = ({

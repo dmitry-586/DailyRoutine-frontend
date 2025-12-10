@@ -1,5 +1,5 @@
 import { AllHabits } from '@/features/habits'
-import { PageHeader } from '@/shared/ui/PageHeader'
+import { PageHeader } from '@/shared/ui'
 import { ListChecks } from 'lucide-react'
 
 export default function HabitsPage() {

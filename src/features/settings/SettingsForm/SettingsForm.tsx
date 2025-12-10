@@ -1,10 +1,7 @@
 'use client'
 
-import type { Settings } from '@/shared/lib/api/settings'
-import {
-  useSettings,
-  useUpdateSettings,
-} from '@/shared/model/hooks/useSettings'
+import type { Settings } from '@/shared/lib/api'
+import { useSettings, useUpdateSettings } from '@/shared/model/hooks'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { DoNotDisturbSection } from './DoNotDisturbSection'

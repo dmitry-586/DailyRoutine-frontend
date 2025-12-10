@@ -1,5 +1,4 @@
 import type { InputHTMLAttributes, ReactNode } from 'react'
-
 import type { RadioVariantProps } from './config'
 
 export interface RadioProps
@@ -11,5 +10,3 @@ export interface RadioProps
   description?: ReactNode
   descriptionClassName?: string
 }
-
-export type { RadioVariantProps }

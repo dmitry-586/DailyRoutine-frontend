@@ -1,9 +1,12 @@
 'use client'
 
-import { Button } from '@/shared/ui/Button'
-import { PageHeader } from '@/shared/ui/PageHeader'
-import { Progress } from '@/shared/ui/Progress'
-import { TabsList, TabsTrigger } from '@/shared/ui/Tabs'
+import {
+  Button,
+  PageHeader,
+  Progress,
+  TabsList,
+  TabsTrigger,
+} from '@/shared/ui'
 import { Award, Clock, Target, Trophy } from 'lucide-react'
 import { useState } from 'react'
 

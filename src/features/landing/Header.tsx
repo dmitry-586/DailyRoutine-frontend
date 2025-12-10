@@ -1,6 +1,6 @@
 import TelegramAuthButton from '@/features/auth/TelegramAuthButton'
 import { TelegramAuthProps } from '@/shared/types/auth.types'
-import Logo from '@/shared/ui/Logo'
+import { Logo } from '@/shared/ui'
 import LandingLayout from '../../shared/model/providers/LandingLayout'
 
 export default function Header({ setIsTelegramModalOpen }: TelegramAuthProps) {

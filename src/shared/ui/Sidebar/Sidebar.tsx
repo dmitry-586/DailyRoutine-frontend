@@ -2,9 +2,8 @@
 
 import { cn } from '@/shared/lib/utils'
 import { ISidebarProps } from '@/shared/types/ui.types'
+import { Logo } from '@/shared/ui'
 import { X } from 'lucide-react'
-
-import Logo from '../Logo'
 import { sidebarStyles } from './config'
 
 export const Sidebar = ({

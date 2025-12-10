@@ -1,7 +1,6 @@
 'use client'
 
-import { useMe } from '@/shared/model/hooks/useAuth'
-import { useTimezone } from '@/shared/model/hooks/useTimezone'
+import { useMe, useTimezone } from '@/shared/model/hooks'
 import { useEffect } from 'react'
 
 export function TimezoneSync() {

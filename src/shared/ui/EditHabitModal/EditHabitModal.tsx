@@ -1,8 +1,7 @@
 'use client'
 
-import Modal from '@/shared/ui/Modal'
+import { Button, Modal } from '@/shared/ui'
 import { Pause, Play } from 'lucide-react'
-import { Button } from '../Button'
 import { EditHabitForm } from './components/EditHabitForm'
 import InfoBlock from './components/InfoBlock'
 import type { EditHabitModalProps } from './types'

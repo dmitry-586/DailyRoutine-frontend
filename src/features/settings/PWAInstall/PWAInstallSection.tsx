@@ -1,7 +1,7 @@
 'use client'
 
 import { PWA_CONSTANTS } from '@/shared/lib/pwa'
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { CheckCircle2, Download, Share2 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { isIOS, isSafari, isStandalone } from '../utils/pwa'

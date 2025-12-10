@@ -12,5 +12,3 @@ export interface InputProps
   wrapperClassName?: string
   inputSize?: InputVariantProps['inputSize']
 }
-
-export type { InputVariantProps }

@@ -1,7 +1,7 @@
 import { cn } from '@/shared/lib/utils'
-import { useAuthButton } from '@/shared/model/hooks/useAuth'
+import { useAuthButton } from '@/shared/model/hooks'
 import { TelegramAuthProps } from '@/shared/types/auth.types'
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 

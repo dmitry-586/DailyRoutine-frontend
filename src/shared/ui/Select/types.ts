@@ -16,5 +16,3 @@ export interface SelectProps
   labelClassName?: string
   placeholder?: string
 }
-
-export type { SelectVariantProps }

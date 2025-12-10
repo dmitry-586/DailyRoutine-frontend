@@ -1,8 +1,8 @@
 'use client'
 
 import { cn } from '@/shared/lib'
-import { useHabits } from '@/shared/model/hooks/useHabits'
-import Logo from '@/shared/ui/Logo'
+import { useHabits } from '@/shared/model/hooks'
+import { Logo } from '@/shared/ui'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import Link from 'next/link'
 import { useMemo } from 'react'

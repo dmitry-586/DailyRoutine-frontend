@@ -1,3 +1,4 @@
+export { BotLinkCard } from './BotLink/BotLinkCard'
 export { LogoutButton } from './LogoutButton/LogoutButton'
 export { PWAInstallCard } from './PWAInstall/PWAInstallCard'
 export { SettingsForm } from './SettingsForm/SettingsForm'

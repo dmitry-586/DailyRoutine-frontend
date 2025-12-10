@@ -1,6 +1,6 @@
-import { useAuthButton } from '@/shared/model/hooks/useAuth'
+import { useAuthButton } from '@/shared/model/hooks'
 import { TelegramAuthProps } from '@/shared/types'
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { ArrowDown, ListChecks, Loader2, Rocket } from 'lucide-react'
 import BlockCard from './BlockCard'
 import { steps } from './config'

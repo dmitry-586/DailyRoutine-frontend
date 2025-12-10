@@ -1,9 +1,8 @@
 'use client'
 
-import { useTelegramAuth } from '@/shared/model/hooks/useAuth'
-import { useTimezone } from '@/shared/model/hooks/useTimezone'
+import { useTelegramAuth, useTimezone } from '@/shared/model/hooks'
 import type { TelegramUser } from '@/shared/types/auth.types'
-import Modal from '@/shared/ui/Modal'
+import { Modal } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'

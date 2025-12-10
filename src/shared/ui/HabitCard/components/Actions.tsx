@@ -1,4 +1,4 @@
-import { Button } from '@/shared/ui/Button'
+import { Button } from '@/shared/ui'
 import { Check, Pencil, Trash2, X } from 'lucide-react'
 import type { HabitCardActionsProps } from '../types'
 
