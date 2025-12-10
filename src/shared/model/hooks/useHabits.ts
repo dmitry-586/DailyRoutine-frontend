@@ -16,7 +16,6 @@ export function useHabits() {
   return useQuery<Habit[]>({
     queryKey: habitKeys.all(),
     queryFn: getHabits,
-    staleTime: 1 * 60_000,
   })
 }
 
