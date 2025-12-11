@@ -64,7 +64,7 @@ const features: Feature[] = [
 export default function Features() {
   return (
     <LandingLayout>
-      <section className='py-20 max-md:py-16 max-sm:py-12'>
+      <section id='features' className='py-20 max-md:py-16 max-sm:py-12'>
         <div className='mb-16 text-center max-md:mb-12 max-sm:mb-10'>
           <h2 className='mb-4 text-4xl font-bold max-md:text-3xl max-sm:text-2xl'>
             Почему Telegram?
