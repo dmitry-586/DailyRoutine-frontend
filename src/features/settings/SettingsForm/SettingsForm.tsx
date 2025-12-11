@@ -1,7 +1,11 @@
 'use client'
 
 import type { Settings } from '@/shared/lib/api'
-import { useSettings, useUpdateSettings } from '@/shared/model/hooks'
+import {
+  useMounted,
+  useSettings,
+  useUpdateSettings,
+} from '@/shared/model/hooks'
 import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { DoNotDisturbSection } from './DoNotDisturbSection'
@@ -11,25 +15,28 @@ export function SettingsForm() {
   const { data: settings, isLoading } = useSettings()
   const { mutateAsync: updateSettings, isPending } = useUpdateSettings()
   const [formState, setFormState] = useState<Settings | null>(null)
-  const [isMounted, setIsMounted] = useState(false)
-
-  useEffect(() => {
-    setIsMounted(true)
-  }, [])
+  const isMounted = useMounted()
 
   useEffect(() => {
     if (settings) {
-      setFormState(settings)
+      setFormState({
+        ...settings,
+        do_not_disturb: settings.do_not_disturb ?? false,
+        notify_times: settings.notify_times ?? [],
+      })
     }
   }, [settings])
 
   const isDirty = useMemo(() => {
     if (!settings || !formState) return false
 
+    const settingsTimes = settings.notify_times ?? []
+    const formTimes = formState.notify_times ?? []
+
     return (
       settings.do_not_disturb !== formState.do_not_disturb ||
-      JSON.stringify([...settings.notify_times].sort()) !==
-        JSON.stringify([...formState.notify_times].sort())
+      JSON.stringify([...settingsTimes].sort()) !==
+        JSON.stringify([...formTimes].sort())
     )
   }, [formState, settings])
 
@@ -39,10 +46,14 @@ export function SettingsForm() {
 
     try {
       const updated = await updateSettings({
-        do_not_disturb: formState.do_not_disturb,
-        notify_times: formState.notify_times,
+        do_not_disturb: formState.do_not_disturb ?? false,
+        notify_times: formState.notify_times ?? [],
       })
-      setFormState(updated)
+      setFormState({
+        ...updated,
+        do_not_disturb: updated.do_not_disturb ?? false,
+        notify_times: updated.notify_times ?? [],
+      })
       toast.success('Настройки сохранены')
     } catch (error) {
       console.error('Ошибка при сохранении настроек', error)
@@ -59,13 +70,16 @@ export function SettingsForm() {
     )
   }
 
+  const doNotDisturb = formState.do_not_disturb ?? false
+  const notifyTimes = formState.notify_times ?? []
+
   return (
     <form
       onSubmit={handleSubmit}
       className='border-light-gray/10 bg-gray space-y-8 rounded-xl border p-6 sm:p-8'
     >
       <DoNotDisturbSection
-        enabled={formState.do_not_disturb}
+        enabled={doNotDisturb}
         onChange={(enabled) =>
           setFormState((prev) =>
             prev ? { ...prev, do_not_disturb: enabled } : prev,
@@ -76,7 +90,7 @@ export function SettingsForm() {
 
       <div className='border-light-gray/10 border-t pt-6'>
         <NotificationTimes
-          times={formState.notify_times}
+          times={notifyTimes}
           onChange={(times) =>
             setFormState((prev) =>
               prev ? { ...prev, notify_times: times } : prev,

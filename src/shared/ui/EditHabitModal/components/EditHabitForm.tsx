@@ -18,7 +18,7 @@ export const EditHabitForm = ({
         error={errors.title?.message}
       />
 
-      {habit.type === 'time' && (
+      {habit.format === 'time' && (
         <Controller
           name='value'
           control={control}
@@ -35,7 +35,7 @@ export const EditHabitForm = ({
         />
       )}
 
-      {habit.type === 'count' && (
+      {habit.format === 'count' && (
         <div className='flex gap-2'>
           <Input
             label='Целевое значение'

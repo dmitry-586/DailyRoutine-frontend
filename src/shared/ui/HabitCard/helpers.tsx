@@ -1,9 +1,9 @@
 import { Habit } from '@/shared/types/habit.types'
 import { Clock, Target } from 'lucide-react'
 
-export const getIcon = (type: Habit['type']) => {
-  if (type === 'time') return <Clock className='size-4' />
-  if (type === 'count') return <Target className='size-4' />
+export const getIcon = (format: Habit['format']) => {
+  if (format === 'time') return <Clock className='size-4' />
+  if (format === 'count') return <Target className='size-4' />
   return null
 }
 

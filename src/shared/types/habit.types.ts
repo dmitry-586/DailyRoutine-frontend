@@ -1,39 +1,25 @@
-export interface HabitHistoryEntry {
-  date: string
+export type HabitType = 'beneficial' | 'harmful'
+export type HabitFormat = 'time' | 'count' | 'binary'
+
+interface HabitBase {
+  title: string
+  type: HabitType
+  format: HabitFormat
   value: number
-  completed: boolean
+  is_active?: boolean
+  unit?: string | null
 }
 
-export interface Habit {
+export interface HabitCreate extends HabitBase {}
+
+export interface HabitUpdate extends Partial<HabitBase> {
+  current_value?: number
+  is_done?: boolean
+  series?: number
+}
+
+export interface Habit extends Required<HabitUpdate> {
   id: number
   user_id: number
-  title: string
-  type: 'time' | 'count' | 'binary'
-  unit?: string
-  value: number
-  is_active: boolean
-  is_done: boolean
-  is_beneficial: boolean
-  series: number
   created_at: string
-}
-
-export interface CreateHabitRequest {
-  title: string
-  type: 'time' | 'count' | 'binary'
-  unit?: string
-  value: number
-  is_active?: boolean
-  is_beneficial?: boolean
-}
-
-export interface UpdateHabitRequest {
-  title?: string
-  type?: 'time' | 'count' | 'binary'
-  unit?: string
-  value?: number
-  is_active?: boolean
-  is_done?: boolean
-  is_beneficial?: boolean
-  series?: number
 }

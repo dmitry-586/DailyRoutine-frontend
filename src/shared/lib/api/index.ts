@@ -20,4 +20,4 @@ export {
   updateTimezone,
   type Settings,
 } from './settings'
-export { getUser, updateUser, type UpdateUserRequest } from './user'
+export { getUser, updateUser } from './user'

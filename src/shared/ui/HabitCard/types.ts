@@ -1,6 +1,17 @@
-import { Habit } from '@/shared/types/habit.types'
+import { Habit, HabitType } from '@/shared/types/habit.types'
+import type React from 'react'
 
 export type HabitCardData = Habit
+
+export type HabitCardClick = (
+  event: React.MouseEvent<HTMLButtonElement>,
+) => void
+
+export interface HabitCardActionHandlers {
+  onPrimary: HabitCardClick
+  onEdit?: HabitCardClick
+  onDelete?: HabitCardClick
+}
 
 export interface HabitCardHandlers {
   onComplete?: (habit: HabitCardData) => void
@@ -15,20 +26,17 @@ export interface HabitCardProps {
 }
 
 export interface HabitCardHeaderProps {
-  data: Pick<Habit, 'title' | 'type' | 'value' | 'unit' | 'series'>
+  data: Pick<
+    Habit,
+    'title' | 'format' | 'value' | 'unit' | 'series' | 'current_value'
+  >
 }
 
 export interface HabitCardActionsProps {
-  isBeneficial: boolean
+  type: HabitType
   isCompleted: boolean
   isActive: boolean
-  handlers: {
-    onComplete: (e: React.MouseEvent) => void
-    onRelapse: (e: React.MouseEvent) => void
-    onEdit?: (e: React.MouseEvent) => void
-    onDelete?: (e: React.MouseEvent) => void
-    onToggleActive?: () => void
-  }
+  handlers: HabitCardActionHandlers
 }
 
 export interface HabitCardDeleteModalProps {

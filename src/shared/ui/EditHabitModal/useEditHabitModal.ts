@@ -1,4 +1,4 @@
-import type { Habit, UpdateHabitRequest } from '@/shared/types'
+import type { Habit, HabitUpdate } from '@/shared/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
@@ -14,7 +14,7 @@ const habitToFormData = (habit: Habit): EditHabitFormData => {
     title: habit.title,
   }
 
-  switch (habit.type) {
+  switch (habit.format) {
     case 'binary':
       return {
         ...base,
@@ -47,17 +47,17 @@ const habitToFormData = (habit: Habit): EditHabitFormData => {
 
 const formDataToUpdateRequest = (
   data: EditHabitFormData,
-  habitType: Habit['type'],
-): UpdateHabitRequest => {
-  const baseRequest: UpdateHabitRequest = {
+  habitFormat: Habit['format'],
+): HabitUpdate => {
+  const baseRequest: HabitUpdate = {
     title: data.title,
   }
 
-  if (habitType === 'binary') {
+  if (habitFormat === 'binary') {
     return baseRequest
   }
 
-  if (habitType === 'count') {
+  if (habitFormat === 'count') {
     const value = data.value ? Number.parseInt(data.value, 10) : 0
     const unit = data.unit || 'раз'
     return {
@@ -67,7 +67,7 @@ const formDataToUpdateRequest = (
     }
   }
 
-  if (habitType === 'time') {
+  if (habitFormat === 'time') {
     const value = data.value ? Number.parseInt(data.value, 10) : 0
     return {
       ...baseRequest,
@@ -78,8 +78,8 @@ const formDataToUpdateRequest = (
   return baseRequest
 }
 
-const getSchemaForHabitType = (type: Habit['type']) => {
-  switch (type) {
+const getSchemaForHabitType = (format: Habit['format']) => {
+  switch (format) {
     case 'binary':
       return binaryEditSchema
     case 'count':
@@ -94,7 +94,7 @@ const getSchemaForHabitType = (type: Habit['type']) => {
 interface UseEditHabitModalProps {
   open: boolean
   habit: Habit
-  onSave: (data: UpdateHabitRequest) => void | Promise<void>
+  onSave: (data: HabitUpdate) => void | Promise<void>
 }
 
 export const useEditHabitModal = ({
@@ -111,7 +111,7 @@ export const useEditHabitModal = ({
     control,
     formState: { errors, isSubmitting },
   } = useForm<EditHabitFormData>({
-    resolver: zodResolver(getSchemaForHabitType(habit.type)),
+    resolver: zodResolver(getSchemaForHabitType(habit.format)),
     defaultValues: habitToFormData(habit),
     mode: 'onChange',
   })
@@ -123,7 +123,7 @@ export const useEditHabitModal = ({
   }, [habit, open, reset])
 
   const onSubmit = (data: EditHabitFormData) => {
-    const updateRequest = formDataToUpdateRequest(data, habit.type)
+    const updateRequest = formDataToUpdateRequest(data, habit.format)
     onSave(updateRequest)
   }
 

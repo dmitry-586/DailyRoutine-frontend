@@ -1,4 +1,5 @@
-import { authKeys, updateUser, type UpdateUserRequest } from '@/shared/lib/api'
+import { authKeys, updateUser } from '@/shared/lib/api'
+import { UpdateUserRequest } from '@/shared/types'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 export function useUpdateUser() {

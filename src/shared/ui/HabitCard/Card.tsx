@@ -3,7 +3,9 @@
 import { cn } from '@/shared/lib'
 import { HabitCardActions } from './components/Actions'
 import { HabitCardDeleteModal } from './components/DeleteModal'
+import { HarmfulConfirmModal } from './components/HarmfulConfirmModal'
 import { HabitCardHeader } from './components/Header'
+import { HabitProgressModal } from './components/ProgressModal'
 import { CARD_BASE_STYLES, getCardContainerClassName } from './config'
 import type { HabitCardProps } from './types'
 import { useHabitCard } from './useHabitCard'
@@ -13,17 +15,25 @@ export function HabitCard(props: HabitCardProps) {
     isCompleted,
     isActive,
     showDeleteDialog,
-    handleComplete,
-    handleRelapse,
+    showProgressModal,
+    showHarmfulConfirm,
+    progressValue,
+    setProgressValue,
+    remainingValue,
+    handlePrimaryAction,
     handleEdit,
-    handleToggleActive,
     handleDeleteClick,
     handleDeleteConfirm,
+    handleProgressSave,
+    handleHarmfulConfirm,
+    handleResetProgress,
     closeDeleteDialog,
+    closeProgressModal,
+    closeHarmfulConfirm,
   } = useHabitCard(props)
 
   const { data } = props
-  const { title, is_beneficial } = data
+  const { title, type } = data
 
   const cardClassName = getCardContainerClassName({
     isActive,
@@ -36,15 +46,13 @@ export function HabitCard(props: HabitCardProps) {
         <HabitCardHeader data={data} />
 
         <HabitCardActions
-          isBeneficial={is_beneficial}
+          type={type}
           isCompleted={isCompleted}
           isActive={isActive}
           handlers={{
-            onComplete: handleComplete,
-            onRelapse: handleRelapse,
+            onPrimary: handlePrimaryAction,
             onEdit: handleEdit,
             onDelete: handleDeleteClick,
-            onToggleActive: handleToggleActive,
           }}
         />
       </div>
@@ -56,6 +64,25 @@ export function HabitCard(props: HabitCardProps) {
           onClose: closeDeleteDialog,
           onConfirm: handleDeleteConfirm,
         }}
+      />
+
+      <HabitProgressModal
+        isOpen={showProgressModal}
+        value={progressValue}
+        remaining={remainingValue}
+        format={data.format}
+        unit={data.unit}
+        onChange={setProgressValue}
+        onClose={closeProgressModal}
+        onSave={handleProgressSave}
+        onReset={handleResetProgress}
+      />
+
+      <HarmfulConfirmModal
+        isOpen={showHarmfulConfirm}
+        title={title}
+        onClose={closeHarmfulConfirm}
+        onConfirm={handleHarmfulConfirm}
       />
     </>
   )

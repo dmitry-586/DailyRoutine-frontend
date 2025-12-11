@@ -34,7 +34,20 @@ export const useHabitModal = ({
     }
   }, [open, reset])
 
+  useEffect(() => {
+    if (!isBeneficialValue) {
+      setValue('type', 'binary')
+      setValue('value', DEFAULT_FORM_VALUES.value)
+      setValue('unit', DEFAULT_FORM_VALUES.unit)
+    }
+  }, [isBeneficialValue, setValue])
+
   const handleTypeChange = (nextType: string) => {
+    if (!isBeneficialValue) {
+      setValue('type', 'binary')
+      return
+    }
+
     if (nextType === 'count') {
       setValue('value', '')
       setValue('unit', DEFAULT_FORM_VALUES.unit)

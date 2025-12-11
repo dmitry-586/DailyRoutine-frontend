@@ -1,10 +1,13 @@
-export interface TelegramUser {
+interface UserBase {
   id: number
-  first_name: string
-  last_name?: string
   username?: string
+  first_name: string
   photo_url?: string
-  auth_date: number
+  auth_date: string
+}
+
+export interface TelegramUser extends UserBase {
+  last_name?: string
   hash: string
 }
 
@@ -14,24 +17,20 @@ export interface TelegramAuthProps {
   className?: string
 }
 
-export interface User {
-  id: number
-  username?: string
-  photo_url?: string
-  auth_date: string
-  tokentg?: string
-}
+export interface User extends UserBase {}
 
-export interface UserSettings {
-  user_id: number
-  timezone: string
-  do_not_disturb: boolean
-  notify_times: string[]
-}
-
-export interface UpdateSettingsRequest {
+export interface UserSettingsBase {
   do_not_disturb?: boolean
   notify_times?: string[]
+}
+
+export interface UpdateUserRequest extends Partial<
+  Pick<UserBase, 'username' | 'photo_url' | 'first_name'>
+> {}
+
+export interface UserSettings extends UserSettingsBase {
+  userId: number
+  timezone: string
 }
 
 export interface AuthTokens {

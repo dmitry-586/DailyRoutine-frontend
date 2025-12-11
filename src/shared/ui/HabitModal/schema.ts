@@ -68,10 +68,20 @@ const timeHabitFormSchema = baseHabitFormSchema.extend({
 })
 
 // Объединенная схема с discriminated union
-export const habitFormSchema = z.discriminatedUnion('type', [
-  binaryHabitFormSchema,
-  countHabitFormSchema,
-  timeHabitFormSchema,
-])
+export const habitFormSchema = z
+  .discriminatedUnion('type', [
+    binaryHabitFormSchema,
+    countHabitFormSchema,
+    timeHabitFormSchema,
+  ])
+  .superRefine((data, ctx) => {
+    if (!data.is_beneficial && data.type !== 'binary') {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        path: ['type'],
+        message: 'Для вредной привычки доступен только формат «Да / Нет»',
+      })
+    }
+  })
 
 export type HabitFormData = z.infer<typeof habitFormSchema>

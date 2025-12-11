@@ -10,11 +10,16 @@ import type { HabitFormFieldsProps } from '../types'
 export const HabitFormFields = ({
   habitType,
   unitValue,
+  isBeneficialValue,
   register,
   errors,
   control,
   onTypeChange,
 }: HabitFormFieldsProps) => {
+  const typeOptions = isBeneficialValue
+    ? habitTypeOptions
+    : habitTypeOptions.filter((opt) => opt.value === 'binary')
+
   return (
     <div className='space-y-4'>
       <Input
@@ -46,7 +51,7 @@ export const HabitFormFields = ({
 
       <RadioGroup
         label='Формат отслеживания'
-        options={habitTypeOptions}
+        options={typeOptions}
         currentValue={habitType}
         defaultValue='binary'
         onValueChange={onTypeChange}

@@ -1,4 +1,4 @@
-import type { CreateHabitRequest } from '@/shared/types'
+import type { HabitCreate } from '@/shared/types'
 import type { HabitFormData } from './schema'
 
 /**
@@ -28,15 +28,14 @@ const calculateValue = (
 /**
  * Преобразует данные формы в запрос создания привычки
  */
-export const formDataToCreateRequest = (
-  data: HabitFormData,
-): CreateHabitRequest => {
-  const baseRequest = {
+export const formDataToCreateRequest = (data: HabitFormData): HabitCreate => {
+  const baseRequest: HabitCreate = {
     title: data.title,
-    is_beneficial: data.is_beneficial,
-    type: data.type,
+    type: data.is_beneficial ? 'beneficial' : 'harmful',
+    format: data.type,
     value: calculateValue(data.type, data.value),
     is_active: true,
+    unit: undefined,
   }
 
   // unit нужен только для count

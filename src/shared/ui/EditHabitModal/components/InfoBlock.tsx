@@ -6,8 +6,8 @@ interface InfoBlockProps {
 }
 
 export default function InfoBlock({ habit }: InfoBlockProps) {
-  const getHabitTypeLabel = (type: string) => {
-    switch (type) {
+  const getHabitFormatLabel = (format: Habit['format']) => {
+    switch (format) {
       case 'binary':
         return 'Да / Нет'
       case 'count':
@@ -15,7 +15,7 @@ export default function InfoBlock({ habit }: InfoBlockProps) {
       case 'time':
         return 'Время'
       default:
-        return type
+        return format
     }
   }
 
@@ -26,7 +26,7 @@ export default function InfoBlock({ habit }: InfoBlockProps) {
         <div className='grid grid-cols-2 max-sm:grid-cols-[1.5fr_1fr]'>
           <span className='text-light-gray text-sm'>Тип привычки:</span>
           <span className='text-center text-sm font-medium'>
-            {habit.is_beneficial ? (
+            {habit.type === 'beneficial' ? (
               <span className='inline-flex items-center gap-1.5 rounded-full bg-emerald-500/10 px-2.5 py-0.5 text-xs font-medium text-emerald-200 ring-1 ring-emerald-500/40'>
                 <CheckCircle2 className='h-3.5 w-3.5' />
                 Полезная
@@ -42,7 +42,7 @@ export default function InfoBlock({ habit }: InfoBlockProps) {
         <div className='grid grid-cols-2 max-sm:grid-cols-[1.5fr_1fr]'>
           <span className='text-light-gray text-sm'>Формат отслеживания:</span>
           <span className='text-center text-sm'>
-            {getHabitTypeLabel(habit.type)}
+            {getHabitFormatLabel(habit.format)}
           </span>
         </div>
       </div>

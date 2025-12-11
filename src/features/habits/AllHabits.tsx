@@ -1,7 +1,7 @@
 'use client'
 
 import { useHabitMutations, useHabits } from '@/shared/model/hooks'
-import type { CreateHabitRequest, Habit } from '@/shared/types'
+import type { Habit, HabitCreate } from '@/shared/types'
 import {
   Button,
   EditHabitModal,
@@ -77,7 +77,10 @@ export function AllHabits() {
                   onEdit: openEditModal,
                   onDelete: handleDelete,
                   onComplete: (updated) =>
-                    void handleUpdate(habit.id, { is_done: updated.is_done }),
+                    void handleUpdate(habit.id, {
+                      is_done: updated.is_done,
+                      current_value: updated.current_value,
+                    }),
                   onToggleActive: (updated) =>
                     void handleUpdate(habit.id, {
                       is_active: updated.is_active,
@@ -101,7 +104,7 @@ export function AllHabits() {
         open={isCreateModalOpen}
         onClose={closeCreateModal}
         onSave={async (data) => {
-          await handleCreate(data as CreateHabitRequest)
+          await handleCreate(data as HabitCreate)
           closeCreateModal()
         }}
       />

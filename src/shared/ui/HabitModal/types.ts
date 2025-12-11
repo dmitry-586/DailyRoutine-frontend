@@ -1,11 +1,11 @@
-import type { CreateHabitRequest } from '@/shared/types'
+import type { HabitCreate } from '@/shared/types'
 import type { Control, FieldErrors, UseFormRegister } from 'react-hook-form'
 import type { HabitFormData } from './schema'
 
 export interface HabitModalProps {
   open: boolean
   onClose: () => void
-  onSave: (data: CreateHabitRequest) => void | Promise<void>
+  onSave: (data: HabitCreate) => void | Promise<void>
 }
 
 export interface HabitFormFieldsProps {

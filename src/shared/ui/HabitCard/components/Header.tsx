@@ -3,8 +3,9 @@ import { formatTimeValue, getIcon, getStreakColorClassName } from '../helpers'
 import type { HabitCardHeaderProps } from '../types'
 
 export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
-  const { title, type, value, unit = '', series } = data
+  const { title, format, value, current_value, unit = '', series } = data
   const streakColorClassName = getStreakColorClassName(series > 0)
+  const hasProgress = format !== 'binary'
 
   return (
     <div className='mb-3 flex items-start justify-between'>
@@ -12,11 +13,14 @@ export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
         <h3 className='mb-1 truncate text-base font-medium text-white'>
           {title}
         </h3>
-        {type !== 'binary' && (
+        {hasProgress && (
           <div className='text-light-gray flex items-center gap-2 text-xs'>
-            {getIcon(type)}
+            {getIcon(format)}
             <span>
-              {type === 'time' ? formatTimeValue(value) : `${value} ${unit}`}
+              {current_value}/
+              {format === 'time'
+                ? formatTimeValue(value)
+                : `${value} ${unit ?? ''}`}
             </span>
           </div>
         )}

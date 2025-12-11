@@ -1,7 +1,4 @@
-import type {
-  UpdateSettingsRequest,
-  UserSettings,
-} from '@/shared/types/auth.types'
+import type { UserSettings, UserSettingsBase } from '@/shared/types'
 import { apiFetch } from './client'
 
 export type Settings = UserSettings
@@ -13,7 +10,7 @@ export async function getSettings(): Promise<Settings> {
 }
 
 export async function updateSettings(
-  data: UpdateSettingsRequest,
+  data: UserSettingsBase,
 ): Promise<Settings> {
   return apiFetch<Settings>('/user/me/settings', {
     method: 'PATCH',
