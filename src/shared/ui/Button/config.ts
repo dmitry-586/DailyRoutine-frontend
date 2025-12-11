@@ -8,6 +8,7 @@ export const buttonVariants = cva(
         default:
           'bg-primary text-primary-foreground hover:border-transparent hover:bg-primary/80',
         primary: 'bg-transparent text-primary hover:bg-primary/10',
+        red: 'bg-red border-red hover:bg-red/80',
       },
       size: {
         default: 'h-9 px-4 py-2 has-[>svg]:px-3',

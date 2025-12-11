@@ -15,6 +15,8 @@ export function ProfileContent({ state }: ProfileContentProps) {
         src={viewData.avatarSrc}
         alt={viewData.displayName}
         size={80}
+        isEditing={isEditing}
+        onPhotoChange={handlers.onChangePhoto}
       />
       <div className='min-w-0 flex-1 space-y-2'>
         {isEditing ? (

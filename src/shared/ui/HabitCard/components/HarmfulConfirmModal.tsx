@@ -20,18 +20,16 @@ export function HarmfulConfirmModal({
       title='Подтверждение'
       className='max-w-md'
     >
-      <div className='space-y-4'>
+      <div className='space-y-6'>
         <p className='text-light-gray text-sm'>
-          Подтвердите, что привычка «{title}» была выполнена (вредная).
+          Подтвердите свое действие для привычки «{title}».
         </p>
 
         <div className='flex justify-end gap-2'>
-          <Button variant='default' onClick={onClose}>
+          <Button variant='primary' onClick={onClose}>
             Отмена
           </Button>
-          <Button variant='primary' onClick={onConfirm}>
-            Подтвердить
-          </Button>
+          <Button onClick={onConfirm}>Подтвердить</Button>
         </div>
       </div>
     </Modal>

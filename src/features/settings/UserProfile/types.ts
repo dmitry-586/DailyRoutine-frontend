@@ -1,5 +1,7 @@
 export interface ProfileFormData {
   firstName: string
+  photoFile?: File | null
+  photoPreview?: string | null
 }
 
 export interface ProfileViewData {
@@ -18,5 +20,6 @@ export interface ProfileEditState {
     onCancel: () => void
     onSave: () => Promise<void>
     onChangeName: (value: string) => void
+    onChangePhoto: (file: File | null) => void
   }
 }
