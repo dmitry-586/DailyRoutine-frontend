@@ -1,85 +1,16 @@
 'use client'
 
-import { PWA_CONSTANTS } from '@/shared/lib/pwa'
-import { useMounted } from '@/shared/model/hooks'
+import { isIOS, isSafari, usePWAInstall } from '@/shared/lib/pwa'
 import { Button } from '@/shared/ui'
-import { CheckCircle2, Download, Share2 } from 'lucide-react'
-import { useEffect, useState } from 'react'
-import { isIOS, isSafari, isStandalone } from '../utils/pwa'
-
-interface BeforeInstallPromptEvent extends Event {
-  readonly platforms: string[]
-  readonly userChoice: Promise<{
-    outcome: 'accepted' | 'dismissed'
-    platform: string
-  }>
-  prompt(): Promise<void>
-}
+import { CheckCircle2, Download, Loader2, Share2 } from 'lucide-react'
 
 export function PWAInstallSection() {
-  const [deferredPrompt, setDeferredPrompt] =
-    useState<BeforeInstallPromptEvent | null>(null)
-  const [installStatus, setInstallStatus] = useState<
-    'unknown' | 'installed' | 'pending'
-  >('unknown')
-  const isMounted = useMounted()
-
-  useEffect(() => {
-    if (isStandalone()) {
-      setInstallStatus('installed')
-      return
-    }
-
-    if ('serviceWorker' in navigator && process.env.NODE_ENV === 'production') {
-      navigator.serviceWorker
-        .register(PWA_CONSTANTS.SERVICE_WORKER_PATH)
-        .catch((error) => {
-          console.warn('Service worker registration failed', error)
-        })
-    }
-
-    const handleBeforeInstallPrompt = (e: Event) => {
-      e.preventDefault()
-      setInstallStatus('pending')
-      setDeferredPrompt(e as BeforeInstallPromptEvent)
-    }
-
-    const handleAppInstalled = () => {
-      setInstallStatus('installed')
-      setDeferredPrompt(null)
-    }
-
-    window.addEventListener('beforeinstallprompt', handleBeforeInstallPrompt)
-    window.addEventListener('appinstalled', handleAppInstalled)
-
-    return () => {
-      window.removeEventListener(
-        'beforeinstallprompt',
-        handleBeforeInstallPrompt,
-      )
-      window.removeEventListener('appinstalled', handleAppInstalled)
-    }
-  }, [])
-
-  const handleInstall = async () => {
-    if (!deferredPrompt) return
-    deferredPrompt.prompt()
-    const choice = await deferredPrompt.userChoice
-    setDeferredPrompt(null)
-    if (choice.outcome === 'accepted') {
-      setInstallStatus('installed')
-    }
-  }
-
-  // Не рендерим ничего до монтирования, чтобы избежать проблем с гидратацией
-  if (!isMounted) {
-    return null
-  }
-
+  const { deferredPrompt, isInstalled, isCheckingPrompt, handleInstall } =
+    usePWAInstall()
   const isSafariBrowser = isSafari()
   const isIOSDevice = isIOS()
 
-  if (installStatus === 'installed') {
+  if (isInstalled) {
     return (
       <div className='border-primary/20 bg-primary/5 flex items-center gap-3 rounded-lg border p-4'>
         <CheckCircle2 className='text-primary h-5 w-5 shrink-0' />
@@ -91,6 +22,18 @@ export function PWAInstallSection() {
             Вы можете использовать приложение в автономном режиме
           </p>
         </div>
+      </div>
+    )
+  }
+
+  // Показываем индикатор загрузки пока ждем событие
+  if (isCheckingPrompt && !isSafariBrowser) {
+    return (
+      <div className='border-light-gray/10 bg-light-gray/5 flex items-center gap-3 rounded-lg border p-4'>
+        <Loader2 className='text-light-gray h-5 w-5 shrink-0 animate-spin' />
+        <p className='text-light-gray text-sm'>
+          Проверка возможности установки...
+        </p>
       </div>
     )
   }
@@ -140,7 +83,7 @@ export function PWAInstallSection() {
       <Button
         onClick={handleInstall}
         variant='primary'
-        className='flex w-full items-center justify-center gap-2'
+        className='flex w-fit items-center justify-center gap-2'
       >
         <Download size={16} />
         Установить приложение
@@ -148,12 +91,13 @@ export function PWAInstallSection() {
     )
   }
 
-  // Браузер не поддерживает установку
+  // Браузер не поддерживает установку или dev режим
   return (
     <div className='border-light-gray/10 bg-light-gray/5 rounded-lg border p-4'>
       <p className='text-light-gray text-sm'>
-        Установка приложения доступна в Chrome, Edge, Safari, Yandex и других
-        поддерживаемых браузерах
+        {process.env.NODE_ENV === 'production'
+          ? 'Установка приложения доступна в Chrome, Edge, Safari, Yandex и других поддерживаемых браузерах'
+          : 'Установка PWA доступна только в production режиме. Для тестирования запустите сборку production.'}
       </p>
     </div>
   )

@@ -1,3 +1,7 @@
+/**
+ * Утилиты для определения окружения PWA
+ */
+
 export function isStandalone(): boolean {
   if (typeof window === 'undefined') return false
 

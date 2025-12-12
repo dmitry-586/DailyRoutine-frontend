@@ -12,6 +12,9 @@
   --green: #4caf50;
   --green-dark: #45a049;
   --orange: #ff9800;
+  --blue: #00b0ff;
+  --cyan: #1cbecb;
+  --purple: #ba68c8;
   --gold: #ffd700;
   --silver: #c0c0c0;
   --bronze: #cd7f32;
@@ -29,6 +32,9 @@
   --color-green: var(--green);
   --color-green-dark: var(--green-dark);
   --color-orange: var(--orange);
+  --color-blue: var(--blue);
+  --color-cyan: var(--cyan);
+  --color-purple: var(--purple);
   --color-gold: var(--gold);
   --color-silver: var(--silver);
   --color-bronze: var(--bronze);

@@ -1,11 +1,22 @@
-import { Flame } from 'lucide-react'
-import { formatTimeValue, getIcon, getStreakColorClassName } from '../helpers'
+import {
+  FLAME_STAGES,
+  FlameEvolution,
+  getCurrentStage,
+  getFlameScale,
+  getFlameStageStyles,
+} from '@/shared/ui'
+import { formatTimeValue, getIcon } from '../helpers'
 import type { HabitCardHeaderProps } from '../types'
 
 export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
   const { title, format, value, current_value, unit = '', series } = data
-  const streakColorClassName = getStreakColorClassName(series > 0)
   const hasProgress = format !== 'binary'
+  const streak = series || 0
+  const currentStage = getCurrentStage(streak, FLAME_STAGES)
+  const { bgClassName, borderClassName, textClassName } = getFlameStageStyles(
+    currentStage.id,
+  )
+  const scale = getFlameScale(streak)
 
   return (
     <div className='mb-3 flex items-start justify-between'>
@@ -26,9 +37,14 @@ export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
         )}
       </div>
 
-      <div className='border-orange/20 bg-orange/10 ml-2 flex flex-shrink-0 items-center gap-1 rounded border px-2 py-1'>
-        <Flame className={`size-3.5 ${streakColorClassName}`} />
-        <span className={`text-xs font-medium ${streakColorClassName}`}>
+      <div
+        className={`${bgClassName} ${borderClassName} ml-2 flex flex-shrink-0 items-center gap-1.5 rounded border px-2 py-1`}
+      >
+        <FlameEvolution streak={streak} size={16} className='shrink-0' />
+        <span
+          className={`text-xs font-medium transition-transform duration-300 ease-out ${textClassName}`}
+          style={{ transform: `scale(${scale})` }}
+        >
           {series}
         </span>
       </div>

@@ -10,6 +10,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
 import { DoNotDisturbSection } from './DoNotDisturbSection'
 import { NotificationTimes } from './NotificationTimes'
+import { SettingsFormSkeleton } from './SettingsFormSkeleton'
 
 export function SettingsForm() {
   const { data: settings, isLoading } = useSettings()
@@ -63,11 +64,7 @@ export function SettingsForm() {
 
   // Показываем скелетон загрузки до монтирования или во время загрузки
   if (!isMounted || isLoading || !formState) {
-    return (
-      <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
-        <p className='text-light-gray'>Загрузка настроек...</p>
-      </div>
-    )
+    return <SettingsFormSkeleton />
   }
 
   const doNotDisturb = formState.do_not_disturb ?? false
