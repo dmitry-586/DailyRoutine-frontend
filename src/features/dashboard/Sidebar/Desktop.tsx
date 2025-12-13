@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/shared/lib'
+import { cn } from '@/shared/lib/utils'
 import { useHabits } from '@/shared/model/hooks'
 import { Logo } from '@/shared/ui'
 import { ChevronLeft, ChevronRight } from 'lucide-react'

@@ -1,6 +1,8 @@
+'use client'
+
 import { useMemo, useState } from 'react'
 import { toast } from 'sonner'
-import type { HabitCardClick, HabitCardProps } from './types'
+import type { HabitCardClick, HabitCardProps } from '../types'
 
 const MIN_PROGRESS_STEP = 1
 

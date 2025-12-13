@@ -6,7 +6,7 @@ interface LandingLayoutProps {
   className?: string
 }
 
-export default function LandingLayout({
+export function LandingLayout({
   children,
   backgroundColor,
   className,

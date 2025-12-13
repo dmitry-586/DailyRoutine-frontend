@@ -1,4 +1,4 @@
-import LandingLayout from '@/shared/model/providers/LandingLayout'
+import { LandingLayout } from '@/shared/model/providers'
 import {
   Bell,
   MessageSquare,
@@ -61,7 +61,7 @@ const features: Feature[] = [
   },
 ]
 
-export default function Features() {
+export function Features() {
   return (
     <LandingLayout>
       <section className='py-20 max-md:py-16 max-sm:py-12'>

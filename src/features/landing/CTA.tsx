@@ -1,10 +1,10 @@
 import { useAuthButton } from '@/shared/model/hooks'
-import LandingLayout from '@/shared/model/providers/LandingLayout'
+import { LandingLayout } from '@/shared/model/providers'
 import { TelegramAuthProps } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { ListChecks, Loader2, Rocket, Sparkles } from 'lucide-react'
 
-export default function CTA({ setIsTelegramModalOpen }: TelegramAuthProps) {
+export function CTA({ setIsTelegramModalOpen }: TelegramAuthProps) {
   const { handleAuthClick, buttonText, isLoading } = useAuthButton(
     setIsTelegramModalOpen,
     'Начать бесплатно',

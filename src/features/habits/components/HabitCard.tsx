@@ -1,14 +1,14 @@
 'use client'
 
 import { cn } from '@/shared/lib'
-import { HabitCardActions } from './components/Actions'
-import { HabitCardDeleteModal } from './components/DeleteModal'
-import { HarmfulConfirmModal } from './components/HarmfulConfirmModal'
-import { HabitCardHeader } from './components/Header'
-import { HabitProgressModal } from './components/ProgressModal'
-import { CARD_BASE_STYLES, getCardContainerClassName } from './config'
-import type { HabitCardProps } from './types'
-import { useHabitCard } from './useHabitCard'
+import { CARD_BASE_STYLES, getCardContainerClassName } from '../config/habits'
+import { useHabitCard } from '../hooks/useHabitCard'
+import type { HabitCardProps } from '../types'
+import { HabitCardActions } from './HabitCardActions'
+import { HabitCardDeleteModal } from './HabitCardDeleteModal'
+import { HabitCardHeader } from './HabitCardHeader'
+import { HabitProgressModal } from './HabitProgressModal'
+import { HarmfulConfirmModal } from './HarmfulConfirmModal'
 
 export function HabitCard(props: HabitCardProps) {
   const {
@@ -87,3 +87,4 @@ export function HabitCard(props: HabitCardProps) {
     </>
   )
 }
+

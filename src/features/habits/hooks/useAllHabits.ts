@@ -1,7 +1,9 @@
-import type { Habit } from '@/shared/types/habit.types'
+'use client'
+
+import type { Habit } from '@/shared/types'
 import { useMemo, useState } from 'react'
-import { HABIT_TABS } from './config'
-import type { FilterType } from './types'
+import { HABIT_TABS } from '../config/habits'
+import type { FilterType } from '../types'
 
 export function useAllHabits(habits: Habit[]) {
   const [filter, setFilter] = useState<FilterType>('all')

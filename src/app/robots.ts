@@ -1,6 +1,5 @@
-import { MetadataRoute } from 'next'
-
 import { SEO_CONSTANTS } from '@/shared/lib/seo'
+import { MetadataRoute } from 'next'
 
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = SEO_CONSTANTS.SITE_URL

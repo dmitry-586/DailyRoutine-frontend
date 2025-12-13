@@ -1,11 +1,7 @@
 import { Input, RadioGroup, Select, TimeInput } from '@/shared/ui'
 import { Controller } from 'react-hook-form'
-import {
-  COUNT_UNITS,
-  habitBeneficialOptions,
-  habitTypeOptions,
-} from '../config'
-import type { HabitFormFieldsProps } from '../types'
+import { COUNT_UNITS, habitBeneficialOptions, habitTypeOptions } from './config'
+import type { HabitFormFieldsProps } from './types'
 
 export const HabitFormFields = ({
   habitType,

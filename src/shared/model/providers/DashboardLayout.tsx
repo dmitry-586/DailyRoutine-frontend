@@ -1,6 +1,6 @@
 'use client'
 
-import { BottomNavigation, DesktopSidebar } from '@/features/dashboard/Sidebar'
+import { BottomNavigation, DesktopSidebar } from '@/features/dashboard'
 import { usePathname } from 'next/navigation'
 import { ReactNode, useState } from 'react'
 

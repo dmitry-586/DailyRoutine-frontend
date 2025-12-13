@@ -1,6 +1,10 @@
-import { Habit, HabitType } from '@/shared/types/habit.types'
+import type { Habit, HabitType } from '@/shared/types/habit.types'
 import type React from 'react'
 
+// Filters
+export type FilterType = 'all' | 'active' | 'inactive'
+
+// HabitCard
 export type HabitCardData = Habit
 
 export type HabitCardClick = (

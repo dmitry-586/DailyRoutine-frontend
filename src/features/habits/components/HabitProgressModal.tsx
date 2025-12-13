@@ -1,7 +1,9 @@
+'use client'
+
 import type { HabitFormat } from '@/shared/types/habit.types'
 import { Button, Input, Modal, TimeInput } from '@/shared/ui'
 import { Controller } from 'react-hook-form'
-import { useProgressModal } from './useProgressModal'
+import { useProgressModal } from '../hooks/useProgressModal'
 
 interface HabitProgressModalProps {
   isOpen: boolean

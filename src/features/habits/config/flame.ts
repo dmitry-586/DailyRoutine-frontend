@@ -1,4 +1,4 @@
-import type { FlameStage } from './types'
+import type { FlameStage } from '../types/flame'
 
 export const FLAME_STAGES: FlameStage[] = [
   {

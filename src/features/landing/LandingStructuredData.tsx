@@ -3,7 +3,7 @@ import {
   generateSoftwareApplicationSchema,
 } from '@/shared/lib/seo'
 
-export default function LandingStructuredData() {
+export function LandingStructuredData() {
   const structuredData = [
     generateSoftwareApplicationSchema(),
     generateFAQSchema(),

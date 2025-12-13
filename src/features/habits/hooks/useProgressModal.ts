@@ -1,10 +1,9 @@
+'use client'
+
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
-import {
-  createProgressSchema,
-  type ProgressFormData,
-} from './progressModalSchema'
+import { createProgressSchema, type ProgressFormData } from '../config/schema'
 
 const MIN_PROGRESS_STEP = 1
 

@@ -3,7 +3,6 @@ import {
   ListChecks,
   LucideIcon,
   SettingsIcon,
-  // ShoppingBag,
   Target,
 } from 'lucide-react'
 
@@ -23,7 +22,6 @@ export const NAV_ITEMS: INavItem[] = [
     href: '/dashboard/habits',
   },
   { id: 'sprints', label: 'Спринты', icon: Target, href: '/dashboard/sprints' },
-  // { id: 'shop', label: 'Магазин', icon: ShoppingBag, href: '/dashboard/shop' },
   {
     id: 'settings',
     label: 'Настройки',

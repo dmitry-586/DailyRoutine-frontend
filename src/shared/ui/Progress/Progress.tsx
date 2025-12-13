@@ -1,8 +1,7 @@
 'use client'
 
 import { cn } from '@/shared/lib/utils'
-
-import type { ProgressProps } from './types'
+import { ProgressProps } from './types'
 
 export const Progress = ({
   className,

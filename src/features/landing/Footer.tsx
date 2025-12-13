@@ -1,10 +1,10 @@
 'use client'
 
-import LandingLayout from '@/shared/model/providers/LandingLayout'
+import { LandingLayout } from '@/shared/model/providers'
 import { Logo } from '@/shared/ui'
 import { ExternalLink, MessageCircle } from 'lucide-react'
 
-export default function Footer() {
+export function Footer() {
   const currentYear = new Date().getFullYear()
 
   const scrollToSection = (id: string) => {

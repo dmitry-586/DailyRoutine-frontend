@@ -1,17 +1,12 @@
 import { PWA_CONSTANTS } from './constants'
 import type { PWAConfig } from './types'
 
-const iconSmall = {
-  url: PWA_CONSTANTS.ICONS.SMALL,
-  sizes: '192x192',
-  type: 'image/png',
-}
-
-const iconLarge = {
-  url: PWA_CONSTANTS.ICONS.LARGE,
-  sizes: '512x512',
-  type: 'image/png',
-}
+const icon = (size: '192x192' | '512x512') => ({
+  url:
+    size === '192x192' ? PWA_CONSTANTS.ICONS.SMALL : PWA_CONSTANTS.ICONS.LARGE,
+  sizes: size,
+  type: 'image/png' as const,
+})
 
 export const pwaConfig: PWAConfig = {
   manifest: {
@@ -53,8 +48,8 @@ export const pwaConfig: PWAConfig = {
       capable: true,
     },
     icons: {
-      icon: [iconSmall, iconLarge],
-      apple: [iconSmall],
+      icon: [icon('192x192'), icon('512x512')],
+      apple: [icon('192x192')],
     },
     other: {
       'mobile-web-app-capable': 'yes',
@@ -74,8 +69,7 @@ export const pwaConfig: PWAConfig = {
     urlsToCache: [
       '/',
       PWA_CONSTANTS.MANIFEST_PATH,
-      PWA_CONSTANTS.ICONS.SMALL,
-      PWA_CONSTANTS.ICONS.LARGE,
+      ...Object.values(PWA_CONSTANTS.ICONS),
     ],
     swPath: PWA_CONSTANTS.SERVICE_WORKER_PATH,
   },

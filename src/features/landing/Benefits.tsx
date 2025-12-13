@@ -7,7 +7,7 @@ const benefits = [
   'Простой интерфейс - ничего лишнего',
 ]
 
-export default function Benefits() {
+export function Benefits() {
   return (
     <section className='my-[60px] flex flex-col items-center'>
       <h2 className='text-center text-xl sm:text-2xl'>Почему это работает?</h2>

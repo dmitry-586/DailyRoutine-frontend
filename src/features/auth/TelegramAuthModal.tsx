@@ -1,15 +1,14 @@
 'use client'
 
 import { useTelegramAuth, useTimezone } from '@/shared/model/hooks'
-import type { TelegramUser } from '@/shared/types/auth.types'
+import type { TelegramUser } from '@/shared/types'
 import { Modal } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
-
-import TestAuthButton from './TestAuthButton'
+import { TestAuthButton } from './TestAuthButton'
 
 interface TelegramAuthModalProps {
   isOpen: boolean
@@ -22,10 +21,7 @@ declare global {
   }
 }
 
-export default function TelegramAuthModal({
-  isOpen,
-  onClose,
-}: TelegramAuthModalProps) {
+export function TelegramAuthModal({ isOpen, onClose }: TelegramAuthModalProps) {
   const telegramContainerRef = useRef<HTMLDivElement>(null)
   const [isLoading, setIsLoading] = useState(false)
   const { sendTimezoneToBackend } = useTimezone()

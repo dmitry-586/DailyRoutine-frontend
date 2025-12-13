@@ -1,11 +1,11 @@
 import { cn } from '@/shared/lib/utils'
 import { useAuthButton } from '@/shared/model/hooks'
-import { TelegramAuthProps } from '@/shared/types/auth.types'
+import { TelegramAuthProps } from '@/shared/types'
 import { Button } from '@/shared/ui'
 import { Loader2 } from 'lucide-react'
 import Image from 'next/image'
 
-export default function TelegramAuthButton({
+export function TelegramAuthButton({
   setIsTelegramModalOpen,
   className,
   title,

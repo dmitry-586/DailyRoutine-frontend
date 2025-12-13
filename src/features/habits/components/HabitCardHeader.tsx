@@ -1,12 +1,14 @@
+'use client'
+
+import Image from 'next/image'
+import { FLAME_STAGES } from '../config/flame'
+import type { HabitCardHeaderProps } from '../types'
 import {
-  FLAME_STAGES,
-  FlameEvolution,
   getCurrentStage,
   getFlameScale,
   getFlameStageStyles,
-} from '@/shared/ui'
-import { formatTimeValue, getIcon } from '../helpers'
-import type { HabitCardHeaderProps } from '../types'
+} from '../utils/flame'
+import { formatTimeValue, getIcon } from '../utils/formatters'
 
 export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
   const { title, format, value, current_value, unit = '', series } = data
@@ -40,7 +42,14 @@ export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
       <div
         className={`${bgClassName} ${borderClassName} ml-2 flex flex-shrink-0 items-center gap-1.5 rounded border px-2 py-1`}
       >
-        <FlameEvolution streak={streak} size={16} className='shrink-0' />
+        <Image
+          src={currentStage.iconPath}
+          alt={`Огонек ${currentStage.name || currentStage.id}`}
+          width={16}
+          height={16}
+          className='shrink-0 object-contain transition-transform duration-300 ease-out'
+          style={{ transform: `scale(${scale})` }}
+        />
         <span
           className={`text-xs font-medium transition-transform duration-300 ease-out ${textClassName}`}
           style={{ transform: `scale(${scale})` }}

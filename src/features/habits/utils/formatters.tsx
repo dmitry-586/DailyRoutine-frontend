@@ -1,3 +1,5 @@
+'use client'
+
 import { Habit } from '@/shared/types/habit.types'
 import { Clock, Target } from 'lucide-react'
 

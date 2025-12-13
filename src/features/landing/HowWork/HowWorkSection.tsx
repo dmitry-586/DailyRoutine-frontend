@@ -1,6 +1,6 @@
+import { LandingLayout } from '@/shared/model/providers'
 import dynamic from 'next/dynamic'
 import { ComponentType } from 'react'
-import LandingLayout from '../../../shared/model/providers/LandingLayout'
 import { howWorkStages } from './config'
 import StageCard from './stages/StageCard'
 import HabitFormPreview from './stages/previews/HabitFormPreview'
@@ -26,7 +26,7 @@ const VISUAL_COMPONENTS: Record<
   'progress-dashboard': DashboardPreview,
 }
 
-export default function HowWorkSection() {
+export function HowWorkSection() {
   return (
     <LandingLayout backgroundColor='dark-gray'>
       <section id='how-it-works' className='py-20 max-md:py-16 max-sm:py-12'>

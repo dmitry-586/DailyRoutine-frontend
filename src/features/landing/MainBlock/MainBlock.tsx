@@ -5,9 +5,7 @@ import { ArrowDown, ListChecks, Loader2, Rocket } from 'lucide-react'
 import BlockCard from './BlockCard'
 import { steps } from './config'
 
-export default function MainBlock({
-  setIsTelegramModalOpen,
-}: TelegramAuthProps) {
+export function MainBlock({ setIsTelegramModalOpen }: TelegramAuthProps) {
   const { handleAuthClick, buttonText, isLoading } = useAuthButton(
     setIsTelegramModalOpen,
     'Начать бесплатно',

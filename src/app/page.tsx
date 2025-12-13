@@ -1,26 +1,34 @@
 'use client'
 
-import CTA from '@/features/landing/CTA'
-import Features from '@/features/landing/Features'
-import Footer from '@/features/landing/Footer'
-import Header from '@/features/landing/Header'
-import HowWork from '@/features/landing/HowWork'
-import LandingStructuredData from '@/features/landing/LandingStructuredData'
-import MainBlock from '@/features/landing/MainBlock/MainBlock'
-import LandingLayout from '@/shared/model/providers/LandingLayout'
+import {
+  CTA,
+  Features,
+  Footer,
+  Header,
+  HowWorkSection,
+  LandingStructuredData,
+  MainBlock,
+} from '@/features/landing'
+import { LandingLayout } from '@/shared/model/providers'
 import dynamic from 'next/dynamic'
 import { useState } from 'react'
 
 const TelegramAuthModal = dynamic(
-  () => import('@/features/auth/TelegramAuthModal'),
+  () =>
+    import('@/features/auth').then((mod) => ({
+      default: mod.TelegramAuthModal,
+    })),
   {
     ssr: false,
   },
 )
 
-const PWAInstallButton = dynamic(() => import('@/shared/ui/PWAInstallButton'), {
-  ssr: false,
-})
+const PWAInstallButton = dynamic(
+  () => import('@/shared/ui/PWAInstallButton/PWAInstallButton'),
+  {
+    ssr: false,
+  },
+)
 
 export default function Home() {
   const [isTelegramModalOpen, setIsTelegramModalOpen] = useState(false)
@@ -32,7 +40,7 @@ export default function Home() {
       <LandingLayout className='pb-20 max-sm:pb-12'>
         <MainBlock setIsTelegramModalOpen={setIsTelegramModalOpen} />
       </LandingLayout>
-      <HowWork />
+      <HowWorkSection />
       <Features />
       <CTA setIsTelegramModalOpen={setIsTelegramModalOpen} />
       <Footer />

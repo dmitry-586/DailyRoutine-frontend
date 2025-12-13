@@ -1,101 +1,13 @@
-import type { Habit, HabitUpdate } from '@/shared/types'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { type EditHabitFormData } from './components/schema'
 import {
-  binaryEditSchema,
-  countEditSchema,
-  timeEditSchema,
-  type EditHabitFormData,
-} from './components/editHabitSchema'
-
-const habitToFormData = (habit: Habit): EditHabitFormData => {
-  const base = {
-    title: habit.title,
-  }
-
-  switch (habit.format) {
-    case 'binary':
-      return {
-        ...base,
-        value: undefined,
-        unit: undefined,
-      } as EditHabitFormData
-
-    case 'count':
-      return {
-        ...base,
-        value: habit.value.toString(),
-        unit: habit.unit && habit.unit.trim() !== '' ? habit.unit : 'раз',
-      } as EditHabitFormData
-
-    case 'time':
-      return {
-        ...base,
-        value: habit.value.toString(),
-        unit: undefined,
-      } as EditHabitFormData
-
-    default:
-      return {
-        ...base,
-        value: undefined,
-        unit: undefined,
-      } as EditHabitFormData
-  }
-}
-
-const formDataToUpdateRequest = (
-  data: EditHabitFormData,
-  habitFormat: Habit['format'],
-): HabitUpdate => {
-  const baseRequest: HabitUpdate = {
-    title: data.title,
-  }
-
-  if (habitFormat === 'binary') {
-    return baseRequest
-  }
-
-  if (habitFormat === 'count') {
-    const value = data.value ? Number.parseInt(data.value, 10) : 0
-    const unit = data.unit || 'раз'
-    return {
-      ...baseRequest,
-      value,
-      unit,
-    }
-  }
-
-  if (habitFormat === 'time') {
-    const value = data.value ? Number.parseInt(data.value, 10) : 0
-    return {
-      ...baseRequest,
-      value,
-    }
-  }
-
-  return baseRequest
-}
-
-const getSchemaForHabitType = (format: Habit['format']) => {
-  switch (format) {
-    case 'binary':
-      return binaryEditSchema
-    case 'count':
-      return countEditSchema
-    case 'time':
-      return timeEditSchema
-    default:
-      return binaryEditSchema
-  }
-}
-
-interface UseEditHabitModalProps {
-  open: boolean
-  habit: Habit
-  onSave: (data: HabitUpdate) => void | Promise<void>
-}
+  formDataToUpdateRequest,
+  getSchemaForHabitType,
+  habitToFormData,
+} from './helpers'
+import { UseEditHabitModalProps } from './types'
 
 export const useEditHabitModal = ({
   open,

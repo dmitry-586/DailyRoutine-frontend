@@ -1,12 +1,11 @@
 'use client'
 
-import { DashboardHabits } from '@/features/dashboard/DashboardHabits'
-import { WeekCalendar } from '@/features/dashboard/WeekCalendar'
+import { DashboardHabits, WeekCalendar } from '@/features/dashboard'
 import { PageHeader } from '@/shared/ui'
 import { HomeIcon } from 'lucide-react'
 import dynamic from 'next/dynamic'
 
-const Stats = dynamic(
+const StatsDynamic = dynamic(
   () =>
     import('@/features/dashboard/Stats').then((mod) => ({
       default: mod.Stats,
@@ -36,7 +35,7 @@ export default function DashboardPage() {
       <WeekCalendar />
       <div className='mt-6 flex w-full gap-4 max-xl:flex-col'>
         <DashboardHabits />
-        <Stats />
+        <StatsDynamic />
       </div>
     </>
   )

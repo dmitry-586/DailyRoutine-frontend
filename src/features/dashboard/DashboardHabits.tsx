@@ -1,6 +1,7 @@
+import { HabitCard } from '@/features/habits'
 import { useHabitMutations, useHabits } from '@/shared/model/hooks'
 import type { Habit, HabitCreate } from '@/shared/types'
-import { Button, EditHabitModal, HabitCard, HabitModal } from '@/shared/ui'
+import { Button, EditHabitModal, HabitModal } from '@/shared/ui'
 import { Plus } from 'lucide-react'
 import { useMemo, useState } from 'react'
 

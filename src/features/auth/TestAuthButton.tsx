@@ -10,7 +10,7 @@ interface TestAuthButtonProps {
   onSuccess?: () => void
 }
 
-export default function TestAuthButton({ onSuccess }: TestAuthButtonProps) {
+export function TestAuthButton({ onSuccess }: TestAuthButtonProps) {
   const { sendTimezoneToBackend } = useTimezone()
   const { mutate: testAuth, isPending } = useTestAuth()
   const router = useRouter()
