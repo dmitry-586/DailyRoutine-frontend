@@ -11,6 +11,7 @@ export interface ModalProps {
   title: string
   children: ReactNode
   className?: string
+  contentClassName?: string
 }
 
 export const Modal = ({
@@ -19,6 +20,7 @@ export const Modal = ({
   title,
   children,
   className,
+  contentClassName,
 }: ModalProps) => {
   return (
     <RemoveScroll enabled={isOpen} removeScrollBar={false} forwardProps>
@@ -55,7 +57,12 @@ export const Modal = ({
               <X size={24} />
             </button>
           </div>
-          <div className='custom-scrollbar h-full overflow-y-auto p-5 max-sm:px-3'>
+          <div
+            className={cn(
+              'custom-scrollbar h-full overflow-y-auto p-5 max-sm:px-3',
+              contentClassName,
+            )}
+          >
             {children}
           </div>
         </div>

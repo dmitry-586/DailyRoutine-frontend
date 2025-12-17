@@ -1,8 +1,9 @@
 'use client'
 
-import { Button, Input } from '@/shared/ui'
+import { Button, TimeInput } from '@/shared/ui'
 import { Plus } from 'lucide-react'
 import { useState } from 'react'
+import z from 'zod'
 import { TimeTag } from './TimeTag'
 
 interface NotificationTimesProps {
@@ -11,29 +12,79 @@ interface NotificationTimesProps {
   disabled?: boolean
 }
 
+const notificationTimeSchema = z
+  .string()
+  .regex(
+    /^([01]\d|2[0-3]):([0-5]\d)$/,
+    'Введите время в формате ЧЧ:ММ (24 часа)',
+  )
+
+const minutesToTimeString = (minutesValue: string): string => {
+  const total = Number.parseInt(minutesValue, 10)
+
+  if (Number.isNaN(total) || total < 0) {
+    return ''
+  }
+
+  const hours = Math.floor(total / 60)
+  const minutes = total % 60
+
+  return `${hours.toString().padStart(2, '0')}:${minutes
+    .toString()
+    .padStart(2, '0')}`
+}
+
 export function NotificationTimes({
   times,
   onChange,
   disabled = false,
 }: NotificationTimesProps) {
-  const [newTime, setNewTime] = useState('')
+  const [timeMinutes, setTimeMinutes] = useState('')
+  const [error, setError] = useState<string | null>(null)
+
+  const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const minutesValue = e.target.value
+    setTimeMinutes(minutesValue)
+
+    const timeString = minutesToTimeString(minutesValue)
+
+    if (!minutesValue) {
+      setError('Время не может быть пустым')
+      return
+    }
+
+    const result = notificationTimeSchema.safeParse(timeString)
+
+    if (!result.success) {
+      setError(result.error.issues[0]?.message ?? 'Некорректное время')
+    } else {
+      setError(null)
+    }
+  }
 
   const handleAdd = () => {
-    if (!newTime.trim() || times.includes(newTime)) return
+    if (!timeMinutes) {
+      setError('Время не может быть пустым')
+      return
+    }
 
-    onChange([...times, newTime].sort())
-    setNewTime('')
+    const timeString = minutesToTimeString(timeMinutes)
+    const parseResult = notificationTimeSchema.safeParse(timeString)
+
+    if (!parseResult.success) {
+      setError(parseResult.error.issues[0]?.message ?? 'Некорректное время')
+      return
+    }
+
+    if (times.includes(parseResult.data)) return
+
+    onChange([...times, parseResult.data].sort())
+    setTimeMinutes('')
+    setError(null)
   }
 
   const handleRemove = (timeToRemove: string) => {
     onChange(times.filter((time) => time !== timeToRemove))
-  }
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      e.preventDefault()
-      handleAdd()
-    }
   }
 
   return (
@@ -47,24 +98,25 @@ export function NotificationTimes({
         </p>
       </div>
 
-      <div className='flex items-center gap-2'>
-        <Input
-          type='time'
-          value={newTime}
-          onChange={(e) => setNewTime(e.target.value)}
-          onKeyDown={handleKeyDown}
-          placeholder='Выберите время'
+      <div className='flex flex-col gap-4'>
+        <TimeInput
+          label='Время уведомления'
+          name='time'
+          value={timeMinutes}
+          onChange={handleTimeChange}
+          error={error ?? undefined}
           disabled={disabled}
-          className='w-fit text-base font-medium'
+          className='max-w-80'
         />
         <Button
           type='button'
           onClick={handleAdd}
-          disabled={disabled || !newTime.trim()}
+          disabled={disabled || !!error || !timeMinutes}
           variant='primary'
-          className='h-10 shrink-0'
+          className='max-w-80'
         >
           <Plus className='size-4' />
+          Добавить
         </Button>
       </div>
 

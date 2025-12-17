@@ -76,12 +76,9 @@ export function DashboardHabits() {
             ))}
           </div>
         ) : (
-          <div className='border-light-gray/10 bg-gray rounded-xl border p-12 text-center'>
+          <div className='border-light-gray/10 bg-gray rounded-xl border px-6 py-12 text-center'>
             <p className='text-light-gray mb-4'>У вас пока нет привычек</p>
-            <Button
-              onClick={openCreateModal}
-              className='bg-primary hover:bg-primary/90 hover:shadow-primary/20 transition-all duration-200 hover:scale-105 hover:shadow-md'
-            >
+            <Button onClick={openCreateModal}>
               <Plus className='mr-2 h-4 w-4' />
               Создать первую привычку
             </Button>

@@ -8,4 +8,5 @@ export interface TimeInputProps {
   error?: string
   label?: string
   disabled?: boolean
+  className?: string
 }

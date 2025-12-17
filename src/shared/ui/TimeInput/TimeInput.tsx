@@ -8,7 +8,10 @@ import type { TimeInputProps } from './types'
 import { useTimeInput } from './useTimeInput'
 
 export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
-  ({ value = '0', onChange, onBlur, name, error, label, disabled }, ref) => {
+  (
+    { value = '0', onChange, onBlur, name, error, label, disabled, className },
+    ref,
+  ) => {
     const { hoursInput, minutesInput, handleSegmentChange } = useTimeInput({
       value,
       onChange,
@@ -33,10 +36,15 @@ export const TimeInput = forwardRef<HTMLInputElement, TimeInputProps>(
     return (
       <div className={timeInputStyles.wrapper}>
         <input ref={ref} type='hidden' name={name} value={value} readOnly />
-        {label && <label className={timeInputStyles.label}>{label}</label>}
-        <div className={timeInputStyles.fields}>
+        {label && (
+          <label htmlFor={name} className={timeInputStyles.label}>
+            {label}
+          </label>
+        )}
+        <div className={`${timeInputStyles.fields} ${className}`}>
           <div className={timeInputStyles.fieldWrapper}>
             <input
+              id={name}
               type='text'
               inputMode='numeric'
               value={hoursInput}
