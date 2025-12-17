@@ -13,11 +13,24 @@ export {
   getHabits,
   updateHabit,
 } from './habits'
-export { authKeys, habitKeys, routineKeys, settingsKeys } from './keys'
+export {
+  authKeys,
+  habitKeys,
+  routineKeys,
+  settingsKeys,
+  sprintKeys,
+} from './keys'
 export {
   getSettings,
   updateSettings,
   updateTimezone,
   type Settings,
 } from './settings'
+export {
+  getSprintProgress,
+  getSprints,
+  type Sprint,
+  type SprintType,
+  type UserSprintProgress,
+} from './sprints'
 export { getUser, updateUser } from './user'

@@ -22,7 +22,6 @@ export function useTimezone() {
       saveTimezone(timezone)
       saveLastSentTimezone(timezone)
     } catch (error) {
-      // Логируем, но не ломаем UI — часовой пояс не критичен для работы приложения
       console.error('Не удалось отправить часовой пояс на бэкенд', error)
     }
   }, [])
