@@ -4,6 +4,7 @@ import {
   createHabit,
   getHabits,
   habitKeys,
+  sprintKeys,
 } from '@/shared/lib/api'
 import type { Habit, HabitCreate, HabitUpdate } from '@/shared/types'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
@@ -22,7 +23,17 @@ function useCreateHabit() {
   return useMutation({
     mutationFn: (data: HabitCreate) => createHabit(data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+      // Точечная инвалидация: только ключи привычек через predicate
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const [key] = query.queryKey
+          return key === 'habits'
+        },
+      })
+      // Прогресс спринтов обновляется на бэкенде при создании привычки
+      queryClient.invalidateQueries({
+        queryKey: sprintKeys.progress(),
+      })
     },
   })
 }
@@ -34,7 +45,17 @@ function useUpdateHabit() {
     mutationFn: ({ id, data }: { id: number; data: HabitUpdate }) =>
       apiUpdateHabit(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+      // Точечная инвалидация: только ключи привычек через predicate
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const [key] = query.queryKey
+          return key === 'habits'
+        },
+      })
+      // Прогресс спринтов обновляется на бэкенде при обновлении привычки
+      queryClient.invalidateQueries({
+        queryKey: sprintKeys.progress(),
+      })
     },
   })
 }
@@ -45,7 +66,17 @@ function useDeleteHabit() {
   return useMutation({
     mutationFn: (id: number) => apiDeleteHabit(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: habitKeys.all() })
+      // Точечная инвалидация: только ключи привычек через predicate
+      queryClient.invalidateQueries({
+        predicate: (query) => {
+          const [key] = query.queryKey
+          return key === 'habits'
+        },
+      })
+      // Прогресс спринтов обновляется на бэкенде при удалении привычки
+      queryClient.invalidateQueries({
+        queryKey: sprintKeys.progress(),
+      })
     },
   })
 }

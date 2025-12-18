@@ -3,21 +3,20 @@ import { useSprintProgress, useSprints } from '@/shared/model/hooks'
 import type { SprintWithProgress } from '../types'
 
 export function useSprintsWithProgress() {
-  const { data: sprints = [], isLoading: isSprintsLoading } = useSprints()
-  const { data: progress = [], isLoading: isProgressLoading } =
-    useSprintProgress()
+  const { data: activeSprints = [], isLoading: isSprintsLoading } = useSprints({
+    select: (sprints) => sprints.filter((sprint) => sprint.is_active),
+  })
+
+  const { data: progressBySprintId = {}, isLoading: isProgressLoading } =
+    useSprintProgress({
+      select: (progress) =>
+        progress.reduce<Record<number, number>>((acc, item) => {
+          acc[item.sprint_id] = item.current_days
+          return acc
+        }, {}),
+    })
 
   const isLoading = isSprintsLoading || isProgressLoading
-
-  const activeSprints = sprints.filter((sprint) => sprint.is_active)
-
-  const progressBySprintId = progress.reduce<Record<number, number>>(
-    (acc, item) => {
-      acc[item.sprint_id] = item.current_days
-      return acc
-    },
-    {},
-  )
 
   const sprintsWithProgress: SprintWithProgress[] = activeSprints.map(
     (sprint) => {

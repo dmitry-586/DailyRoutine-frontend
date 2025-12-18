@@ -23,5 +23,7 @@ export const routineKeys = {
 
 export const sprintKeys = {
   all: () => ['sprints'] as const,
+  list: () => ['sprints', 'list'] as const,
+  detail: (id: number) => ['sprints', 'detail', id] as const,
   progress: () => ['sprints', 'progress'] as const,
 }

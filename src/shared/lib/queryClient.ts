@@ -10,12 +10,18 @@ export function createQueryClient() {
         retry: (failureCount, error) => {
           if (
             error instanceof ApiError &&
+            (error.status === 404 || error.status === 401)
+          ) {
+            return false
+          }
+          if (
+            error instanceof ApiError &&
             error.status >= 400 &&
             error.status < 500
           ) {
             return false
           }
-          return failureCount < 1
+          return failureCount < 2
         },
         refetchOnWindowFocus: false,
         refetchOnMount: true,
