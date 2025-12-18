@@ -52,7 +52,7 @@ export function SprintCard({ sprint }: SprintCardProps) {
       </div>
 
       {sprint.isCompleted ? (
-        <Button className='hover:shadow-green/30 from-green to-green-dark w-full bg-gradient-to-r shadow-lg transition-all duration-200 hover:scale-105 hover:shadow-xl'>
+        <Button variant='green' className='w-full'>
           <Trophy className='mr-2 h-4 w-4' />
           Награда получена
         </Button>

@@ -1,6 +1,6 @@
 import { apiFetch } from './client'
 
-export type SprintType = 'habit_series' | 'all_habits' | 'habit_increase'
+export type SprintType = 'all_habits' | 'new_habit'
 
 export interface Sprint {
   id: number
@@ -10,9 +10,6 @@ export interface Sprint {
   target_days: number
   coins_reward: number
   is_active: boolean
-  habit_id?: number | null
-  min_series?: number | null
-  percent_increase?: number | null
   created_at: string
   updated_at: string
 }
@@ -29,9 +26,9 @@ export interface UserSprintProgress {
 }
 
 export async function getSprints(): Promise<Sprint[]> {
-  return apiFetch<Sprint[]>('/sprints')
+  return apiFetch<Sprint[]>('/api/sprints')
 }
 
 export async function getSprintProgress(): Promise<UserSprintProgress[]> {
-  return apiFetch<UserSprintProgress[]>('/sprints/progress')
+  return apiFetch<UserSprintProgress[]>('/api/sprints/progress')
 }

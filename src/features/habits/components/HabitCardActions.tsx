@@ -7,7 +7,7 @@ import type { HabitCardActionHandlers, HabitCardActionsProps } from '../types'
 type PrimaryActionConfig = {
   label: string
   icon: React.ReactNode
-  variant: 'primary' | 'default' | undefined
+  variant: 'primary' | 'default' | 'green' | 'red' | undefined
   className: string
 }
 
@@ -24,13 +24,14 @@ const getPrimaryActionConfig = (
     ) : (
       <X className='mr-1.5 h-4 w-4' />
     ),
-    variant: isBeneficial ? undefined : isCompleted ? 'primary' : 'default',
-    className:
-      (isBeneficial &&
-        isCompleted &&
-        'bg-green border-green hover:bg-green/90') ||
-      (!isBeneficial && !isCompleted && 'bg-red border-red hover:bg-red/80') ||
-      '',
+    variant: isBeneficial
+      ? isCompleted
+        ? 'green'
+        : undefined
+      : isCompleted
+        ? 'primary'
+        : 'red',
+    className: '',
   }
 }
 
