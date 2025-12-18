@@ -26,9 +26,9 @@ export interface UserSprintProgress {
 }
 
 export async function getSprints(): Promise<Sprint[]> {
-  return apiFetch<Sprint[]>('/api/sprints')
+  return apiFetch<Sprint[]>('/sprints')
 }
 
 export async function getSprintProgress(): Promise<UserSprintProgress[]> {
-  return apiFetch<UserSprintProgress[]>('/api/sprints/progress')
+  return apiFetch<UserSprintProgress[]>('/sprints/progress')
 }
