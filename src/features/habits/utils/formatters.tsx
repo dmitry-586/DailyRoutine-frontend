@@ -13,7 +13,7 @@ export const getStreakColorClassName = (hasStreak: boolean): string =>
   hasStreak ? 'text-orange' : 'text-light-gray'
 
 export const formatTimeValue = (totalMinutes: number) => {
-  if (!totalMinutes || totalMinutes <= 0) return ''
+  if (!Number.isFinite(totalMinutes) || totalMinutes < 0) return '0 мин'
 
   const hours = Math.floor(totalMinutes / 60)
   const minutes = totalMinutes % 60

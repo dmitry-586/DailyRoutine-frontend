@@ -30,10 +30,9 @@ export const HabitCardHeader = ({ data }: HabitCardHeaderProps) => {
           <div className='text-light-gray flex items-center gap-2 text-xs'>
             {getIcon(format)}
             <span>
-              {current_value}/
               {format === 'time'
-                ? formatTimeValue(value)
-                : `${value} ${unit ?? ''}`}
+                ? `${formatTimeValue(current_value)}/${formatTimeValue(value)}`
+                : `${current_value}/${value} ${unit ?? ''}`}
             </span>
           </div>
         )}
