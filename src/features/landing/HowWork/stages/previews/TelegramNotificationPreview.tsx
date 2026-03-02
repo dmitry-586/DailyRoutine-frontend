@@ -1,6 +1,13 @@
+import { m } from 'framer-motion'
+
 export default function TelegramNotificationPreview() {
   return (
-    <section className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5'>
+    <m.section 
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5'
+    >
       <header className='border-gray mb-3.5 flex items-center gap-3 border-b pb-3 max-sm:mb-3 max-sm:gap-2.5 max-sm:pb-2.5'>
         <div className='bg-primary flex h-10 w-10 items-center justify-center rounded-full text-sm font-semibold max-sm:h-8 max-sm:w-8 max-sm:text-xs'>
           DR
@@ -16,7 +23,7 @@ export default function TelegramNotificationPreview() {
           <div className='bg-primary flex size-8 shrink-0 items-center justify-center rounded-full text-xs leading-none font-semibold max-sm:size-6 max-sm:text-[10px]'>
             DR
           </div>
-          <div className='bg-background max-w-[85%] rounded-lg rounded-tl-none px-3 py-2.5 max-sm:rounded-md max-sm:px-2.5 max-sm:py-2'>
+          <div className='bg-background max-w-[85%] rounded-lg rounded-tl-none px-3 py-2.5 max-sm:rounded-md max-sm:px-2.5 max-sm:py-2 shadow-lg'>
             <h4 className='mb-2 text-sm font-medium text-white max-sm:mb-1.5 max-sm:text-xs'>
               Утренний обзор привычек:
             </h4>
@@ -25,7 +32,7 @@ export default function TelegramNotificationPreview() {
                 <span className='text-light-gray text-sm max-sm:text-xs'>
                   Прочитать книгу
                 </span>
-                <span className='text-light-gray/90 text-xs max-sm:text-[10px]'>
+                <span className='text-light-gray/90 text-xs max-sm:text-[10px] font-mono'>
                   15/20
                 </span>
               </li>
@@ -58,23 +65,23 @@ export default function TelegramNotificationPreview() {
           aria-label='Действия с привычками'
         >
           <div className='flex gap-1.5 max-sm:gap-1'>
-            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs'>
+            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs transition-colors'>
               Книга
             </button>
-            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs'>
+            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs transition-colors'>
               Пробежка
             </button>
           </div>
           <div className='flex gap-1.5 max-sm:gap-1'>
-            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs'>
+            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs transition-colors'>
               Медитация
             </button>
-            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs'>
+            <button className='border-gray bg-background flex-1 rounded-lg border px-3 py-2 text-sm max-sm:rounded-md max-sm:px-2 max-sm:py-1.5 max-sm:text-xs transition-colors'>
               Все
             </button>
           </div>
         </nav>
       </div>
-    </section>
+    </m.section>
   )
 }

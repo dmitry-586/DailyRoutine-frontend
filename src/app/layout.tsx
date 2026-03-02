@@ -2,7 +2,11 @@ import { TimezoneSync } from '@/features/timezone/TimezoneSync'
 import { YandexMetrika } from '@/shared/lib/analytics'
 import { getPWAMetadata, getPWAViewport } from '@/shared/lib/pwa'
 import { generateLandingMetadata } from '@/shared/lib/seo'
-import { PWAProvider, TanstackClientProvider } from '@/shared/model/providers'
+import {
+    FramerMotionProvider,
+    PWAProvider,
+    TanstackClientProvider,
+} from '@/shared/model/providers'
 import { Toaster } from '@/shared/ui'
 import type { Metadata, Viewport } from 'next'
 import { Inter, Reggae_One } from 'next/font/google'
@@ -60,8 +64,10 @@ export default function RootLayout({
         <PWAProvider />
         <YandexMetrika />
         <TanstackClientProvider>
-          <TimezoneSync />
-          {children}
+          <FramerMotionProvider>
+            <TimezoneSync />
+            {children}
+          </FramerMotionProvider>
         </TanstackClientProvider>
         <Toaster />
       </body>

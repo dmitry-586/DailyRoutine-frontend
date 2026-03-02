@@ -1,5 +1,6 @@
 'use client'
 
+import { m } from 'framer-motion'
 import { Flame, Trophy } from 'lucide-react'
 import { Line, LineChart, ResponsiveContainer, XAxis, YAxis } from 'recharts'
 
@@ -22,7 +23,12 @@ export default function DashboardPreview() {
   const percentage = Math.round((averageValue / targetValue) * 100)
 
   return (
-    <section className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5'>
+    <m.section 
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5 shadow-2xl'
+    >
       <div className='mb-3.5 flex items-center justify-between max-sm:mb-3'>
         <div>
           <h4 className='mb-1 text-lg font-medium text-white max-sm:mb-0.5 max-sm:text-base'>
@@ -74,7 +80,9 @@ export default function DashboardPreview() {
         </div>
       </div>
 
-      <div className='bg-gray pointer-events-none rounded-lg p-3.5 max-sm:rounded-md max-sm:p-3'>
+      <div
+        className='bg-gray pointer-events-none rounded-lg p-3.5 max-sm:rounded-md max-sm:p-3'
+      >
         <ResponsiveContainer width='100%' height={150}>
           <LineChart data={weekData}>
             <XAxis
@@ -100,6 +108,6 @@ export default function DashboardPreview() {
           </LineChart>
         </ResponsiveContainer>
       </div>
-    </section>
+    </m.section>
   )
 }

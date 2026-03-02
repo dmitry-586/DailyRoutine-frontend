@@ -1,8 +1,14 @@
+import { m } from 'framer-motion'
 import { X } from 'lucide-react'
 
 export default function HabitFormPreview() {
   return (
-    <section className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5'>
+    <m.section 
+      initial={{ opacity: 0, scale: 0.95 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      viewport={{ once: true }}
+      className='bg-dark-gray border-gray rounded-2xl border-8 p-5 max-sm:rounded-xl max-sm:border-4 max-sm:p-3.5'
+    >
       <header className='mb-5 flex items-center justify-between max-sm:mb-3.5'>
         <h4 className='text-lg font-medium max-sm:text-base'>
           Создать новую привычку
@@ -49,6 +55,6 @@ export default function HabitFormPreview() {
           </p>
         </div>
       </form>
-    </section>
+    </m.section>
   )
 }

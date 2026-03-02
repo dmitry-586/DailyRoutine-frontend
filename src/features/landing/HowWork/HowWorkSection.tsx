@@ -1,4 +1,5 @@
 import { LandingLayout } from '@/shared/model/providers'
+import { m } from 'framer-motion'
 import dynamic from 'next/dynamic'
 import { ComponentType } from 'react'
 import { howWorkStages } from './config'
@@ -30,7 +31,13 @@ export function HowWorkSection() {
   return (
     <LandingLayout backgroundColor='dark-gray'>
       <section id='how-it-works' className='py-20 max-md:py-16 max-sm:py-12'>
-        <div className='mb-16 flex flex-col gap-4 text-center max-md:mb-12 max-sm:mb-10'>
+        <m.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-100px' }}
+          transition={{ duration: 0.4 }}
+          className='mb-16 flex flex-col gap-4 text-center max-md:mb-12 max-sm:mb-10'
+        >
           <h2 className='text-4xl font-bold max-md:text-3xl max-sm:text-2xl'>
             Как это работает
           </h2>
@@ -38,7 +45,7 @@ export function HowWorkSection() {
             Умный трекер привычек с гибкой настройкой и удобным отслеживанием
             прогресса
           </p>
-        </div>
+        </m.div>
 
         <div className='space-y-12 max-md:space-y-10 max-sm:space-y-8'>
           {howWorkStages.map(({ visualId, ...stage }) => {

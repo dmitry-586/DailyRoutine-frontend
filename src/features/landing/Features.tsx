@@ -1,4 +1,5 @@
 import { LandingLayout } from '@/shared/model/providers'
+import { m, Variants } from 'framer-motion'
 import {
   Bell,
   MessageSquare,
@@ -61,44 +62,78 @@ const features: Feature[] = [
   },
 ]
 
+const containerVariants: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+}
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+}
+
 export function Features() {
   return (
     <LandingLayout>
       <section className='py-20 max-md:py-16 max-sm:py-12'>
-        <div className='mb-16 text-center max-md:mb-12 max-sm:mb-10'>
+        <m.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className='mb-16 text-center max-md:mb-12 max-sm:mb-10'
+        >
           <h2 className='mb-4 text-4xl font-bold max-md:text-3xl max-sm:text-2xl'>
             Почему Telegram?
           </h2>
           <p className='text-light-gray mx-auto max-w-2xl text-lg max-md:text-base max-sm:text-sm'>
             Преимущества выбора Telegram для трекинга привычек
           </p>
-        </div>
+        </m.div>
 
-        <div className='grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3'>
+        <m.div 
+          variants={containerVariants}
+          initial='hidden'
+          whileInView='visible'
+          viewport={{ once: true, margin: '-50px' }}
+          className='grid gap-6 sm:grid-cols-2 md:gap-8 lg:grid-cols-3'
+        >
           {features.map((feature) => {
             const Icon = feature.icon
             return (
-              <div
+              <m.div
+                variants={itemVariants}
                 key={feature.title}
-                className='bg-gray rounded-2xl p-6 max-md:p-5 max-sm:p-4'
+                whileHover={{ y: -5 }}
+                className='bg-gray group relative rounded-2xl p-6 transition-colors hover:bg-white/5 max-md:p-5 max-sm:p-4'
               >
                 <Icon
-                  className={`mb-4 size-10 max-md:size-8 max-sm:size-7 ${
+                  className={`mb-4 size-10 transition-transform group-hover:scale-110 max-md:size-8 max-sm:size-7 ${
                     feature.iconColor === 'primary'
                       ? 'text-primary'
                       : 'text-green'
                   }`}
                 />
-                <h3 className='mb-3 text-lg leading-tight font-medium max-md:text-base max-sm:text-sm'>
+                <h3 className='mb-3 text-lg leading-tight font-medium transition-colors group-hover:text-primary max-md:text-base max-sm:text-sm'>
                   {feature.title}
                 </h3>
                 <p className='text-light-gray text-sm max-sm:text-xs'>
                   {feature.description}
                 </p>
-              </div>
+              </m.div>
             )
           })}
-        </div>
+        </m.div>
       </section>
     </LandingLayout>
   )

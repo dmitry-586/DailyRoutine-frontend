@@ -1,4 +1,5 @@
 export { DashboardLayout } from './DashboardLayout'
+export { FramerMotionProvider } from './FramerMotionProvider'
 export { LandingLayout } from './LandingLayout'
 export * from './PWAProvider'
 export { TanstackClientProvider } from './TanstackClientProvider'
