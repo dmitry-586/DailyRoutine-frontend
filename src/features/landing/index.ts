@@ -1,11 +1,8 @@
 export { Benefits } from './Benefits'
 export { CTA } from './CTA'
 export { FAQ } from './FAQ'
-export { Features } from './Features'
 export { Footer } from './Footer'
 export { Header } from './Header'
 export { HowWorkSection } from './HowWork'
 export { LandingStructuredData } from './LandingStructuredData'
 export { MainBlock } from './MainBlock/MainBlock'
-export { ScrollProgress } from './ScrollProgress'
-
